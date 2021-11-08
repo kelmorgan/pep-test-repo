@@ -8,7 +8,7 @@ import com.newgen.util.Shared;
 import com.newgen.worksteps.WorkStep1;
 import com.newgen.worksteps.WorkStep2;
 
-public class ProcessName implements IFormListenerFactory, Constants {
+public class PEP implements IFormListenerFactory, Constants {
 
 	@Override
 	public IFormServerEventHandler getClassInstance(IFormReference ifr) {
