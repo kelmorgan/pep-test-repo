@@ -14,10 +14,10 @@ public class PEP implements IFormListenerFactory, Constants {
 	public IFormServerEventHandler getClassInstance(IFormReference ifr) {
 		IFormServerEventHandler objActivity = null;
 		String processName = Shared.getProcessName(ifr);
-		String workstep = Shared.getCurrentWorkstep(ifr);
+		String workStep = Shared.getCurrentWorkstep(ifr);
 	
 		if (Shared.isProcessName(ifr, processName)) {
-			switch (workstep) {
+			switch (workStep) {
 				case workstep1:{
 					objActivity = new WorkStep1();
 					break;
