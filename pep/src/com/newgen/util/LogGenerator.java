@@ -14,7 +14,7 @@ public class LogGenerator implements Constants{
             logger = Logger.getLogger(logClass);
             PatternLayout layout = new PatternLayout();
             layout.setConversionPattern("[%d{dd MMM yyyy HH:mm:ss:SSS}] (%F:%L) - %m%n");
-            String logFile = logPath+ logClass.getSimpleName() + "_CP.log";
+            String logFile = logPath+ logClass.getSimpleName() + ".log";
             RollingFileAppender appender = new RollingFileAppender(layout,logFile,true);
             appender.setMaxFileSize("1000KB");
             appender.setMaxBackupIndex(10);

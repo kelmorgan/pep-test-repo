@@ -11,7 +11,7 @@ import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
 
-public class WorkStep2 implements IFormServerEventHandler {
+public class BranchVerifier implements IFormServerEventHandler {
 
 	@Override
 	public void beforeFormLoad(FormDef arg0, IFormReference arg1) {

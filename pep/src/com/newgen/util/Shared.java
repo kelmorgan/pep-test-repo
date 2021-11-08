@@ -20,11 +20,8 @@ public class Shared implements Constants {
     public static List<List<String>> resultSet;
     public static int validate;
     public static String message;
-	
 
-  
-  
-    public static String getCurrentWorkstep (IFormReference ifr) {
+    public static String getCurrentWorkStep(IFormReference ifr) {
     	return ifr.getActivityName();
     	
     }
@@ -56,27 +53,13 @@ public class Shared implements Constants {
         }
         return null;
     }
-    private static void setDecisionHistory(IFormReference ifr, String staffId, String process, String marketType, String decision,
-                                    String remarks, String prevWs, String entryDate, String exitDate, String tat){
-        JSONArray jsRowArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(dhRowStaffId,staffId);
-        jsonObject.put(dhRowProcess,process);
-        jsonObject.put(dhRowMarketType,marketType);
-        jsonObject.put(dhRowDecision,decision);
-        jsonObject.put(dhRowRemarks,remarks);
-        jsonObject.put(dhRowPrevWs,prevWs);
-        jsonObject.put(dhRowEntryDate,entryDate);
-        jsonObject.put(dhRowExitDate,exitDate);
-        jsonObject.put(dhRowTat,tat);
-        jsRowArray.add(jsonObject);
+    private static void setDecisionHistory(IFormReference ifr){
 
-        ifr.addDataToGrid(decisionHisTable, jsRowArray);
     }
     public String getUsersMailsInGroup(IFormReference ifr, String groupName){
         StringBuilder groupMail= new StringBuilder();
         try {
-            resultSet = new DbConnect(ifr, new Query().getUsersInGroup(groupName)).getData();
+            resultSet = new DbConnect(ifr, Query.getUsersInGroup(groupName)).getData();
             for (List<String> result : resultSet)
                 groupMail.append(result.get(0)).append(endMail).append(",");
         } catch (Exception e){
@@ -148,18 +131,9 @@ public class Shared implements Constants {
     public static void clearTables(IFormReference ifr, String table){ifr.clearTable(table);}
     public static String getFieldValue(IFormReference ifr, String local){return ifr.getValue(local).toString();}
     public static boolean isEmpty(String s) {return s == null || s.trim().isEmpty();}
-  
-   
-
     public boolean compareDate(String startDate, String endDate){
       return  LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern(dbDateTimeFormat)).isAfter(LocalDateTime.parse(startDate,DateTimeFormatter.ofPattern(dbDateTimeFormat)));
     }
-  
-    public String getCurrentWorkStep(IFormReference ifr){
-        return ifr.getActivityName();
-    }
-
-
     public static void setTableGridData(IFormReference ifr, String tableLocal, String [] columns, String [] rowValues){
         JSONArray jsRowArray = new JSONArray();
         jsRowArray.add(setTableRows(columns,rowValues));
@@ -172,8 +146,6 @@ public class Shared implements Constants {
 
         return jsonObject;
     }
-   
-   
     public static String addToCurrentDate(int tenor){
         return LocalDate.now().plusDays(tenor).toString();
     }
@@ -216,8 +188,6 @@ public class Shared implements Constants {
     public static String getTableCellValue(IFormReference ifr,String tableName,int rowIndex, int columnIndex){
         return ifr.getTableCellValue(tableName,rowIndex,columnIndex);
     }
-
-
     public static String getFormattedString(float value){
         return String.format("%.2f",value);
     }
@@ -227,8 +197,6 @@ public class Shared implements Constants {
     public static String getFormattedString(int value){
         return String.valueOf(value);
     }
- 
-  
     public static LocalDate getDate(String date){
         return (!isEmpty(date)) ? LocalDate.parse(date) : null;
     }
@@ -242,28 +210,20 @@ public class Shared implements Constants {
     public static LocalDateTime getDateTime(String date,String format){
         return (!(isEmpty(date) && isEmpty(format))) ? LocalDateTime.parse(date,DateTimeFormatter.ofPattern(format)) : null;
     }
-   
     public static void clearFields(IFormReference ifr, String field) {ifr.setValue(field,empty);}
     public static void setVisible(IFormReference ifr, String field) { ifr.setStyle(field,visible,True);}
-
     public static void hideFields(IFormReference ifr, String [] fields ) { for(String field: fields) ifr.setStyle(field,visible,False); }
-
     public static void setMandatory(IFormReference ifr, String field) { ifr.setStyle(field,mandatory,True); }
     public static void undoMandatory(IFormReference ifr, String field) { ifr.setStyle(field,mandatory,False); }
     public static void setWiName(IFormReference ifr){
 	    setFields(ifr,wiNameFormLocal,getWorkItemNumber(ifr));
 	}
-
     public static boolean isSaved(int value){
         return value > 0;
     }
-   
-
     public static String getDataByCoordinates(List<List<String>> resultSet, int row, int column){
        return  resultSet.get(row).get(column);
     }
-    
-
     public static boolean isNotEmpty(String value){
         return !isEmpty(value);
     }

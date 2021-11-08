@@ -3,11 +3,21 @@ package com.newgen.util;
 import java.io.File;
 
 public interface Constants {
-	//ProcessName 
+	//ProcessName
+	String pepProcessName = "PEP";
 	
 	//WorkSteps
-	String workstep1 = "workstep1";
-	String workstep2 = "workstep2";
+	String branchInitiatorWs = "BRANCHINITIATOR";
+	String branchVerifierWs = "BRANCHVERIFIER";
+	String acoWs = "ACO";
+	String amlWs = "AML";
+	String lineExecutiveWs = "LINEEXECUTIVE";
+	String ccoWs = "CCO";
+	String reworkWs = "REWORK";
+	String amlInitiatorWs = "AMLINITIATOR";
+	String queryWs = "QUERY";
+	String discardWs = "DISCARD";
+	String exitWs = "EXIT";
 
 	//process Ids
 	 String wiNameFormLocal = "";
@@ -44,8 +54,8 @@ public interface Constants {
 
 
 	//config
-	String logPath = "nglogs/NGF_Logs/ProcessName/";
-	String configPath = System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "processName.properties";
+	String logPath = "nglogs/NGF_Logs/pep/";
+	String configPath = System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "pep.properties";
 
 	//Api Service Name
 }
