@@ -311,11 +311,13 @@ public class Shared implements Constants {
         }
     }
     public static void setLineExecutiveFilter(IFormReference ifr){
-        Shared.clearFields(ifr,lineExecFilterLocal);
-        Shared.setFields(ifr,lineExecFilterLocal,getLineExecutive(ifr));
+        clearFields(ifr,lineExecFilterLocal);
+        setFields(ifr,lineExecFilterLocal,getLineExecutive(ifr));
     }
 
-
-
-
+    public static void setAcoFilter(IFormReference ifr){
+        clearFields(ifr,acoFilterLocal);
+        resultSet = new DbConnect(ifr,Query.getAcoId(getUserSolId(ifr))).getData();
+        setFields(ifr,acoFilterLocal,getDataByCoordinates(resultSet,0,0));
+    }
 }

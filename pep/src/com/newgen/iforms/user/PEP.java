@@ -4,15 +4,19 @@ import com.newgen.iforms.custom.IFormListenerFactory;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.util.Constants;
+import com.newgen.util.LogGenerator;
 import com.newgen.util.Shared;
 import com.newgen.worksteps.*;
+import org.apache.log4j.Logger;
 
 public class PEP implements IFormListenerFactory, Constants {
+	Logger logger = LogGenerator.getLoggerInstance(PEP.class);
 
 	@Override
 	public IFormServerEventHandler getClassInstance(IFormReference ifr) {
 		IFormServerEventHandler objActivity = null;
 		String workStep = Shared.getCurrentWorkStep(ifr);
+		logger.info("workStep: "+workStep);
 	
 		if (Shared.isProcessName(ifr, pepProcessName)) {
 			switch (workStep) {

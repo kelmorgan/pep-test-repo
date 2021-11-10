@@ -1,14 +1,20 @@
 package com.newgen.util;
 
 public class Query {
+    public static String getAcoGroup(String id){
+        return "select aco_group from usr_0_fbn_aco_groupname where aco_id = '"+id+"'";
+    }
+    public static  String getAcoId(String sol){
+        return "select aco_id from usr_0_fbn_aco_mapping where sole_id = '"+sol+"'";
+    }
     public static String getLineExecutives(){
         return "select le_id, le_name from usr_0_fbn_lineexecutive";
     }
-    public static String getIsMemberOfSol(String userId, String solId){
-        return "select count(*) from usr_0_fbn_usr_branch_mapping where user_id = '"+userId+"' and sole_id = '"+solId+"'";
+    public static String getIsMemberOfSol(String userId, String sol){
+        return "select count(*) from usr_0_fbn_usr_branch_mapping where user_id = '"+userId+"' and sole_id = '"+sol+"'";
     }
-    public static String getIsUserMemberOfGroup(String userId, String groupName){
-        return "select count (username) from pdbuser where upper(username)= upper('"+userId+"')  and userindex in (select userindex from pdbgroupmember where groupindex = (select groupindex from pdbgroup where groupname = '"+groupName+"'))";
+    public static String getIsUserMemberOfGroup(String user, String groupName){
+        return "select count (username) from pdbuser where upper(username)= upper('"+user+"')  and userindex in (select userindex from pdbgroupmember where groupindex = (select groupindex from pdbgroup where groupname = '"+groupName+"'))";
     }
     public static String getSolQuery(String userName) {
         return "select sole_id from usr_0_fbn_usr_branch_mapping where upper(user_id) = upper('" + userName + "')";

@@ -58,7 +58,7 @@ public interface Constants {
 	 String alColBranchName = "";
 	 String lineExecFilterLocal = "";
 	 String decisionHisTable = "";
-	 String aocFilterLocal = "";
+	 String acoFilterLocal = "";
 
 	//sections
 	String accountListSection = "";
@@ -89,9 +89,6 @@ public interface Constants {
 	 String lineExecRetailCommercial = "Retail And Commercial Banking";
 	 String lineExecCorporate = "Corporate Banking";
 	 String lineExecPublic = "Public Sector";
-	 String lineExecRetailCommercialId = "1";
-	 String lineExecCorporateId = "2";
-	 String lineExecPublicId = "3";
 
 
 	//eventName/controlName
