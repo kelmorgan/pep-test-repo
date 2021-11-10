@@ -16,14 +16,38 @@ import java.util.List;
 
 public class Shared implements Constants {
     private static final Logger logger = LogGenerator.getLoggerInstance(Shared.class);
-	private static final String True = null;
     public static List<List<String>> resultSet;
     public static int validate;
     public static String message;
 
+    public static String getBmGroupName(IFormReference ifr){
+        return bmGroupLabel + getUserSolId(ifr);
+    }
+
+    public static String getRmGroupName(IFormReference ifr){
+        return rmGroupLabel + getUserSolId(ifr);
+    }
+
+    public static String getUserSolId(IFormReference ifr){
+        return getFieldValue(ifr,userSolIdLocal);
+    }
+    public static void checkBmIsInitiator(IFormReference ifr){
+        resultSet = new DbConnect(ifr,Query.getIsUserMemberOfGroup(getLoginUser(ifr),getBmGroupName(ifr))).getData();
+        int count = getFormattedNumber(getDataByCoordinates(resultSet,0,0));
+        if (count > 0) setFields(ifr,bvFlagLocal,flag);
+    }
+
+    public static void setInitiatorDetails(IFormReference ifr){
+        resultSet = new DbConnect(ifr,Query.getUserDetailsQuery(getLoginUser(ifr))).getData();
+        String soleId = getDataByCoordinates(resultSet,0,0);
+        String branchName = getDataByCoordinates(resultSet,0,1);
+        setFields(ifr,new String[]{userSolIdLocal,userBranchNameLocal},new String[]{soleId,branchName});
+    }
+    public static void hideSections(IFormReference ifr){
+        setInvisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection});
+    }
     public static String getCurrentWorkStep(IFormReference ifr) {
     	return ifr.getActivityName();
-    	
     }
     public static boolean isProcessName(IFormReference ifr, String processName) {
     	return ifr.getProcessName().equalsIgnoreCase(processName);
@@ -95,21 +119,28 @@ public class Shared implements Constants {
     public static void setFields (IFormReference ifr, String local,String value){
         ifr.setValue(local,value);
     }
-    public void setDropDown (IFormReference ifr,String local, String [] values){
+    public static void setDropDown (IFormReference ifr,String local, String [] values){
         ifr.clearCombo(local);
         for (String value: values) ifr.addItemInCombo(local,value,value);
         clearFields(ifr,local);
     }
-    public void setDropDown (IFormReference ifr,String local,String [] labels, String [] values){
+    public static void setDropDown (IFormReference ifr,String local,String [] labels, String [] values){
         ifr.clearCombo(local);
         for (int i = 0; i < values.length; i++) ifr.addItemInCombo(local,labels[i],values[i]);
     }
-    public  void setDecision (IFormReference ifr,String decisionLocal, String [] values){
+
+    public static void setDropDown (IFormReference ifr,String local,String label, String value){
+       ifr.addItemInCombo(local,label,value);
+    }
+    public static void clearDropDown(IFormReference ifr,String local){
+        ifr.clearCombo(local);
+    }
+    public static void  setDecision (IFormReference ifr,String decisionLocal, String [] values){
         ifr.clearCombo(decisionLocal);
         for (String value: values) ifr.addItemInCombo(decisionLocal,value,value);
         clearFields(ifr,new String[]{decisionLocal});
     }
-    public  void setDecision (IFormReference ifr,String decisionLocal,String [] labels, String [] values){
+    public static  void setDecision (IFormReference ifr,String decisionLocal,String [] labels, String [] values){
         ifr.clearCombo(decisionLocal);
         for (int i = 0; i < values.length; i++) ifr.addItemInCombo(decisionLocal,labels[i],values[i]);
         clearFields(ifr,new String[]{decisionLocal});
@@ -197,6 +228,9 @@ public class Shared implements Constants {
     public static String getFormattedString(int value){
         return String.valueOf(value);
     }
+    public static  int getFormattedNumber(String data){
+        return Integer.parseInt(data);
+    }
     public static LocalDate getDate(String date){
         return (!isEmpty(date)) ? LocalDate.parse(date) : null;
     }
@@ -230,4 +264,58 @@ public class Shared implements Constants {
     public static boolean isNotEmpty(List<List<String>> resultSet){
         return !isEmpty(resultSet);
     }
+    public static String getBvn(IFormReference ifr){
+        return getFieldValue(ifr,bvnLocal);
+    }
+    public static  String getPrevWs (IFormReference ifr){
+        return  getFieldValue(ifr,previousWsLocal);
+    }
+
+    public static boolean isPrevWs(IFormReference ifr, String workStep){
+        return getPrevWs(ifr).equalsIgnoreCase(workStep);
+    }
+    public static boolean isCurrWs(IFormReference ifr, String workStep){
+        return getCurrentWorkStep(ifr).equalsIgnoreCase(workStep);
+    }
+
+    public static boolean isDecisionApprove(IFormReference ifr){
+        return getDecision(ifr).equalsIgnoreCase(decApprove);
+    }
+    public static boolean isDecisionSubmit(IFormReference ifr){
+        return getDecision(ifr).equalsIgnoreCase(decSubmit);
+    }
+    public static boolean isDecisionReturn(IFormReference ifr){
+        return getDecision(ifr).equalsIgnoreCase(decReturn);
+    }
+    public static String getDecision(IFormReference ifr){
+        return getFieldValue(ifr,decisionLocal);
+    }
+    public static void checkSol(IFormReference ifr){
+
+    }
+    public static  String getLineExecutive(IFormReference ifr){
+        return getFieldValue(ifr, lineExecutiveLocal);
+    }
+
+    public static  boolean isLineExecutive(IFormReference ifr, String executive){
+        return  getLineExecutive(ifr).equalsIgnoreCase(executive);
+    }
+
+    public static void setLineExecutive(IFormReference ifr){
+        clearDropDown(ifr, lineExecutiveLocal);
+        resultSet = new DbConnect(ifr,Query.getLineExecutives()).getData();
+        for (List<String> result : resultSet){
+            String lineExecId = result.get(0);
+            String lineExecName = result.get(1);
+            setDropDown(ifr, lineExecutiveLocal,lineExecName,lineExecId);
+        }
+    }
+    public static void setLineExecutiveFilter(IFormReference ifr){
+        Shared.clearFields(ifr,lineExecFilterLocal);
+        Shared.setFields(ifr,lineExecFilterLocal,getLineExecutive(ifr));
+    }
+
+
+
+
 }

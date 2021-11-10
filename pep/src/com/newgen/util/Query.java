@@ -1,7 +1,16 @@
 package com.newgen.util;
 
 public class Query {
-    public String getSolQuery(String userName) {
+    public static String getLineExecutives(){
+        return "select le_id, le_name from usr_0_fbn_lineexecutive";
+    }
+    public static String getIsMemberOfSol(String userId, String solId){
+        return "select count(*) from usr_0_fbn_usr_branch_mapping where user_id = '"+userId+"' and sole_id = '"+solId+"'";
+    }
+    public static String getIsUserMemberOfGroup(String userId, String groupName){
+        return "select count (username) from pdbuser where upper(username)= upper('"+userId+"')  and userindex in (select userindex from pdbgroupmember where groupindex = (select groupindex from pdbgroup where groupname = '"+groupName+"'))";
+    }
+    public static String getSolQuery(String userName) {
         return "select sole_id from usr_0_fbn_usr_branch_mapping where upper(user_id) = upper('" + userName + "')";
     }
     public static String getUserDetailsQuery(String userName) {

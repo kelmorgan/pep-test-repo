@@ -5,7 +5,7 @@ import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
 public class MailSetup {
-    private static Logger logger = LogGenerator.getLoggerInstance(MailSetup.class);
+    private static final Logger logger = LogGenerator.getLoggerInstance(MailSetup.class);
     private String wiName;
     private String sendMail;
     private String copyMail;
@@ -38,6 +38,6 @@ public class MailSetup {
     }
 
     private boolean isMailSent(IFormReference ifr){
-        return new DbConnect(ifr, Query.getMailQuery(wiName,sendMail,copyMail,mailSubject,mailMessage)).saveQuery() >= 0;
+        return new DbConnect(ifr, Query.getMailQuery(wiName,sendMail,copyMail,mailSubject,mailMessage)).saveQuery() > 0;
     }
 }
