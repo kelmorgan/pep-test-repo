@@ -20,51 +20,67 @@ public interface Constants {
 	String exitWs = "EXIT";
 
 	//process Ids
-	 String wiNameFormLocal = "";
+	 String wiNameFormLocal = "WINAME";
  	 String wiNameLocal = "WorkItemName";
-     String previousWsLocal = "";
-	 String currentWsLocal = "";
-	 String staffIdLocal = "";
-	 String userSolIdLocal = "";
-	 String userBranchNameLocal = "";
-	 String lineExecutiveLocal = "";
-	 String bvnLocal = "";
-	 String accountNoLocal = "";
-	 String surNameLocal = "";
-	 String firstNameLocal = "";
-	 String otherNameLocal = "";
-	 String addressLocal = "";
-	 String pepSolIdLocal = "";
-	 String pepBranchNameLocal = "";
-	 String pepStatusLocal = "";
-	 String tinLocal = "";
-	 String srcOfWealthLocal = "";
-	 String purposeOfAccountLocal = "";
-	 String officeDesignationLocal = "";
-	 String pepAccountTypeLocal = "";
-	 String otherAcctTypeLocal = "";
-	 String isDocCompletedLocal = "";
-	 String isLinkedPepLocal = "";
-	 String linkedPepLocal = "";
-	 String decisionLocal = "";
-	 String remarksLocal = "";
-	 String bvFlagLocal = "";
-	 String entryDateLocal = "";
+     String previousWsLocal = "PREVIOUSWRKSTEP";
+	 String currentWsLocal = "CURRENTWRKSTEP";
+	 String userIdLocal = "STAFFID";
+	 String userSolIdLocal = "SOLID";
+	 String userBranchNameLocal = "BRCHNAME";
+	 String lineExecutiveLocal = "LINEEXEC";
+	 String bvnLocal = "BVN";
+	 String accountNoLocal = "ACCTNUM";
+	 String surNameLocal = "SURNAME";
+	 String firstNameLocal = "FIRSTNAME";
+	 String otherNameLocal = "OTHERNAME";
+	 String addressLocal = "ADDRESS";
+	 String pepSolIdLocal = "ACCTSOL";
+	 String pepBranchNameLocal = "BRCHNAMEEXT";
+	 String pepStatusLocal = "PEPSTATUS";
+	 String tinLocal = "TIN";
+	 String srcOfWealthLocal = "SRCINCOME";
+	 String purposeOfAccountLocal = "ACCTPURPOSE";
+	 String officeDesignationLocal = "OFFICEDESIGN";
+	 String pepAccountTypeLocal = "ACCTTYPE";
+	 String otherAcctTypeLocal = "OTHERS";
+	 String isDocCompletedLocal = "DOCREQUIRE";
+	 String isLinkedPepLocal = "BUSASSFAM";
+	 String linkedPepLocal = "LINKEDPEP";
+	 String decisionLocal = "DECISION";
+	 String remarksLocal = "REMARK";
+	 String bvFlagLocal = "BVFLAG";
+	 String entryDateLocal = "EntryDateTime";
 	 String ccoApprovedFlagLocal = "CCOAPPROVEDFLAG";
-	 String accountListTable = "";
-	 String alColAccountNo = "";
-	 String alColAccountName = "";
-	 String alColSolId = "";
-	 String alColBranchName = "";
-	 String lineExecFilterLocal = "";
-	 String decisionHisTable = "";
-	 String acoFilterLocal = "";
+	 String accountListTable = "table3";
+	 String alColAccountNo = "Account Nu";
+	 String alColAccountName = "Account Name";
+	 String alColSolId = "SOL ID";
+	 String alColBranchName = "Branch Name";
+	 String lineExecFilterLocal = "LINEEXECFILTER";
+	 String acoFilterLocal = "ACOFILTER";
+	 String decisionHistoryTable = "table4";
+	 String dhColStaffId = "Staff ID";
+	 String dhColPrevWs = "Previous WorkStep";
+	 String dhColDecision = "Decision";
+	 String dhColRemarks = "Remark";
+	 String dhColEntryDate = "Entry Date";
+	 String dhColExitDate = "Exit Date";
+	 String dhColTat = "TAT";
+	 String decisionHistoryFlagLocal = "DHFLAG";
+	 String accountOpeningDateLocal = "ACCTDATE";
+	 String pepCategoryLocal = "CUSTOMERCATEGORY";
+	 String pepAccountCategory = "ACCTCATEGORY";
+	 String fetchPepInfoBtn = "FETCHPEPINFOBTN";
+	 String searchBvnBtn = "SEARCHBVNBTN";
+	 String generatePepDocBtn= "GENERATEDOCUMENTBTN";
 
 	//sections
 	String accountListSection = "";
 	String pepInfoSection = "";
 	String pepVerificationSection= "";
 	String decisionSection= "";
+	String generateDocumentSection = "";
+	String pepCategorySection = "";
 
     
 	//common variables
@@ -79,21 +95,30 @@ public interface Constants {
 	 String bmGroupLabel = "BM_";
 	 String rmGroupLabel= "RM_";
 	 String flag = "Y";
-	 String decSubmit = "Submit";
-	 String decRework = "Rework";
-	 String decReturn = "Return";
-	 String decReject = "Reject";
-	 String decApprove = "Approve";
-	 String decDiscard = "Discard";
+	 String decSubmit = "SUBMIT";
+	 String decRework = "REWORK";
+	 String decReturn = "RETURN";
+	 String decReject = "REJECT";
+	 String decApprove = "APPROVE";
+	 String decDiscard = "DISCARD";
 	 int bvnLength = 11;
 	 String lineExecRetailCommercial = "Retail And Commercial Banking";
 	 String lineExecCorporate = "Corporate Banking";
 	 String lineExecPublic = "Public Sector";
+	 String accountTypeOthers= "Others";
+	 String na = "N.A";
 
 
 	//eventName/controlName
+	String onClickEvent = "onClickEvent";
+	String onChangeEvent = "onChangeEvent";
+	String onDoneEvent = "onDoneEvent";
+	String onLoadEvent = "onLoadEvent";
 	String apiEvent = "apiEvent";
 	String lineExecFilterEvent= "lineExecFilterEvent";
+	String accountTypeEvent = "accountTypeEvent";
+	String decisionHistoryEvent = "decisionHistoryEvent";
+	String sendMailEvent = "sendMailEvent";
 
 	
 	//process info

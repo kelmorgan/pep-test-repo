@@ -21,17 +21,18 @@ public class Shared implements Constants {
     public static String message;
 
     public static String getBmGroupName(IFormReference ifr){
-        return bmGroupLabel + getUserSolId(ifr);
+        return bmGroupLabel + getUserSol(ifr);
     }
 
     public static String getRmGroupName(IFormReference ifr){
-        return rmGroupLabel + getUserSolId(ifr);
+        return rmGroupLabel + getUserSol(ifr);
     }
 
-    public static String getUserSolId(IFormReference ifr){
+    public static String getUserSol(IFormReference ifr){
         return getFieldValue(ifr,userSolIdLocal);
     }
     public static void checkBmIsInitiator(IFormReference ifr){
+        clearFields(ifr,bvFlagLocal);
         resultSet = new DbConnect(ifr,Query.getIsUserMemberOfGroup(getLoginUser(ifr),getBmGroupName(ifr))).getData();
         int count = getFormattedNumber(getDataByCoordinates(resultSet,0,0));
         if (count > 0) setFields(ifr,bvFlagLocal,flag);
@@ -39,12 +40,12 @@ public class Shared implements Constants {
 
     public static void setInitiatorDetails(IFormReference ifr){
         resultSet = new DbConnect(ifr,Query.getUserDetailsQuery(getLoginUser(ifr))).getData();
-        String soleId = getDataByCoordinates(resultSet,0,0);
+        String sol = getDataByCoordinates(resultSet,0,0);
         String branchName = getDataByCoordinates(resultSet,0,1);
-        setFields(ifr,new String[]{userSolIdLocal,userBranchNameLocal},new String[]{soleId,branchName});
+        setFields(ifr,new String[]{userSolIdLocal,userBranchNameLocal,userIdLocal},new String[]{sol,branchName,getLoginUser(ifr)});
     }
     public static void hideSections(IFormReference ifr){
-        setInvisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection});
+        setInvisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection,pepCategorySection,generateDocumentSection});
     }
     public static String getCurrentWorkStep(IFormReference ifr) {
     	return ifr.getActivityName();
@@ -56,7 +57,7 @@ public class Shared implements Constants {
     	return ifr.getProcessName();
     }
 
-    private String getTat (String entryDate, String exitDate){
+    private static String getTat (String entryDate, String exitDate){
         SimpleDateFormat sdf = new SimpleDateFormat(dbDateTimeFormat);
         try {
             Date d1 = sdf.parse(entryDate);
@@ -77,8 +78,13 @@ public class Shared implements Constants {
         }
         return null;
     }
-    private static void setDecisionHistory(IFormReference ifr){
-
+    public static void setDecisionHistory(IFormReference ifr){
+        if (isDecisionHistoryEmpty(ifr)) {
+            String tat = getTat(getEntryDate(ifr), getCurrentDateTime());
+            setTableGridData(ifr, decisionHistoryTable, new String[]{dhColStaffId, dhColPrevWs, dhColDecision, dhColRemarks, dhColEntryDate, dhColExitDate, dhColTat},
+                    new String[]{getLoginUser(ifr), getCurrentWorkStep(ifr), getDecision(ifr), getRemarks(ifr), getEntryDate(ifr), getCurrentDateTime(), tat});
+            setFields(ifr,decisionHistoryFlagLocal,flag);
+        }
     }
     public String getUsersMailsInGroup(IFormReference ifr, String groupName){
         StringBuilder groupMail= new StringBuilder();
@@ -291,7 +297,13 @@ public class Shared implements Constants {
         return getFieldValue(ifr,decisionLocal);
     }
     public static void checkSol(IFormReference ifr){
-
+        try{
+            if (isNotMemberOfSol(ifr)) hideSections(ifr);
+        }
+        catch (Exception e){
+            hideSections(ifr);
+            logger.error("Exception occurred check database details for user: "+ e.getMessage());
+        }
     }
     public static  String getLineExecutive(IFormReference ifr){
         return getFieldValue(ifr, lineExecutiveLocal);
@@ -301,7 +313,7 @@ public class Shared implements Constants {
         return  getLineExecutive(ifr).equalsIgnoreCase(executive);
     }
 
-    public static void setLineExecutive(IFormReference ifr){
+    public static void loadLineExecutive(IFormReference ifr){
         clearDropDown(ifr, lineExecutiveLocal);
         resultSet = new DbConnect(ifr,Query.getLineExecutives()).getData();
         for (List<String> result : resultSet){
@@ -317,7 +329,43 @@ public class Shared implements Constants {
 
     public static void setAcoFilter(IFormReference ifr){
         clearFields(ifr,acoFilterLocal);
-        resultSet = new DbConnect(ifr,Query.getAcoId(getUserSolId(ifr))).getData();
+        resultSet = new DbConnect(ifr,Query.getAcoId(getUserSol(ifr))).getData();
         setFields(ifr,acoFilterLocal,getDataByCoordinates(resultSet,0,0));
     }
+
+    public static  String getAccountType(IFormReference ifr){
+        return getFieldValue(ifr,pepAccountTypeLocal);
+    }
+    public static boolean isAccountType(IFormReference ifr, String accountType){
+        return getAccountType(ifr).equalsIgnoreCase(accountType);
+    }
+    public static void  showAccountTypeOthersField(IFormReference ifr){
+       if ( isAccountType(ifr,accountTypeOthers) ) {
+           setVisible(ifr,otherAcctTypeLocal);
+           setMandatory(ifr,otherAcctTypeLocal);
+       }
+       else {
+           clearFields(ifr,otherAcctTypeLocal);
+           setInvisible(ifr,otherAcctTypeLocal);
+       }
+    }
+
+    public static String getRemarks(IFormReference ifr){
+        return getFieldValue(ifr,remarksLocal);
+    }
+
+    public static boolean isNotMemberOfSol (IFormReference ifr){
+        return Integer.parseInt(new DbConnect(ifr,Query.getIsMemberOfSol(getLoginUser(ifr), getUserSol(ifr))).getData().get(0).get(0)) <= 0;
+    }
+    public static String getEntryDate(IFormReference ifr){
+        return  getFieldValue(ifr,entryDateLocal);
+    }
+    public static boolean isDecisionHistoryEmpty(IFormReference ifr){
+        return isEmpty(getDecisionHistoryFlag(ifr));
+    }
+
+    private static String getDecisionHistoryFlag(IFormReference ifr){
+        return getFieldValue(ifr,decisionHistoryFlagLocal);
+    }
+
 }

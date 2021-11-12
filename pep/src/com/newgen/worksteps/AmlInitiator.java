@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AmlInitiator implements IFormServerEventHandler {
     @Override
-    public void beforeFormLoad(FormDef formDef, IFormReference iFormReference) {
+    public void beforeFormLoad(FormDef formDef, IFormReference ifr) {
 
     }
 

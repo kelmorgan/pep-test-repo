@@ -42,13 +42,37 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 	@Override
 	public String executeServerEvent(IFormReference ifr, String control, String event, String data) {
 		switch (event){
-			case apiEvent:{
-				return new Service(ifr).getAccountListTest();
-			}
-			case lineExecFilterEvent:{
-				Shared.setLineExecutiveFilter(ifr);
+			case onLoadEvent:
+			case onChangeEvent:{
+				switch (control){
+					case lineExecFilterEvent:{
+						Shared.setLineExecutiveFilter(ifr);
+						break;
+					}
+					case accountTypeEvent:{
+						Shared.showAccountTypeOthersField(ifr);
+						break;
+					}
+				}
 			}
 			break;
+			case onClickEvent:{
+				switch (control) {
+					case apiEvent: {
+						return new Service(ifr).getAccountListTest();
+					}
+				}
+			}
+			break;
+			case onDoneEvent:{
+				switch (control){
+					case decisionHistoryEvent:{
+						Shared.setDecisionHistory(ifr);
+						break;
+					}
+					case sendMailEvent:
+				}
+			}
 		}
 		return null;
 	}
@@ -95,9 +119,12 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 			Shared.hideSections(ifr);
 			Shared.setInitiatorDetails(ifr);
 			Shared.checkBmIsInitiator(ifr);
+			Shared.setFields(ifr,new String[]{currentWsLocal,previousWsLocal}, new String[]{Shared.getCurrentWorkStep(ifr),na});
 			Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection});
 			Shared.enableFields(ifr,new String[]{bvnLocal,surNameLocal,firstNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,decisionLocal,isLinkedPepLocal,isDocCompletedLocal});
 			Shared.setMandatory(ifr,new String[]{bvnLocal,surNameLocal,firstNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,decisionLocal,isDocCompletedLocal,isLinkedPepLocal});
+			Shared.loadLineExecutive(ifr);
+			Shared.setAcoFilter(ifr);
 			setDecision(ifr);
 		}
 		catch (Exception e){

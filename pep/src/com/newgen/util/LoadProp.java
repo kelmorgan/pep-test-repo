@@ -9,6 +9,7 @@ public class LoadProp implements  Constants {
     private static final Logger logger = LogGenerator.getLoggerInstance(LoadProp.class);
 	public static String mailFrom;
 	public static String processDefId;
+    public static String serverIp;
 
     static {
         try {
