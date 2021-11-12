@@ -53,6 +53,9 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 						Shared.showAccountTypeOthersField(ifr);
 						break;
 					}
+					case mandatoryPepInfoEvent:{
+					return Shared.setPepMandatoryInfoFields(ifr);
+					}
 				}
 			}
 			break;
@@ -121,8 +124,8 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 			Shared.checkBmIsInitiator(ifr);
 			Shared.setFields(ifr,new String[]{currentWsLocal,previousWsLocal}, new String[]{Shared.getCurrentWorkStep(ifr),na});
 			Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection});
-			Shared.enableFields(ifr,new String[]{bvnLocal,surNameLocal,firstNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,decisionLocal,isLinkedPepLocal,isDocCompletedLocal});
-			Shared.setMandatory(ifr,new String[]{bvnLocal,surNameLocal,firstNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,decisionLocal,isDocCompletedLocal,isLinkedPepLocal});
+			Shared.enableFields(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal});
+			Shared.setMandatory(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal});
 			Shared.loadLineExecutive(ifr);
 			Shared.setAcoFilter(ifr);
 			setDecision(ifr);

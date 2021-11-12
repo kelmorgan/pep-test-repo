@@ -367,5 +367,51 @@ public class Shared implements Constants {
     private static String getDecisionHistoryFlag(IFormReference ifr){
         return getFieldValue(ifr,decisionHistoryFlagLocal);
     }
+    public static String getPepCategory(IFormReference ifr){
+        return getFieldValue(ifr,pepCategoryLocal);
+    }
+    public static String getPepAccountCategory(IFormReference ifr){
+        return getFieldValue(ifr,pepAccountCategoryLocal);
+    }
+
+    public static boolean isPepCategory(IFormReference ifr, String category){
+        return getPepCategory(ifr).equalsIgnoreCase(category);
+    }
+
+    public static boolean isPepAcctCategory(IFormReference ifr, String category){
+        return getPepAccountCategory(ifr).equalsIgnoreCase(category);
+    }
+
+    public static String setPepMandatoryInfoFields(IFormReference ifr){
+
+        if (isEmpty(getPepCategory(ifr))) return "Kindly Choose Pep Category";
+
+        if (isEmpty(getPepAccountCategory(ifr))) return "Kindly Choose Pep Account Category";
+
+        enableFields(ifr, new String[]{surNameLocal,firstNameLocal,otherNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,pepAccountTypeLocal,isDocCompletedLocal,isLinkedPepLocal});
+        setMandatory(ifr, new String[]{surNameLocal,firstNameLocal,otherNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,pepAccountTypeLocal,isDocCompletedLocal,isLinkedPepLocal});
+
+        if (isPepCategory(ifr,pepCategoryExisting)){
+            enableFields(ifr,new String[]{accountNoLocal,accountOpeningDateLocal});
+            setMandatory(ifr,new String[]{accountNoLocal,accountOpeningDateLocal});
+        }
+        else {
+            clearFields(ifr,new String[]{accountNoLocal,accountOpeningDateLocal});
+            disableFields(ifr,new String[]{accountNoLocal,accountOpeningDateLocal});
+            undoMandatory(ifr,new String[]{accountNoLocal,accountOpeningDateLocal});
+        }
+
+        if (isPepAcctCategory(ifr,pepAcctCategoryCorporate)){
+            enableFields(ifr,new String[]{tinLocal});
+            setMandatory(ifr,new String[]{tinLocal});
+        }
+        else {
+            disableFields(ifr,new String[]{tinLocal});
+            clearFields(ifr,new String[]{tinLocal});
+            undoMandatory(ifr,new String[]{tinLocal});
+        }
+
+        return  null;
+    }
 
 }

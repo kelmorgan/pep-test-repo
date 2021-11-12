@@ -69,18 +69,18 @@ public interface Constants {
 	 String decisionHistoryFlagLocal = "DHFLAG";
 	 String accountOpeningDateLocal = "ACCTDATE";
 	 String pepCategoryLocal = "CUSTOMERCATEGORY";
-	 String pepAccountCategory = "ACCTCATEGORY";
+	 String pepAccountCategoryLocal = "ACCTCATEGORY";
 	 String fetchPepInfoBtn = "FETCHPEPINFOBTN";
 	 String searchBvnBtn = "SEARCHBVNBTN";
 	 String generatePepDocBtn= "GENERATEDOCUMENTBTN";
 
 	//sections
-	String accountListSection = "";
-	String pepInfoSection = "";
-	String pepVerificationSection= "";
-	String decisionSection= "";
-	String generateDocumentSection = "";
-	String pepCategorySection = "";
+	String accountListSection = "ACCTLINKEDINFOSECTION";
+	String pepInfoSection = "PEPINFORMATIONSECTION";
+	String pepVerificationSection= "PEPVERIFICATIONSECTION";
+	String decisionSection= "DECISIONSECTION";
+	String generateDocumentSection = "GENERATEDOCSECTION";
+	String pepCategorySection = "PEPCATEGORYSECTION";
 
     
 	//common variables
@@ -107,7 +107,10 @@ public interface Constants {
 	 String lineExecPublic = "Public Sector";
 	 String accountTypeOthers= "Others";
 	 String na = "N.A";
-
+	 String pepCategoryNew = "New";
+	 String pepCategoryExisting = "Existing";
+	 String pepAcctCategoryIndividual = "Individual";
+	 String pepAcctCategoryCorporate = "Corporate";
 
 	//eventName/controlName
 	String onClickEvent = "onClickEvent";
@@ -119,6 +122,7 @@ public interface Constants {
 	String accountTypeEvent = "accountTypeEvent";
 	String decisionHistoryEvent = "decisionHistoryEvent";
 	String sendMailEvent = "sendMailEvent";
+	String mandatoryPepInfoEvent = "mandatoryPepInfoEvent";
 
 	
 	//process info
