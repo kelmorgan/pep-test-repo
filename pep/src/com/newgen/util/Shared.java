@@ -32,17 +32,25 @@ public class Shared implements Constants {
         return getFieldValue(ifr,userSolIdLocal);
     }
     public static void checkBmIsInitiator(IFormReference ifr){
-        clearFields(ifr,bvFlagLocal);
-        resultSet = new DbConnect(ifr,Query.getIsUserMemberOfGroup(getLoginUser(ifr),getBmGroupName(ifr))).getData();
-        int count = getFormattedNumber(getDataByCoordinates(resultSet,0,0));
-        if (count > 0) setFields(ifr,bvFlagLocal,flag);
+        try {
+            clearFields(ifr, bvFlagLocal);
+            resultSet = new DbConnect(ifr, Query.getIsUserMemberOfGroup(getLoginUser(ifr), getBmGroupName(ifr))).getData();
+            int count = getFormattedNumber(getDataByCoordinates(resultSet, 0, 0));
+            if (count > 0) setFields(ifr, bvFlagLocal, flag);
+        } catch (Exception e){
+            logger.info("Exception occurred in checkBmIsInitiator method: "+e.getMessage());
+        }
     }
 
     public static void setInitiatorDetails(IFormReference ifr){
-        resultSet = new DbConnect(ifr,Query.getUserDetailsQuery(getLoginUser(ifr))).getData();
-        String sol = getDataByCoordinates(resultSet,0,0);
-        String branchName = getDataByCoordinates(resultSet,0,1);
-        setFields(ifr,new String[]{userSolIdLocal,userBranchNameLocal,userIdLocal},new String[]{sol,branchName,getLoginUser(ifr)});
+        try {
+            resultSet = new DbConnect(ifr, Query.getUserDetailsQuery(getLoginUser(ifr))).getData();
+            String sol = getDataByCoordinates(resultSet, 0, 0);
+            String branchName = getDataByCoordinates(resultSet, 0, 1);
+            setFields(ifr, new String[]{userSolIdLocal, userBranchNameLocal, userIdLocal}, new String[]{sol, branchName, getLoginUser(ifr)});
+        } catch (Exception e){
+            logger.info("Exception occurred in setInitiatorDetails method: "+e.getMessage());
+        }
     }
     public static void hideSections(IFormReference ifr){
         setInvisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection,pepCategorySection,generateDocumentSection});
@@ -314,12 +322,16 @@ public class Shared implements Constants {
     }
 
     public static void loadLineExecutive(IFormReference ifr){
-        clearDropDown(ifr, lineExecutiveLocal);
-        resultSet = new DbConnect(ifr,Query.getLineExecutives()).getData();
-        for (List<String> result : resultSet){
-            String lineExecId = result.get(0);
-            String lineExecName = result.get(1);
-            setDropDown(ifr, lineExecutiveLocal,lineExecName,lineExecId);
+        try {
+            clearDropDown(ifr, lineExecutiveLocal);
+            resultSet = new DbConnect(ifr, Query.getLineExecutives()).getData();
+            for (List<String> result : resultSet) {
+                String lineExecId = result.get(0);
+                String lineExecName = result.get(1);
+                setDropDown(ifr, lineExecutiveLocal, lineExecName, lineExecId);
+            }
+        }catch (Exception e){
+            logger.info("Exception occurred in Loading Line Executive Method: "+ e.getMessage());
         }
     }
     public static void setLineExecutiveFilter(IFormReference ifr){
@@ -328,9 +340,13 @@ public class Shared implements Constants {
     }
 
     public static void setAcoFilter(IFormReference ifr){
-        clearFields(ifr,acoFilterLocal);
-        resultSet = new DbConnect(ifr,Query.getAcoId(getUserSol(ifr))).getData();
-        setFields(ifr,acoFilterLocal,getDataByCoordinates(resultSet,0,0));
+        try {
+            clearFields(ifr, acoFilterLocal);
+            resultSet = new DbConnect(ifr, Query.getAcoId(getUserSol(ifr))).getData();
+            setFields(ifr, acoFilterLocal, getDataByCoordinates(resultSet, 0, 0));
+        } catch (Exception e){
+            logger.info("Exception occurred in setting aco filter method: "+e.getMessage());
+        }
     }
 
     public static  String getAccountType(IFormReference ifr){
