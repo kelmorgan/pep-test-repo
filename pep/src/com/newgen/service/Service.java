@@ -18,6 +18,8 @@ public class Service {
     public String getAccountListTest(){
         Shared.clearTable(ifr,Constants.accountListTable);
         String bvn = Shared.getBvn(ifr);
+
+        if (Shared.isEmpty(bvn)) return "Kindly enter BVN";
         if (isBvnValid(bvn.length())){
             Shared.clearFields(ifr,Constants.bvnLocal);
             return "BVN must be 11 digits";
