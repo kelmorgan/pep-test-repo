@@ -8,8 +8,12 @@ public class Query {
         return "select aco_id from usr_0_fbn_aco_mapping where sole_id = '"+sol+"'";
     }
     public static String getLineExecutives(){
-        return "select le_id, le_name from usr_0_fbn_lineexecutive";
+        return "select le_name from usr_0_fbn_lineexecutive";
     }
+    public static String getLineExecutivesId(String name){
+        return "select le_id from usr_0_fbn_lineexecutive where upper(le_name) = upper('"+name+"')";
+    }
+
     public static String getIsMemberOfSol(String userId, String sol){
         return "select count(*) from usr_0_fbn_usr_branch_mapping where upper(user_id) = upper('"+userId+"') and sole_id = '"+sol+"'";
     }

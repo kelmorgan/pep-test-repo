@@ -142,9 +142,11 @@ public class Shared implements Constants {
         ifr.clearCombo(local);
         for (int i = 0; i < values.length; i++) ifr.addItemInCombo(local,labels[i],values[i]);
     }
-
     public static void setDropDown (IFormReference ifr,String local,String label, String value){
        ifr.addItemInCombo(local,label,value);
+    }
+    public static void setDropDown (IFormReference ifr,String local, String value){
+       ifr.addItemInCombo(local,value,value);
     }
     public static void clearDropDown(IFormReference ifr,String local){
         ifr.clearCombo(local);
@@ -326,17 +328,21 @@ public class Shared implements Constants {
             clearDropDown(ifr, lineExecutiveLocal);
             resultSet = new DbConnect(ifr, Query.getLineExecutives()).getData();
             for (List<String> result : resultSet) {
-                String lineExecId = result.get(0);
-                String lineExecName = result.get(1);
-                setDropDown(ifr, lineExecutiveLocal, lineExecName, lineExecId);
+                String lineExecName = result.get(0);
+                setDropDown(ifr, lineExecutiveLocal,lineExecName);
             }
         }catch (Exception e){
             logger.info("Exception occurred in Loading Line Executive Method: "+ e.getMessage());
         }
     }
     public static void setLineExecutiveFilter(IFormReference ifr){
-        clearFields(ifr,lineExecFilterLocal);
-        setFields(ifr,lineExecFilterLocal,getLineExecutive(ifr));
+        try {
+            clearFields(ifr, lineExecFilterLocal);
+            resultSet = new DbConnect(ifr, Query.getLineExecutivesId(getLineExecutive(ifr))).getData();
+            setFields(ifr, lineExecFilterLocal, getDataByCoordinates(resultSet, 0, 0));
+        }catch (Exception e){
+            logger.error("Exception occurred in setting line executive filter: "+e.getMessage());
+        }
     }
 
     public static void setAcoFilter(IFormReference ifr){
