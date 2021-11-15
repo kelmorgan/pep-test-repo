@@ -36,11 +36,11 @@ public interface Constants {
 	 String addressLocal = "ADDRESS";
 	 String pepSolIdLocal = "ACCTSOL";
 	 String pepBranchNameLocal = "BRCHNAMEEXT";
-	 String pepStatusLocal = "PEPSTATUS";
+	 String pepStatusLocal = "PEPSTATUSNEW";
 	 String tinLocal = "TIN";
 	 String srcOfWealthLocal = "SRCINCOME";
 	 String purposeOfAccountLocal = "ACCTPURPOSE";
-	 String officeDesignationLocal = "OFFICEDESIGN";
+	 String officeDesignationLocal = "OFFICEDESIGNNEW";
 	 String pepAccountTypeLocal = "ACCTTYPE";
 	 String otherAcctTypeLocal = "OTHERS";
 	 String isDocCompletedLocal = "DOCREQUIRE";

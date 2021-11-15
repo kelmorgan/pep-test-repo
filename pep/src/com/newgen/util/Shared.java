@@ -405,7 +405,7 @@ public class Shared implements Constants {
         if (isEmpty(getPepAccountCategory(ifr))) return "Kindly Choose Pep Account Category";
 
         enableFields(ifr, new String[]{surNameLocal,firstNameLocal,otherNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,pepAccountTypeLocal,isDocCompletedLocal,isLinkedPepLocal});
-        setMandatory(ifr, new String[]{surNameLocal,firstNameLocal,otherNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,pepAccountTypeLocal,isDocCompletedLocal,isLinkedPepLocal});
+        setMandatory(ifr, new String[]{surNameLocal,firstNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,pepAccountTypeLocal,isDocCompletedLocal,isLinkedPepLocal});
 
         if (isPepCategory(ifr,pepCategoryExisting)){
             enableFields(ifr,new String[]{accountNoLocal,accountOpeningDateLocal});
