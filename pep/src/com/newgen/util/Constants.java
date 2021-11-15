@@ -52,7 +52,7 @@ public interface Constants {
 	 String entryDateLocal = "EntryDateTime";
 	 String ccoApprovedFlagLocal = "CCOAPPROVEDFLAG";
 	 String accountListTable = "table3";
-	 String alColAccountNo = "Account Nu";
+	 String alColAccountNo = "Account Number";
 	 String alColAccountName = "Account Name";
 	 String alColSolId = "SOL ID";
 	 String alColBranchName = "Branch Name";
