@@ -111,6 +111,7 @@ public interface Constants {
 	 String pepCategoryExisting = "Existing";
 	 String pepAcctCategoryIndividual = "Individual";
 	 String pepAcctCategoryCorporate = "Corporate";
+	 String yes = "YES";
 
 	//eventName/controlName
 	String onClickEvent = "onClickEvent";
@@ -123,6 +124,7 @@ public interface Constants {
 	String decisionHistoryEvent = "decisionHistoryEvent";
 	String sendMailEvent = "sendMailEvent";
 	String mandatoryPepInfoEvent = "mandatoryPepInfoEvent";
+	String isLinkedPepEvent  = "isLinkedPepEvent";
 
 	
 	//process info

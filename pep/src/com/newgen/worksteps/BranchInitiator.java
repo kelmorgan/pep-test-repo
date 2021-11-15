@@ -53,6 +53,10 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 						Shared.showAccountTypeOthersField(ifr);
 						break;
 					}
+					case isLinkedPepEvent:{
+						Shared.isLinkedPep(ifr);
+						break;
+					}
 					case mandatoryPepInfoEvent:{
 					return Shared.setPepMandatoryInfoFields(ifr);
 					}

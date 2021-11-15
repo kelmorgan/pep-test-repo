@@ -430,4 +430,21 @@ public class Shared implements Constants {
         return  null;
     }
 
+    public static String getIsLinkedPep(IFormReference ifr){
+        return getFieldValue(ifr,isLinkedPepLocal);
+    }
+
+    public static void isLinkedPep (IFormReference ifr){
+        if (getIsLinkedPep(ifr).equalsIgnoreCase(yes)){
+            setVisible(ifr,new String[]{linkedPepLocal});
+            enableFields(ifr,new String[]{linkedPepLocal});
+            setMandatory(ifr,new String[]{linkedPepLocal});
+        }
+        else {
+            setInvisible(ifr,new String[]{linkedPepLocal});
+            undoMandatory(ifr,new String[]{linkedPepLocal});
+            clearFields(ifr,new String[]{linkedPepLocal});
+        }
+    }
+
 }
