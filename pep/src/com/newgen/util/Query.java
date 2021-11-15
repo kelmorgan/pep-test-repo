@@ -11,7 +11,7 @@ public class Query {
         return "select le_id, le_name from usr_0_fbn_lineexecutive";
     }
     public static String getIsMemberOfSol(String userId, String sol){
-        return "select count(*) from usr_0_fbn_usr_branch_mapping where user_id = '"+userId+"' and sole_id = '"+sol+"'";
+        return "select count(*) from usr_0_fbn_usr_branch_mapping where upper(user_id) = upper('"+userId+"') and sole_id = '"+sol+"'";
     }
     public static String getIsUserMemberOfGroup(String user, String groupName){
         return "select count (username) from pdbuser where upper(username)= upper('"+user+"')  and userindex in (select userindex from pdbgroupmember where groupindex = (select groupindex from pdbgroup where groupname = '"+groupName+"'))";

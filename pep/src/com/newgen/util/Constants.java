@@ -84,7 +84,8 @@ public interface Constants {
 
     
 	//common variables
-	 String dbDateTimeFormat = "";
+	 String dbDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+	 String dbDateFormat = "yyyy-MM-dd";
      String endMail = "firstbanknigeria.com";
  	 String visible = "visible";
  	 String False = "false";
