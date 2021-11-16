@@ -469,4 +469,20 @@ public class Shared implements Constants {
         return ifr.getObjGeneralData().getM_strDMSSessionId();
     }
 
+    public static String getDocFlag(IFormReference ifr){
+        return getFieldValue(ifr,docFlagLocal);
+    }
+    public static boolean isDocGenerated(IFormReference ifr){
+        return getDocFlag(ifr).equalsIgnoreCase(flag);
+    }
+    public static void setDocFlag(IFormReference ifr){
+        setFields(ifr,docFlagLocal,flag);
+    }
+
+    public static String checkDocGenerated(IFormReference ifr){
+        if (!isDocGenerated(ifr)) return "Kindly generate Pep On-boarding Document";
+
+        return null;
+    }
+
 }

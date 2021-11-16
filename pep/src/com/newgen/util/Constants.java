@@ -73,6 +73,7 @@ public interface Constants {
 	 String fetchPepInfoBtn = "FETCHPEPINFOBTN";
 	 String searchBvnBtn = "SEARCHBVNBTN";
 	 String generatePepDocBtn= "GENERATEDOCUMENTBTN";
+	 String docFlagLocal = "DOCFLAG";
 
 	//sections
 	String accountListSection = "ACCTLINKEDINFOSECTION";
@@ -127,6 +128,7 @@ public interface Constants {
 	String mandatoryPepInfoEvent = "mandatoryPepInfoEvent";
 	String isLinkedPepEvent  = "isLinkedPepEvent";
 	String generateDocEvent = "generateDocEvent";
+	String checkDocEvent = "checkDocEvent";
 
 	
 	//process info

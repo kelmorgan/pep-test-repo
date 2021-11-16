@@ -13,6 +13,8 @@ public class GenerateDocument implements Constants{
     private static final Logger logger = LogGenerator.getLoggerInstance(GenerateDocument.class);
 
     public static String generateDoc (IFormReference ifr, String sessionId) {
+
+        Shared.setDocFlag(ifr);
         return "Document Generated Successfully";
     }
 

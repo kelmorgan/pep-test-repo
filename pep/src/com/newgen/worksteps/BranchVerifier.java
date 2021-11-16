@@ -52,6 +52,9 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 			break;
 			case onDoneEvent:{
 				switch (control){
+					case checkDocEvent:{
+						return Shared.checkDocGenerated(ifr);
+					}
 					case decisionHistoryEvent:{
 						Shared.setDecisionHistory(ifr);
 						break;
