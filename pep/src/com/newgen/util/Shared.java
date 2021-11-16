@@ -325,7 +325,7 @@ public class Shared implements Constants {
 
     public static void loadLineExecutive(IFormReference ifr){
         try {
-            clearDropDown(ifr, lineExecutiveLocal);
+            if (isCurrWs(ifr,branchInitiatorWs)) clearDropDown(ifr, lineExecutiveLocal);
             resultSet = new DbConnect(ifr, Query.getLineExecutives()).getData();
             for (List<String> result : resultSet) {
                 String lineExecName = result.get(0);
