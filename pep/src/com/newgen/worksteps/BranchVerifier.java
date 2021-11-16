@@ -109,6 +109,7 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 			if (Shared.isPrevWs(ifr,ccoWs)){
 				Shared.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection,generateDocumentSection, pepVerificationSection, decisionSection});
 				Shared.setDecisionApprove(ifr);
+				Shared.enableFields(ifr,new String[]{generatePepDocBtn});
 				Shared.setFields(ifr,remarksLocal,"Pep on-boarding approved and successful");
 			}
 			else {
