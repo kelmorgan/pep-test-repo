@@ -440,8 +440,8 @@ public class Shared implements Constants {
         return getFieldValue(ifr,isLinkedPepLocal);
     }
 
-    public static void isLinkedPep (IFormReference ifr){
-        if (getIsLinkedPep(ifr).equalsIgnoreCase(yes)){
+    public static void linkedPep(IFormReference ifr){
+        if (isLinkedPep(ifr)){
             setVisible(ifr,new String[]{linkedPepLocal});
             enableFields(ifr,new String[]{linkedPepLocal});
             setMandatory(ifr,new String[]{linkedPepLocal});
@@ -451,6 +451,15 @@ public class Shared implements Constants {
             undoMandatory(ifr,new String[]{linkedPepLocal});
             clearFields(ifr,new String[]{linkedPepLocal});
         }
+    }
+    public static boolean isLinkedPep(IFormReference ifr){
+        return getIsLinkedPep(ifr).equalsIgnoreCase(yes);
+    }
+
+    public static void checkPepVerification(IFormReference ifr){
+        if (isLinkedPep(ifr)) setVisible(ifr,linkedPepLocal);
+
+        if (isAccountType(ifr,accountTypeOthers)) setVisible(ifr,accountTypeOthers);
     }
 
 }

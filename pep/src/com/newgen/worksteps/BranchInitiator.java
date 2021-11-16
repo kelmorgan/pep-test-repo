@@ -54,7 +54,7 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 						break;
 					}
 					case isLinkedPepEvent:{
-						Shared.isLinkedPep(ifr);
+						Shared.linkedPep(ifr);
 						break;
 					}
 					case mandatoryPepInfoEvent:{

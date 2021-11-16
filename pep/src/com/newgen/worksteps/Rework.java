@@ -47,6 +47,13 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
                         Shared.showAccountTypeOthersField(ifr);
                         break;
                     }
+                    case isLinkedPepEvent:{
+                        Shared.linkedPep(ifr);
+                        break;
+                    }
+                    case mandatoryPepInfoEvent:{
+                        return Shared.setPepMandatoryInfoFields(ifr);
+                    }
                 }
             }
             break;

@@ -80,7 +80,8 @@ public class Aco implements IFormServerEventHandler , Constants, SharedI {
         try {
             Shared.hideSections(ifr);
             Shared.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
-            Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection});
+            Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepCategorySection,pepVerificationSection,decisionSection});
+            Shared.checkPepVerification(ifr);
             Shared.enableFields(ifr,new String[]{decisionLocal,remarksLocal});
             Shared.setMandatory(ifr,new String[]{decisionLocal,remarksLocal});
             setDecision(ifr);
