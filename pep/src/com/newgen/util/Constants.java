@@ -126,6 +126,7 @@ public interface Constants {
 	String sendMailEvent = "sendMailEvent";
 	String mandatoryPepInfoEvent = "mandatoryPepInfoEvent";
 	String isLinkedPepEvent  = "isLinkedPepEvent";
+	String generateDocEvent = "generateDocEvent";
 
 	
 	//process info

@@ -13,7 +13,7 @@ public class GenerateDocument implements Constants{
     private static final Logger logger = LogGenerator.getLoggerInstance(GenerateDocument.class);
 
     public static String generateDoc (IFormReference ifr, String sessionId) {
-        return null;
+        return "Document Generated Successfully";
     }
 
     private static String callSocketServer(int iPortNo, String requestXml) {

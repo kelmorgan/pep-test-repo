@@ -462,4 +462,11 @@ public class Shared implements Constants {
         if (isAccountType(ifr,accountTypeOthers)) setVisible(ifr,accountTypeOthers);
     }
 
+    public static void setDecisionApprove(IFormReference ifr){
+        setFields(ifr,decisionLocal,decApprove);
+    }
+    public  static String getSessionId(IFormReference ifr){
+        return ifr.getObjGeneralData().getM_strDMSSessionId();
+    }
+
 }

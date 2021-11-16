@@ -3,11 +3,9 @@ package com.newgen.worksteps;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.newgen.mvcbeans.model.wfobjects.WDGeneralData;
 import com.newgen.service.Service;
-import com.newgen.util.Constants;
-import com.newgen.util.LogGenerator;
-import com.newgen.util.Shared;
-import com.newgen.util.SharedI;
+import com.newgen.util.*;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
@@ -45,6 +43,11 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 			}
 			break;
 			case onClickEvent:{
+				switch (control){
+					case generateDocEvent:{
+						return GenerateDocument.generateDoc(ifr, Shared.getSessionId(ifr));
+					}
+				}
 			}
 			break;
 			case onDoneEvent:{
@@ -101,12 +104,19 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 	public void formLoad(IFormReference ifr) {
 		try {
 			Shared.hideSections(ifr);
-			Shared.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
-			Shared.setVisible(ifr,new String[]{accountListSection,pepCategorySection,pepInfoSection,pepVerificationSection,decisionSection});
+			Shared.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
 			Shared.checkPepVerification(ifr);
-			Shared.enableFields(ifr,new String[]{decisionLocal,remarksLocal});
-			Shared.setMandatory(ifr,new String[]{decisionLocal,remarksLocal});
-			setDecision(ifr);
+			if (Shared.isPrevWs(ifr,ccoWs)){
+				Shared.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection,generateDocumentSection, pepVerificationSection, decisionSection});
+				Shared.setDecisionApprove(ifr);
+				Shared.setFields(ifr,remarksLocal,"Pep on-boarding approved and successful");
+			}
+			else {
+				Shared.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection, pepVerificationSection, decisionSection});
+				Shared.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
+				Shared.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
+				setDecision(ifr);
+			}
 			Shared.checkSol(ifr);
 		}
 		catch (Exception e){
