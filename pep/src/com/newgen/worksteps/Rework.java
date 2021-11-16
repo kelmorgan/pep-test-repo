@@ -25,7 +25,7 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
 
     @Override
     public String setMaskedValue(String s, String s1) {
-        return null;
+        return s1;
     }
 
     @Override
@@ -114,9 +114,8 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
             Shared.hideSections(ifr);
             Shared.checkBmIsInitiator(ifr);
             Shared.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
-            Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection});
-            Shared.enableFields(ifr,new String[]{bvnLocal,surNameLocal,firstNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,decisionLocal,isLinkedPepLocal,isDocCompletedLocal});
-            Shared.setMandatory(ifr,new String[]{bvnLocal,surNameLocal,firstNameLocal,addressLocal,pepSolIdLocal,pepBranchNameLocal,pepStatusLocal,srcOfWealthLocal,purposeOfAccountLocal,officeDesignationLocal,decisionLocal,isDocCompletedLocal,isLinkedPepLocal});
+            Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepCategorySection,pepVerificationSection,decisionSection});
+            Shared.setPepMandatoryInfoFields(ifr);
             setDecision(ifr);
             Shared.checkSol(ifr);
         }
