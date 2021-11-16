@@ -115,6 +115,8 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
             Shared.checkBmIsInitiator(ifr);
             Shared.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
             Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepCategorySection,pepVerificationSection,decisionSection});
+            Shared.enableFields(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal,lineExecutiveLocal,decisionLocal,remarksLocal,searchBvnBtn});
+            Shared.setMandatory(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal,lineExecutiveLocal,decisionLocal,remarksLocal});
             Shared.setPepMandatoryInfoFields(ifr);
             setDecision(ifr);
             Shared.checkSol(ifr);
