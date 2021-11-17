@@ -53,7 +53,7 @@ public class Shared implements Constants {
         }
     }
     public static void hideSections(IFormReference ifr){
-        setInvisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection,pepCategorySection,generateDocumentSection});
+        setInvisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection,pepCategorySection,generateDocumentSection,pepRepositorySection});
     }
     public static String getCurrentWorkStep(IFormReference ifr) {
     	return ifr.getActivityName();
@@ -481,8 +481,28 @@ public class Shared implements Constants {
 
     public static String checkDocGenerated(IFormReference ifr){
         if (!isDocGenerated(ifr)) return "Kindly generate Pep On-boarding Document";
+        return null;
+    }
+    public static void setRepoView(IFormReference ifr){
+        setVisible(ifr,new String[]{accountListSection,pepRepositorySection,decisionSection});
+        setInvisible(ifr, new String[]{lineExecutiveLocal});
+        enableFields(ifr, new String[]{bvnLocal,searchBvnBtn,repoAcctNoLocal,decisionLocal,remarksLocal});
+        setMandatory(ifr, new String[]{bvnLocal,repoAcctNoLocal,decisionLocal,remarksLocal});
+
+        if (isCurrWs(ifr,amlWs)) disableFields(ifr, new String[]{bvnLocal,searchBvnBtn,repoAcctNoLocal});
+    }
+
+    public static String getRepoAcctNo (IFormReference ifr){
+        return getFieldValue(ifr,repoAcctNoLocal);
+    }
+    public static String setRepoInfo(IFormReference ifr){
+        resultSet = new DbConnect(ifr,Query.getPepRepoDetails(getRepoAcctNo(ifr))).getData();
+
+        if (isEmpty(resultSet)) return "";
 
         return null;
     }
+
+
 
 }

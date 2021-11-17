@@ -36,11 +36,21 @@ public class Aco implements IFormServerEventHandler , Constants, SharedI {
     @Override
     public String executeServerEvent(IFormReference ifr, String control, String event, String data) {
         switch (event){
-            case decisionHistoryEvent:{
-                Shared.setDecisionHistory(ifr);
+            case onLoadEvent:
+                break;
+            case onChangeEvent:
+                break;
+            case onClickEvent:
+                break;
+            case onDoneEvent:{
+                switch (control){
+                    case decisionHistoryEvent:{
+                        Shared.setDecisionHistory(ifr);
+                        break;
+                    }
+                    case sendMailEvent:
+                }
             }
-            break;
-            case sendMailEvent:
         }
         return null;
     }

@@ -35,11 +35,21 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
     @Override
     public String executeServerEvent(IFormReference ifr, String control, String event, String data) {
         switch (event){
-            case decisionHistoryEvent:{
-                Shared.setDecisionHistory(ifr);
+            case onLoadEvent:
+                break;
+            case onChangeEvent:
+                break;
+            case onClickEvent:
+                break;
+            case onDoneEvent:{
+                switch (control){
+                    case decisionHistoryEvent:{
+                        Shared.setDecisionHistory(ifr);
+                        break;
+                    }
+                    case sendMailEvent:
+                }
             }
-            break;
-            case sendMailEvent:
         }
         return null;
     }
@@ -79,11 +89,17 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
         try {
             Shared.hideSections(ifr);
             Shared.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
-            Shared.checkPepVerification(ifr);
-            Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepCategorySection,pepVerificationSection,decisionSection});
-            Shared.enableFields(ifr,new String[]{decisionLocal,remarksLocal});
-            Shared.setMandatory(ifr,new String[]{decisionLocal,remarksLocal});
-            setDecision(ifr);
+            if (Shared.isCurrWs(ifr,amlInitiatorWs)){
+                Shared.setRepoView(ifr);
+                Shared.setDecision(ifr,decisionLocal,new String[]{decApprove,decDiscard});
+            }
+            else {
+                Shared.checkPepVerification(ifr);
+                Shared.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
+                Shared.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
+                Shared.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
+                setDecision(ifr);
+            }
         }
         catch (Exception e){
             logger.error("Exception occurred in Aml FormLoad : "+ e.getMessage());

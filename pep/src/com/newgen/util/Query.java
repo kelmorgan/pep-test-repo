@@ -1,6 +1,10 @@
 package com.newgen.util;
 
 public class Query {
+
+    public static String getPepRepoDetails(String accountNumber){
+        return "select repo_solid,repo_branchname,repo_pepname,repo_address,repo_position,repo_nofbusiness,repo_acctopendate from pep_master where repo_acctno = '"+accountNumber+"'";
+    }
     public static String getAcoGroup(String id){
         return "select aco_group from usr_0_fbn_aco_groupname where aco_id = '"+id+"'";
     }

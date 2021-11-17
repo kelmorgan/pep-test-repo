@@ -74,6 +74,15 @@ public interface Constants {
 	 String searchBvnBtn = "SEARCHBVNBTN";
 	 String generatePepDocBtn= "GENERATEDOCUMENTBTN";
 	 String docFlagLocal = "DOCFLAG";
+	 String repoSolIdLocal = "REPO_SOLID";
+	 String repoBranchNameLocal = "REPO_BRANCHNAME";
+	 String repoAcctNameLocal = "REPO_ACCTNAME";
+	 String repoAcctNoLocal = "REPO_ACCTNO";
+	 String repoPepNameLocal = "REPO_PEPNAME";
+	 String repoAddressLocal = "REPO_ADDRESS";
+	 String repoPositionLocal = "REPO_POSITION";
+	 String repoNOfBusiness = "REPO_NOFBUSINESS";
+	 String repoAcctOpenDateLocal = "REPO_ACCTOPENDATE";
 
 	//sections
 	String accountListSection = "ACCTLINKEDINFOSECTION";
@@ -82,6 +91,7 @@ public interface Constants {
 	String decisionSection= "DECISIONSECTION";
 	String generateDocumentSection = "GENERATEDOCSECTION";
 	String pepCategorySection = "PEPCATEGORYSECTION";
+	String pepRepositorySection = "REPOSECTION";
 
     
 	//common variables
