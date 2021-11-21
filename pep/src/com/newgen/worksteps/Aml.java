@@ -89,7 +89,7 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
         try {
             Shared.hideSections(ifr);
             Shared.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
-            if (Shared.isCurrWs(ifr,amlInitiatorWs)){
+            if (Shared.isPrevWs(ifr,amlInitiatorWs)){
                 Shared.setRepoView(ifr);
                 Shared.setDecision(ifr,decisionLocal,new String[]{decApprove,decDiscard});
             }
