@@ -5,6 +5,7 @@ import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
+import com.newgen.service.Service;
 import com.newgen.util.Constants;
 import com.newgen.util.Shared;
 import com.newgen.util.SharedI;
@@ -34,14 +35,21 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
         switch (event){
             case onLoadEvent:
                 break;
-            case onChangeEvent:
-                switch (control){
-                    case setRepoEvent:{
+            case onChangeEvent: {
+                switch (control) {
+                    case setRepoEvent: {
                         return Shared.setRepoInfo(ifr);
                     }
                 }
+            }
                 break;
-            case onClickEvent:
+            case onClickEvent: {
+                switch (control) {
+                    case apiEvent: {
+                        return new Service(ifr).getAccountListTest();
+                    }
+                }
+            }
                 break;
             case onDoneEvent:{
                 switch (control){
