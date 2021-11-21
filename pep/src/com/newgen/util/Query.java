@@ -2,6 +2,9 @@ package com.newgen.util;
 
 public class Query {
 
+    public static String updatePepRepo(String wiName, String accountNumber){
+        return "update pep_master set winame = '"+wiName+"' where accountnumber = '"+accountNumber+"'";
+    }
     public static String getPepRepoDetails(String accountNumber){
         return "select solid,branchname, accountname,pepname, address, office_position, nature_of_business, acct_opn_date  from pep_master where accountnumber = '"+accountNumber+"'";
     }

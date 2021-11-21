@@ -140,6 +140,7 @@ public interface Constants {
 	String generateDocEvent = "generateDocEvent";
 	String checkDocEvent = "checkDocEvent";
 	String setRepoEvent = "setRepoEvent";
+	String updatePepRepoEvent = "updatePepRepoEvent";
 
 	
 	//process info

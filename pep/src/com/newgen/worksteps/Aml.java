@@ -43,6 +43,10 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
                 break;
             case onDoneEvent:{
                 switch (control){
+                    case updatePepRepoEvent:{
+                        Shared.updatePepRepo(ifr);
+                    }
+                    break;
                     case decisionHistoryEvent:{
                         Shared.setDecisionHistory(ifr);
                         break;

@@ -526,6 +526,11 @@ public class Shared implements Constants {
         return null;
     }
 
+    public static void updatePepRepo (IFormReference ifr){
+      validate = new DbConnect(ifr,Query.updatePepRepo(getWorkItemNumber(ifr),getRepoAcctNo(ifr))).saveQuery();
+
+      if (isSaved(validate)) logger.info("Pep Repo Updated");
+    }
 
 
 }
