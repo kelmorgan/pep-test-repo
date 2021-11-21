@@ -542,11 +542,12 @@ public class Shared implements Constants {
             String officePosition = getFieldValue(ifr, officeDesignationLocal);
             String acctOpenDate = getFieldValue(ifr, accountOpeningDateLocal);
             String wiName = getWorkItemNumber(ifr);
+            String bvn = getBvn(ifr);
             validate = 0;
 
 
-            if (isPepCategory(ifr, pepCategoryNew)) validate = new DbConnect(ifr, Query.setPepRepoNew(wiName, sol, branchName, pepName, address, officePosition)).saveQuery();
-            else if (isPepCategory(ifr, pepCategoryExisting)) validate = new DbConnect(ifr, Query.setPepRepoExisting(wiName, sol, branchName, acctNo, pepName, address, officePosition, acctOpenDate)).saveQuery();
+            if (isPepCategory(ifr, pepCategoryNew)) validate = new DbConnect(ifr, Query.setPepRepoNew(wiName, sol, branchName, pepName, address, officePosition,bvn)).saveQuery();
+            else if (isPepCategory(ifr, pepCategoryExisting)) validate = new DbConnect(ifr, Query.setPepRepoExisting(wiName, sol, branchName, acctNo, pepName, address, officePosition, acctOpenDate,bvn)).saveQuery();
 
             if (isSaved(validate)) {
                 setOnboardedFlag(ifr);

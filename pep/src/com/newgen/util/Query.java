@@ -8,12 +8,12 @@ public class Query {
     public static String setOnboardedFlag (String wiName){
         return "update pep_ext set onboardedflag = 'Y' where winame ='"+wiName+"'";
     }
-    public static String setPepRepoExisting(String wiName,String sol, String branchName, String acctNo, String pepName, String address, String officePosition, String acctOpenDate){
-        return "insert into pep_master (winame,sol,branchname,accountnumber,pepname,address,office_postion,acct_opn_date,ibpsflag) " +
-                "values ('"+wiName+"','"+sol+"','"+branchName+"','"+acctNo+"','"+pepName+"','"+address+"','"+officePosition+"','"+acctOpenDate+"','Y') ";
+    public static String setPepRepoExisting(String wiName,String sol, String branchName, String acctNo, String pepName, String address, String officePosition, String acctOpenDate,String bvn){
+        return "insert into pep_master (winame,sol,branchname,accountnumber,pepname,address,office_postion,acct_opn_date,bvn,ibpsflag) " +
+                "values ('"+wiName+"','"+sol+"','"+branchName+"','"+acctNo+"','"+pepName+"','"+address+"','"+officePosition+"','"+acctOpenDate+"','"+bvn+"','Y') ";
     }
-    public static String setPepRepoNew(String wiName,String sol,String branchName,String pepName, String address, String officePosition){
-        return "insert into pep_master (winame,sol,branchname,pepname,address,office_postion,ibpsflag) values ('"+wiName+"','"+sol+"','"+branchName+"','"+pepName+"','"+address+"','"+officePosition+"','Y')";
+    public static String setPepRepoNew(String wiName,String sol,String branchName,String pepName, String address, String officePosition,String bvn){
+        return "insert into pep_master (winame,sol,branchname,pepname,address,office_postion,bvn,ibpsflag) values ('"+wiName+"','"+sol+"','"+branchName+"','"+pepName+"','"+address+"','"+officePosition+"','"+bvn+"','Y')";
     }
     public static String updatePepRepo(String wiName,String bvn, String accountNumber){
         return "update pep_master set winame = '"+wiName+"', bvn = '"+bvn+"' where accountnumber = '"+accountNumber+"'";
