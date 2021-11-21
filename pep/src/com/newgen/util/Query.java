@@ -9,11 +9,11 @@ public class Query {
         return "update pep_ext set onboardedflag = 'Y' where winame ='"+wiName+"'";
     }
     public static String setPepRepoExisting(String wiName,String sol, String branchName, String acctNo, String pepName, String address, String officePosition, String acctOpenDate,String bvn){
-        return "insert into pep_master (winame,sol,branchname,accountnumber,pepname,address,office_postion,acct_opn_date,bvn,ibpsflag) " +
+        return "insert into pep_master (winame,sol,branchname,accountnumber,pepname,address,office_position,acct_opn_date,bvn,ibpsflag) " +
                 "values ('"+wiName+"','"+sol+"','"+branchName+"','"+acctNo+"','"+pepName+"','"+address+"','"+officePosition+"','"+acctOpenDate+"','"+bvn+"','Y') ";
     }
     public static String setPepRepoNew(String wiName,String sol,String branchName,String pepName, String address, String officePosition,String bvn){
-        return "insert into pep_master (winame,sol,branchname,pepname,address,office_postion,bvn,ibpsflag) values ('"+wiName+"','"+sol+"','"+branchName+"','"+pepName+"','"+address+"','"+officePosition+"','"+bvn+"','Y')";
+        return "insert into pep_master (winame,sol,branchname,pepname,address,office_position,bvn,ibpsflag) values ('"+wiName+"','"+sol+"','"+branchName+"','"+pepName+"','"+address+"','"+officePosition+"','"+bvn+"','Y')";
     }
     public static String updatePepRepo(String wiName,String bvn, String accountNumber){
         return "update pep_master set winame = '"+wiName+"', bvn = '"+bvn+"' where accountnumber = '"+accountNumber+"'";
