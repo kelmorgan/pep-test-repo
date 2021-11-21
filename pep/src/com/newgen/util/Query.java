@@ -3,7 +3,7 @@ package com.newgen.util;
 public class Query {
 
     public static String getPepRepoDetails(String accountNumber){
-        return "select solid,branchname, accountname,pepname, address, office_postion, nature_of_business, acct_opn_date  from pep_master where accountnumber = '"+accountNumber+"'";
+        return "select solid,branchname, accountname,pepname, address, office_position, nature_of_business, acct_opn_date  from pep_master where accountnumber = '"+accountNumber+"'";
     }
     public static String getAcoGroup(String id){
         return "select aco_group from usr_0_fbn_aco_groupname where aco_id = '"+id+"'";
