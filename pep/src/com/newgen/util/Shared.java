@@ -496,9 +496,26 @@ public class Shared implements Constants {
         return getFieldValue(ifr,repoAcctNoLocal);
     }
     public static String setRepoInfo(IFormReference ifr){
-        resultSet = new DbConnect(ifr,Query.getPepRepoDetails(getRepoAcctNo(ifr))).getData();
 
-        if (isEmpty(resultSet)) return "";
+        String acctNo = getRepoAcctNo(ifr);
+
+        if (isEmpty(acctNo)) return "Kindly enter pep Account Number";
+
+        resultSet = new DbConnect(ifr,Query.getPepRepoDetails(acctNo)).getData();
+
+        for (List<String> result : resultSet){
+            String sol = result.get(0);
+            String branchName = result.get(1);
+            String accountName = result.get(2);
+            String pepName = result.get(3);
+            String address = result.get(4);
+            String position = result.get(5);
+            String natureOfBusiness = result.get(6);
+            String acctOpenDate = result.get(7);
+
+            setFields(ifr,new String[]{repoAcctNameLocal,repoAddressLocal,repoAcctOpenDateLocal,repoBranchNameLocal,repoSolIdLocal,repoNOfBusiness,repoPepNameLocal,repoPositionLocal},
+                    new String[]{accountName,address,acctOpenDate,branchName,sol,natureOfBusiness,pepName,position});
+        }
 
         return null;
     }

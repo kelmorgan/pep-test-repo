@@ -139,6 +139,7 @@ public interface Constants {
 	String isLinkedPepEvent  = "isLinkedPepEvent";
 	String generateDocEvent = "generateDocEvent";
 	String checkDocEvent = "checkDocEvent";
+	String setRepoEvent = "setRepoEvent";
 
 	
 	//process info

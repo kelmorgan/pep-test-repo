@@ -35,6 +35,11 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
             case onLoadEvent:
                 break;
             case onChangeEvent:
+                switch (control){
+                    case setRepoEvent:{
+                        return Shared.setRepoInfo(ifr);
+                    }
+                }
                 break;
             case onClickEvent:
                 break;
