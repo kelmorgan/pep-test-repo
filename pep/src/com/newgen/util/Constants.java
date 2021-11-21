@@ -76,7 +76,7 @@ public interface Constants {
 	 String docFlagLocal = "DOCFLAG";
 	 String repoSolIdLocal = "REPO_SOLID";
 	 String repoBranchNameLocal = "REPO_BRANCHNAME";
-	 String repoAcctNameLocal = "REPO_ACCTNAME";
+	 String repoAcctNameLocal = "REPO_ACCTNAMENEW";
 	 String repoAcctNoLocal = "REPO_ACCTNO";
 	 String repoPepNameLocal = "REPO_PEPNAME";
 	 String repoAddressLocal = "REPO_ADDRESS";
