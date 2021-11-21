@@ -527,9 +527,48 @@ public class Shared implements Constants {
     }
 
     public static void updatePepRepo (IFormReference ifr){
-      validate = new DbConnect(ifr,Query.updatePepRepo(getWorkItemNumber(ifr),getRepoAcctNo(ifr))).saveQuery();
+      validate = new DbConnect(ifr,Query.updatePepRepo(getWorkItemNumber(ifr),getBvn(ifr),getRepoAcctNo(ifr))).saveQuery();
 
       if (isSaved(validate)) logger.info("Pep Repo Updated");
+    }
+
+    public static void onboardPepInRepo(IFormReference ifr){
+        if (isOnboardedFlagNotSet(ifr)) {
+            String sol = getFieldValue(ifr, pepSolIdLocal);
+            String branchName = getFieldValue(ifr, pepBranchNameLocal);
+            String acctNo = getFieldValue(ifr, accountNoLocal);
+            String pepName = getPepName(ifr);
+            String address = getFieldValue(ifr, addressLocal);
+            String officePosition = getFieldValue(ifr, officeDesignationLocal);
+            String acctOpenDate = getFieldValue(ifr, accountOpeningDateLocal);
+            String wiName = getWorkItemNumber(ifr);
+            validate = 0;
+
+
+            if (isPepCategory(ifr, pepCategoryNew)) validate = new DbConnect(ifr, Query.setPepRepoNew(wiName, sol, branchName, pepName, address, officePosition)).saveQuery();
+            else if (isPepCategory(ifr, pepCategoryExisting)) validate = new DbConnect(ifr, Query.setPepRepoExisting(wiName, sol, branchName, acctNo, pepName, address, officePosition, acctOpenDate)).saveQuery();
+
+            if (isSaved(validate)) {
+                setOnboardedFlag(ifr);
+                logger.info("Pep Record inserted in repo successfully");
+            }
+        }
+    }
+
+    private static String  getPepName(IFormReference ifr){
+        String firstName = getFieldValue(ifr,firstNameLocal);
+        String surName = getFieldValue(ifr,surNameLocal);
+        String otherName = getFieldValue(ifr,otherNameLocal);
+
+        return firstName + " " + surName +" " + otherName;
+    }
+
+    private static void setOnboardedFlag(IFormReference ifr){
+      validate = new DbConnect(ifr,Query.setOnboardedFlag(getWorkItemNumber(ifr))).saveQuery();
+      if (isSaved(validate)) logger.info("OnboardedFlag set successfully");
+    }
+    private static boolean isOnboardedFlagNotSet(IFormReference ifr){
+        return Integer.parseInt(new DbConnect(ifr,Query.isOnboardedFlagSet(getWorkItemNumber(ifr))).getData().get(0).get(0)) == 0;
     }
 
 

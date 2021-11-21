@@ -2,8 +2,21 @@ package com.newgen.util;
 
 public class Query {
 
-    public static String updatePepRepo(String wiName, String accountNumber){
-        return "update pep_master set winame = '"+wiName+"' where accountnumber = '"+accountNumber+"'";
+    public static String isOnboardedFlagSet(String wiName){
+        return "select count(onboardedflag) from pep_ext where winame = '"+wiName+"' and onboardedflag = 'Y' ";
+    }
+    public static String setOnboardedFlag (String wiName){
+        return "update pep_ext set onboardedflag = 'Y' where winame ='"+wiName+"'";
+    }
+    public static String setPepRepoExisting(String wiName,String sol, String branchName, String acctNo, String pepName, String address, String officePosition, String acctOpenDate){
+        return "insert into pep_master (winame,sol,branchname,accountnumber,pepname,address,office_postion,acct_opn_date,ibpsflag) " +
+                "values ('"+wiName+"','"+sol+"','"+branchName+"','"+acctNo+"','"+pepName+"','"+address+"','"+officePosition+"','"+acctOpenDate+"','Y') ";
+    }
+    public static String setPepRepoNew(String wiName,String sol,String branchName,String pepName, String address, String officePosition){
+        return "insert into pep_master (winame,sol,branchname,pepname,address,office_postion,ibpsflag) values ('"+wiName+"','"+sol+"','"+branchName+"','"+pepName+"','"+address+"','"+officePosition+"','Y')";
+    }
+    public static String updatePepRepo(String wiName,String bvn, String accountNumber){
+        return "update pep_master set winame = '"+wiName+"', bvn = '"+bvn+"' where accountnumber = '"+accountNumber+"'";
     }
     public static String getPepRepoDetails(String accountNumber){
         return "select solid,branchname, accountname,pepname, address, office_position, nature_of_business, acct_opn_date  from pep_master where accountnumber = '"+accountNumber+"'";
