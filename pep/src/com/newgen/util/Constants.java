@@ -146,6 +146,15 @@ public interface Constants {
 	//process info
 
 
+	//Call Client Configs
+	String getBvnAcctListAppCode = "ACCTLINKTOBVN";
+	String getSavingAcctAppCode = "SBAcctInqrespAcctStatus";
+	String getCurrentAcctAppCode = "ODAcctInqrespAcctStatus";
+	String getSpecialAcctAppcode = "FetchCAAccountDetails";
+	String callTypeFinacle  = "Finacle";
+	String endpointCustomFIFinacle  = "EndPointUrl";
+	String endpointBpmFinacle  = "AM_EndPointUrl";
+
 	//config
 	String logPath = "nglogs/NGF_Logs/pep/";
 	String configPath = System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "pep.properties";
