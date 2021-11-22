@@ -40,10 +40,14 @@ public class Controller {
     }
 
     public static String getAccountLinkedToBvn(String bvn,String wiName){
-        String request = new CallClientRequestHandler(Constants.pepProcessName,Constants.getBvnAcctListAppCode,wiName,Constants.callTypeFinacle,Constants.endpointCustomFIFinacle).getCallClientRequest(RequestXml.getBvnLinkAcctRequest(bvn));
-        logger.info("getAccountLinkedToBvn request: "+request);
-        String output = Api.execute(request);
-        logger.info("getAccountLinkedToBvn output: "+output);
+        try {
+            String request = new CallClientRequestHandler(Constants.pepProcessName, Constants.getBvnAcctListAppCode, wiName, Constants.callTypeFinacle, Constants.endpointCustomFIFinacle).getCallClientRequest(RequestXml.getBvnLinkAcctRequest(bvn));
+            logger.info("getAccountLinkedToBvn request: " + request);
+            String output = Api.execute(request);
+            logger.info("getAccountLinkedToBvn output: " + output);
+        } catch (Exception e){
+            logger.error("Exception occurred in getAccountLinkedToBvn method: "+e.getMessage());
+        }
 
 
         return null;
