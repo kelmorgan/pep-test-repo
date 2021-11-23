@@ -94,7 +94,7 @@ public class Shared implements Constants {
             setFields(ifr,decisionHistoryFlagLocal,flag);
         }
     }
-    public String getUsersMailsInGroup(IFormReference ifr, String groupName){
+    public static String getUsersMailsInGroup(IFormReference ifr, String groupName){
         StringBuilder groupMail= new StringBuilder();
         try {
             resultSet = new DbConnect(ifr, Query.getUsersInGroup(groupName)).getData();
@@ -178,6 +178,7 @@ public class Shared implements Constants {
     public static void clearTables(IFormReference ifr, String table){ifr.clearTable(table);}
     public static String getFieldValue(IFormReference ifr, String local){return ifr.getValue(local).toString();}
     public static boolean isEmpty(String s) {return s == null || s.trim().isEmpty();}
+    public static boolean isEmpty(Object obj) {return obj == null;}
     public boolean compareDate(String startDate, String endDate){
       return  LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern(dbDateTimeFormat)).isAfter(LocalDateTime.parse(startDate,DateTimeFormatter.ofPattern(dbDateTimeFormat)));
     }
@@ -276,6 +277,9 @@ public class Shared implements Constants {
     }
     public static boolean isNotEmpty(String value){
         return !isEmpty(value);
+    }
+    public static boolean isNotEmpty(Object obj){
+        return !isEmpty(obj);
     }
     public static boolean isNotEmpty(List<List<String>> resultSet){
         return !isEmpty(resultSet);
@@ -522,7 +526,6 @@ public class Shared implements Constants {
         }catch (Exception e){
             logger.info("Exception Occurred in setRepInfo Method:  "+e.getMessage());
         }
-
         return null;
     }
 

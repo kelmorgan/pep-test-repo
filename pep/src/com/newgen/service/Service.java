@@ -7,7 +7,7 @@ import com.newgen.util.Shared;
 import java.util.HashMap;
 import java.util.List;
 
-public class Service {
+public class Service implements Constants{
 
     private IFormReference ifr;
 
@@ -16,12 +16,12 @@ public class Service {
     }
 
     public String getAccountListTest(){
-        Shared.clearTable(ifr,Constants.accountListTable);
+        Shared.clearTable(ifr,accountListTable);
         String bvn = Shared.getBvn(ifr);
 
         if (Shared.isEmpty(bvn)) return "Kindly enter BVN";
         if (isBvnValid(bvn.length())){
-            Shared.clearFields(ifr,Constants.bvnLocal);
+            Shared.clearFields(ifr,bvnLocal);
             return "BVN must be 11 digits";
         }
 
@@ -41,16 +41,41 @@ public class Service {
     }
 
     public String getAccountList(){
-        Shared.clearTable(ifr,Constants.accountListTable);
+        Shared.clearTable(ifr,accountListTable);
         String bvn = Shared.getBvn(ifr);
+        String wiName = Shared.getWorkItemNumber(ifr);
 
         if (Shared.isEmpty(bvn)) return "Kindly enter BVN";
         if (isBvnValid(bvn.length())){
-            Shared.clearFields(ifr,Constants.bvnLocal);
+            Shared.clearFields(ifr,bvnLocal);
             return "BVN must be 11 digits";
         }
 
-        String accountList = Controller.getAccountLinkedToBvn(bvn,Shared.getWorkItemNumber(ifr));
+      HashMap<String,Object> bvnData = Controller.getAccountLinkedToBvn(bvn,wiName);
+
+       if (Shared.isNotEmpty(bvnData)) {
+
+           if (bvnData.containsKey("error")) return bvnData.get("error").toString();
+
+           List<String> accountList = (List<String>) bvnData.get("success");
+
+           for (String accountNumber : accountList){
+
+               HashMap<String,String > accountData = Controller.fetchAcctDetails(accountNumber,wiName);
+
+               assert accountData != null;
+               if(!accountData.containsKey(errorKey)){
+                   String accountName = accountData.get("name");
+                   String sol = accountData.get("sol");
+                   String branchName = accountData.get("branchName");
+
+                   Shared.setTableGridData(ifr,accountListTable,
+                           new String[]{alColAccountNo,alColAccountName,alColSolId,alColBranchName},
+                           new String[]{accountNumber,accountName,sol,branchName});
+               }
+           }
+
+       }
 
         return null;
     }

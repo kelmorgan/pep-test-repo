@@ -4,10 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.newgen.service.Service;
-import com.newgen.util.Constants;
-import com.newgen.util.LogGenerator;
-import com.newgen.util.Shared;
-import com.newgen.util.SharedI;
+import com.newgen.util.*;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 

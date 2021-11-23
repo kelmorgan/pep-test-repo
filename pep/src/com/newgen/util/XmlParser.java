@@ -32,7 +32,7 @@ public class XmlParser {
         setInputXML(parseThisString);
     }
 
-    private void setInputXML(String parseThisString) {
+    public void setInputXML(String parseThisString) {
         if (parseThisString != null) {
             copyString = parseThisString;
             parseString = toUpperCase(parseThisString, 0, 0);

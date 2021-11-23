@@ -107,6 +107,7 @@ public interface Constants {
 	 String bmGroupLabel = "BM_";
 	 String rmGroupLabel= "RM_";
 	 String flag = "Y";
+	 String flagN = "N";
 	 String decSubmit = "SUBMIT";
 	 String decRework = "REWORK";
 	 String decReturn = "RETURN";
@@ -124,6 +125,14 @@ public interface Constants {
 	 String pepAcctCategoryIndividual = "Individual";
 	 String pepAcctCategoryCorporate = "Corporate";
 	 String yes = "YES";
+	 String apiSuccess = "SUCCESS";
+	 String apiStatus = "Status";
+	 String apiFailed = "Status";
+	 String apiFailure = "Status";
+	 String apiSuccessFailureFlag = "SuccessOrFailure";
+	 String successKey = "success";
+	 String errorKey = "error";
+
 
 	//eventName/controlName
 	String onClickEvent = "onClickEvent";
