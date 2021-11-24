@@ -174,10 +174,13 @@ public class Controller implements Constants {
                         logger.info("ErrorType : " + errType + " ErrorCode : " + errCode + " ErrorDesc : " + errDesc + ".");
 
                         result.put(errorKey,errDesc);
+                        return result;
                     }
                 }
                 else {
-                    result.put(errorKey,"No response from fetch account api for this account: "+accountNumber);
+                    String exception = "No response from fetch account api for this account: "+accountNumber;
+                    logger.error(exception);
+                    result.put(errorKey,exception);
                     return result;
                 }
 
