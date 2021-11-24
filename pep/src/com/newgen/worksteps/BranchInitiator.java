@@ -3,7 +3,7 @@ package com.newgen.worksteps;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.newgen.service.Service;
+import com.newgen.serviceHandler.Service;
 import com.newgen.util.*;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;

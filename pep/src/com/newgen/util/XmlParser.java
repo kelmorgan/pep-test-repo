@@ -36,12 +36,11 @@ public class XmlParser {
         if (parseThisString != null) {
             copyString = parseThisString;
             parseString = toUpperCase(parseThisString, 0, 0);
-            IndexOfPrevSrch = 0;
         } else {
             parseString = null;
             copyString = null;
-            IndexOfPrevSrch = 0;
         }
+        IndexOfPrevSrch = 0;
     }
 
     public  Document convertStringToDocument(String xmlStr) {

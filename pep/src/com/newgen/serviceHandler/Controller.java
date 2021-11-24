@@ -1,4 +1,4 @@
-package com.newgen.service;
+package com.newgen.serviceHandler;
 
 import com.newgen.api.generateXml.CallClientRequestResponseHandler;
 import com.newgen.api.generateXml.RequestXml;
@@ -9,7 +9,6 @@ import com.newgen.util.Shared;
 import com.newgen.util.XmlParser;
 import org.apache.log4j.Logger;
 
-import javax.print.attribute.HashPrintJobAttributeSet;
 import java.util.*;
 
 public class Controller implements Constants {

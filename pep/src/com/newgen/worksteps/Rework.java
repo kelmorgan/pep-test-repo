@@ -5,7 +5,7 @@ import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
-import com.newgen.service.Service;
+import com.newgen.serviceHandler.Service;
 import com.newgen.util.Constants;
 import com.newgen.util.LogGenerator;
 import com.newgen.util.Shared;
