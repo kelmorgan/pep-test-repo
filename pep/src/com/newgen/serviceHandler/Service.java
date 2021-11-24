@@ -2,12 +2,15 @@ package com.newgen.serviceHandler;
 
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.util.Constants;
+import com.newgen.util.LogGenerator;
 import com.newgen.util.Shared;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class Service implements Constants{
+    private final Logger logger = LogGenerator.getLoggerInstance(Service.class);
 
     private IFormReference ifr;
 
@@ -58,6 +61,9 @@ public class Service implements Constants{
            if (bvnData.containsKey("error")) return bvnData.get("error").toString();
 
            List<String> accountList = (List<String>) bvnData.get("success");
+
+           logger.info("Account list: "+accountList);
+
 
            for (String accountNumber : accountList){
 
