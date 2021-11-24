@@ -123,6 +123,7 @@ public class Controller implements Constants {
             }
 
             if (accountNumber.startsWith("1")){
+                handler.setEndpoint(endpointBpmFinacle);
                 handler.setNgMethod(getSpecialAcctAppcode);
                 request = handler.getHandledRequest(RequestXml.getSavingAcctRequest(accountNumber));
                 logger.info("Special account request: "+request);
@@ -130,7 +131,6 @@ public class Controller implements Constants {
             }
 
             else if (accountNumber.startsWith("2")){
-                handler.setEndpoint(endpointBpmFinacle);
                 handler.setNgMethod(getCurrentAcctAppCode);
                 request = handler.getHandledRequest(RequestXml.getCurrentAcctRequest(accountNumber));
                 logger.info("Current account request: "+request);
