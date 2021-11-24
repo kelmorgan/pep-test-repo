@@ -89,6 +89,8 @@ public class Controller implements Constants {
             else {
                 String exception = "No Response for fetch Account Linked to BVN Api Call. Contact iBPS support";
                 result.put(errorKey,exception);
+
+                return result;
             }
 
         } catch (Exception e){
