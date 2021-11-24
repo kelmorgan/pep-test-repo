@@ -71,7 +71,7 @@ public class CallClientRequestResponseHandler {
 
             logger.info("response from CallClient: "+response);
             if (Shared.isEmpty(response)) return "No Response from Call Client";
-            String message = new XmlParser(response).getValueOf("message");
+            String message = new XmlParser(response).getValueOf("message",true);
             String mainCode = new XmlParser(message).getValueOf("MainCode");
             if (Shared.isNotEmpty(mainCode) && isSuccess(mainCode)) return handler(message);
 

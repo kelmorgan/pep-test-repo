@@ -12,7 +12,7 @@ import java.util.List;
 public class Service implements Constants{
     private final Logger logger = LogGenerator.getLoggerInstance(Service.class);
 
-    private IFormReference ifr;
+    private final IFormReference ifr;
 
     public Service(IFormReference ifr) {
         this.ifr = ifr;
