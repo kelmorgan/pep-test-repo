@@ -44,44 +44,50 @@ public class Service implements Constants{
     }
 
     public String getAccountList(){
-        Shared.clearTable(ifr,accountListTable);
-        String bvn = Shared.getBvn(ifr);
-        String wiName = Shared.getWorkItemNumber(ifr);
+        try {
+            Shared.clearTable(ifr, accountListTable);
+            String bvn = Shared.getBvn(ifr);
+            String wiName = Shared.getWorkItemNumber(ifr);
 
-        if (Shared.isEmpty(bvn)) return "Kindly enter BVN";
-        if (isBvnValid(bvn.length())){
-            Shared.clearFields(ifr,bvnLocal);
-            return "BVN must be 11 digits";
+            if (Shared.isEmpty(bvn)) return "Kindly enter BVN";
+            if (isBvnValid(bvn.length())) {
+                Shared.clearFields(ifr, bvnLocal);
+                return "BVN must be 11 digits";
+            }
+
+            HashMap<String, Object> bvnData = Controller.getAccountLinkedToBvn(bvn, wiName);
+
+            if (Shared.isNotEmpty(bvnData)) {
+
+                if (bvnData.containsKey("error")) return bvnData.get("error").toString();
+
+                List<String> accountList = (List<String>) bvnData.get("success");
+
+                logger.info("Account list: " + accountList);
+
+
+                for (String accountNumber : accountList) {
+                    try {
+                        HashMap<String, String> accountData = Controller.fetchAcctDetails(accountNumber, wiName);
+
+                        assert accountData != null;
+                        if (!accountData.containsKey(errorKey)) {
+                            String accountName = accountData.get("name");
+                            String sol = accountData.get("sol");
+                            String branchName = accountData.get("branchName");
+
+                            Shared.setTableGridData(ifr, accountListTable,
+                                    new String[]{alColAccountNo, alColAccountName, alColSolId, alColBranchName},
+                                    new String[]{accountNumber, accountName, sol, branchName});
+                        }
+                    } catch (Exception e){
+                        logger.error("Exception occurred getAccountList method: "+e.getMessage());
+                    }
+                }
+            }
+        }catch (Exception e){
+            logger.error("Exception occurred getAccountList method: "+e.getMessage());
         }
-
-      HashMap<String,Object> bvnData = Controller.getAccountLinkedToBvn(bvn,wiName);
-
-       if (Shared.isNotEmpty(bvnData)) {
-
-           if (bvnData.containsKey("error")) return bvnData.get("error").toString();
-
-           List<String> accountList = (List<String>) bvnData.get("success");
-
-           logger.info("Account list: "+accountList);
-
-
-           for (String accountNumber : accountList){
-
-               HashMap<String,String > accountData = Controller.fetchAcctDetails(accountNumber,wiName);
-
-               assert accountData != null;
-               if(!accountData.containsKey(errorKey)){
-                   String accountName = accountData.get("name");
-                   String sol = accountData.get("sol");
-                   String branchName = accountData.get("branchName");
-
-                   Shared.setTableGridData(ifr,accountListTable,
-                           new String[]{alColAccountNo,alColAccountName,alColSolId,alColBranchName},
-                           new String[]{accountNumber,accountName,sol,branchName});
-               }
-           }
-
-       }
 
         return null;
     }

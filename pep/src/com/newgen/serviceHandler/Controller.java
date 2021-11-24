@@ -185,7 +185,7 @@ public class Controller implements Constants {
             String exception = "Exception occurred in fetchAcctDetails method: "+e.getMessage();
             logger.error(exception);
             result.put(errorKey,exception);
-
+            return  result;
         }
         return null;
     }
