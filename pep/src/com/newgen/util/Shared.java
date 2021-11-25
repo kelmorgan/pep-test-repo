@@ -1,5 +1,7 @@
 package com.newgen.util;
 
+import com.fbn.service.Service;
+import com.fbn.service.ServiceHandler;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -575,5 +577,21 @@ public class Shared implements Constants {
         return Integer.parseInt(new DbConnect(ifr,Query.isOnboardedFlagSet(getWorkItemNumber(ifr))).getData().get(0).get(0)) == 0;
     }
 
+    public static void createAoWiName(){
+        try {
+            String attributes = null;
+            String processDefId = null;
+            String queueId = null;
+            ServiceHandler service = initializeService();
+            String wiName = service.createWorkItem(attributes, processDefId, queueId, flagN);
+            service.disconnectCabinet();
+        } catch (Exception e){
+            logger.error("Exception occurred in createAoWiName method: "+e.getMessage());
+        }
+    }
 
+    public static ServiceHandler initializeService(){
+        ServiceHandler.setConfigPath(configPath);
+       return new Service(ServiceHandler.getSessionId());
+    }
 }

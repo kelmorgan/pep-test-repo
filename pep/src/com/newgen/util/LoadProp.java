@@ -10,6 +10,8 @@ public class LoadProp implements  Constants {
 	public static String mailFrom;
 	public static String processDefId;
     public static String serverIp;
+    public static String activateAo;
+
 
     static {
         try {
@@ -17,6 +19,8 @@ public class LoadProp implements  Constants {
             Properties properties = new Properties();
             InputStream in = new FileInputStream(configPath);
             properties.load(in);
+
+            activateAo = properties.getProperty(activateAoField);
         }
         catch  (UnsupportedEncodingException ex){
             ex.printStackTrace();

@@ -154,6 +154,9 @@ public interface Constants {
 	
 	//process info
 
+	//service info
+	String activateAoField = "ACTIVATEAO";
+
 
 	//Call Client Configs
 	String getBvnAcctListAppCode = "ACCTLINKTOBVN";
