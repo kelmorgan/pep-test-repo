@@ -579,7 +579,7 @@ public class Shared implements Constants {
 
     public static void createAoWorkItem(IFormReference ifr){
         try {
-            if (isAoActive()) {
+            if (isAoActive() && isPrevWs(ifr,ccoWs)) {
                 String otherName = isNotEmpty(getOtherName(ifr)) ? getOtherName(ifr) : empty;
                 String attributes = "<BVNNO>" + getBvn(ifr) + "</BVNNO><R_SNAME>" + getSurName(ifr) + "</R_SNAME><R_FNAME>" + getFirstName(ifr) + "</R_FNAME><R_ONAME>" + otherName + "</R_ONAME>";
                 logger.info("attribute: "+attributes);

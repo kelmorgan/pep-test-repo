@@ -37,8 +37,7 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 	public String executeServerEvent(IFormReference ifr, String control, String event, String data) {
 		switch (event){
 			case onLoadEvent:
-			case onChangeEvent:{
-			}
+			case onChangeEvent:
 			break;
 			case onClickEvent:{
 				switch (control){
@@ -53,10 +52,14 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 					case checkDocEvent:{
 						return Shared.checkDocGenerated(ifr);
 					}
+					case createAoWorkItemEvent:{
+						Shared.createAoWorkItem(ifr);
+					}
+					break;
 					case decisionHistoryEvent:{
 						Shared.setDecisionHistory(ifr);
-						break;
 					}
+					break;
 					case sendMailEvent:
 				}
 			}

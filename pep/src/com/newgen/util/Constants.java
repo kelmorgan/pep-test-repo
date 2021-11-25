@@ -151,6 +151,7 @@ public interface Constants {
 	String checkDocEvent = "checkDocEvent";
 	String setRepoEvent = "setRepoEvent";
 	String updatePepRepoEvent = "updatePepRepoEvent";
+	String createAoWorkItemEvent = "createAoWorkItemEvent";
 
 	
 	//process info

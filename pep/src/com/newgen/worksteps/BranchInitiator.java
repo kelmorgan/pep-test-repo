@@ -44,16 +44,16 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 				switch (control){
 					case lineExecFilterEvent:{
 						Shared.setLineExecutiveFilter(ifr);
-						break;
 					}
+					break;
 					case accountTypeEvent:{
 						Shared.showAccountTypeOthersField(ifr);
-						break;
 					}
+					break;
 					case isLinkedPepEvent:{
 						Shared.linkedPep(ifr);
-						break;
 					}
+					break;
 					case mandatoryPepInfoEvent:{
 					return Shared.setPepMandatoryInfoFields(ifr);
 					}
@@ -63,8 +63,7 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 			case onClickEvent:{
 				switch (control) {
 					case apiEvent: {
-						Shared.createAoWorkItem(ifr);
-						//return new Service(ifr).getAccountList();
+						return new Service(ifr).getAccountList();
 					}
 				}
 			}
@@ -73,8 +72,8 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 				switch (control){
 					case decisionHistoryEvent:{
 						Shared.setDecisionHistory(ifr);
-						break;
 					}
+					break;
 					case sendMailEvent:
 				}
 			}
