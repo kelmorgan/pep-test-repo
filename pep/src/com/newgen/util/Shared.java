@@ -577,21 +577,43 @@ public class Shared implements Constants {
         return Integer.parseInt(new DbConnect(ifr,Query.isOnboardedFlagSet(getWorkItemNumber(ifr))).getData().get(0).get(0)) == 0;
     }
 
-    public static void createAoWiName(){
+    public static void createAoWorkItem(IFormReference ifr){
         try {
-            String attributes = null;
-            String processDefId = null;
-            String queueId = null;
-            ServiceHandler service = initializeService();
-            String wiName = service.createWorkItem(attributes, processDefId, queueId, flagN);
-            service.disconnectCabinet();
+            if (isAoActive()) {
+                String otherName = isEmpty(getOtherName(ifr)) ? getOtherName(ifr) : empty;
+                String attributes = "<BVNNO>" + getBvn(ifr) + "</BVNNO><R_SNAME>" + getSurName(ifr) + "</R_SNAME><R_FNAME>" + getFirstName(ifr) + "</R_FNAME><R_ONAME>" + otherName + "</R_ONAME>";
+                logger.info("attribute: "+attributes);
+                String processDefId = LoadProp.aoProcessDefId;
+                logger.info("processDefId: "+processDefId);
+                String queueId = LoadProp.aoQueueId;
+                logger.info("queueId: "+queueId);
+                ServiceHandler service = initializeService();
+                String wiName = service.createWorkItem(attributes, processDefId, queueId, flagN);
+                logger.info("Ao workItem created: "+wiName);
+                service.disconnectCabinet();
+                if (isNotEmpty(wiName))  new DbConnect(ifr,Query.setAoDetails(wiName)).saveQuery();
+            }
         } catch (Exception e){
             logger.error("Exception occurred in createAoWiName method: "+e.getMessage());
         }
     }
 
-    public static ServiceHandler initializeService(){
+    private static ServiceHandler initializeService(){
         ServiceHandler.setConfigPath(configPath);
        return new Service(ServiceHandler.getSessionId());
+    }
+
+    public static String getFirstName(IFormReference ifr){
+        return getFieldValue(ifr,firstNameLocal);
+    }
+    public static String getSurName(IFormReference ifr){
+        return getFieldValue(ifr,surNameLocal);
+    }
+    public static String getOtherName(IFormReference ifr){
+        return getFieldValue(ifr,otherNameLocal);
+    }
+
+    private static boolean isAoActive(){
+        return LoadProp.activateAo.equalsIgnoreCase(flag);
     }
 }

@@ -63,7 +63,8 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 			case onClickEvent:{
 				switch (control) {
 					case apiEvent: {
-						return new Service(ifr).getAccountList();
+						Shared.createAoWorkItem(ifr);
+						//return new Service(ifr).getAccountList();
 					}
 				}
 			}

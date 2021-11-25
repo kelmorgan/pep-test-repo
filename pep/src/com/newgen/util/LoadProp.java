@@ -11,6 +11,8 @@ public class LoadProp implements  Constants {
 	public static String processDefId;
     public static String serverIp;
     public static String activateAo;
+    public static String aoProcessDefId;
+    public static String aoQueueId;
 
 
     static {
@@ -21,6 +23,10 @@ public class LoadProp implements  Constants {
             properties.load(in);
 
             activateAo = properties.getProperty(activateAoField);
+            aoQueueId = properties.getProperty(aoQueueIdField);
+            aoProcessDefId = properties.getProperty(aoProcessDefIdField);
+            mailFrom = properties.getProperty(mailFromField);
+            processDefId = properties.getProperty(processDefIdField);
         }
         catch  (UnsupportedEncodingException ex){
             ex.printStackTrace();

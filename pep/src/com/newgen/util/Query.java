@@ -2,6 +2,9 @@ package com.newgen.util;
 
 public class Query {
 
+    public static String setAoDetails(String wiName){
+        return "update pep_ext set aowiname = '"+wiName+"', aoflag = 'Y'";
+    }
     public static String isOnboardedFlagSet(String wiName){
         return "select count(onboardedflag) from pep_ext where winame = '"+wiName+"' and onboardedflag = 'Y' ";
     }

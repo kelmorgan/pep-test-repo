@@ -83,6 +83,8 @@ public interface Constants {
 	 String repoPositionLocal = "REPO_POSITION";
 	 String repoNOfBusiness = "REPO_NOFBUSINESS";
 	 String repoAcctOpenDateLocal = "REPO_ACCTOPENDATE";
+	 String aoWiNameFlagLocal = "AOFLAG";
+	 String aoWiNameLocal = "AOWINAME";
 
 	//sections
 	String accountListSection = "ACCTLINKEDINFOSECTION";
@@ -93,7 +95,6 @@ public interface Constants {
 	String pepCategorySection = "PEPCATEGORYSECTION";
 	String pepRepositorySection = "REPOSECTION";
 
-    
 	//common variables
 	 String dbDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 	 String dbDateFormat = "yyyy-MM-dd";
@@ -154,9 +155,6 @@ public interface Constants {
 	
 	//process info
 
-	//service info
-	String activateAoField = "ACTIVATEAO";
-
 
 	//Call Client Configs
 	String getBvnAcctListAppCode = "ACCTLINKTOBVN";
@@ -170,6 +168,12 @@ public interface Constants {
 	//config
 	String logPath = "nglogs/NGF_Logs/pep/";
 	String configPath = System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "pep.properties";
+	String activateAoField = "ACTIVATEAO";
+	String aoQueueIdField = "AOQUEUEID";
+	String aoProcessDefIdField = "AOPROCESSDEFID";
+	String mailFromField = "MAILFROM";
+	String processDefIdField = "PROCESSDEFID";
+
 
 	//Api Service Name
 }
