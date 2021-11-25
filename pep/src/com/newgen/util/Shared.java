@@ -580,7 +580,7 @@ public class Shared implements Constants {
     public static void createAoWorkItem(IFormReference ifr){
         try {
             if (isAoActive()) {
-                String otherName = isEmpty(getOtherName(ifr)) ? getOtherName(ifr) : empty;
+                String otherName = isNotEmpty(getOtherName(ifr)) ? getOtherName(ifr) : empty;
                 String attributes = "<BVNNO>" + getBvn(ifr) + "</BVNNO><R_SNAME>" + getSurName(ifr) + "</R_SNAME><R_FNAME>" + getFirstName(ifr) + "</R_FNAME><R_ONAME>" + otherName + "</R_ONAME>";
                 logger.info("attribute: "+attributes);
                 String processDefId = LoadProp.aoProcessDefId;
@@ -588,10 +588,10 @@ public class Shared implements Constants {
                 String queueId = LoadProp.aoQueueId;
                 logger.info("queueId: "+queueId);
                 ServiceHandler service = initializeService();
-                String wiName = service.createWorkItem(attributes, processDefId, queueId, flagN);
-                logger.info("Ao workItem created: "+wiName);
+                String aoWiName = service.createWorkItem(attributes, processDefId, queueId, flagN);
+                logger.info("Ao workItem created: "+aoWiName);
                 service.disconnectCabinet();
-                if (isNotEmpty(wiName))  new DbConnect(ifr,Query.setAoDetails(wiName)).saveQuery();
+                if (isNotEmpty(aoWiName))  new DbConnect(ifr,Query.setAoDetails(aoWiName,getWorkItemNumber(ifr))).saveQuery();
             }
         } catch (Exception e){
             logger.error("Exception occurred in createAoWiName method: "+e.getMessage());
