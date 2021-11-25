@@ -57,7 +57,7 @@ public class Controller implements Constants {
                 String status = xmlParser.getValueOf(apiStatus);
                 String apiFlag = xmlParser.getValueOf(apiSuccessFailureFlag);
 
-                if (isStatusSuccess(status) && isSuccessFailure(apiFlag,flag)){
+                if (isStatusSuccess(status) && isSuccessFailure(apiFlag, flagY)){
                     Set<Map<String,String>> data = xmlParser.getXMLData(response,"RMInfo");
                     for (Map<String,String> dataSet : data) accountList.add(dataSet.get("AcctID"));
 
@@ -200,7 +200,7 @@ public class Controller implements Constants {
     }
 
     private static boolean isStatusFailed(String status){
-        return status.equalsIgnoreCase(apiSuccess);
+        return status.equalsIgnoreCase(apiFailed) || status.equalsIgnoreCase(apiFailure);
     }
 
     private static boolean isSuccessFailure(String apiFlag,String compareFlag){

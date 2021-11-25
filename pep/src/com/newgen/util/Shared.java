@@ -38,7 +38,7 @@ public class Shared implements Constants {
             clearFields(ifr, bvFlagLocal);
             resultSet = new DbConnect(ifr, Query.getIsUserMemberOfGroup(getLoginUser(ifr), getBmGroupName(ifr))).getData();
             int count = getFormattedNumber(getDataByCoordinates(resultSet, 0, 0));
-            if (count > 0) setFields(ifr, bvFlagLocal, flag);
+            if (count > 0) setFields(ifr, bvFlagLocal, flagY);
         } catch (Exception e){
             logger.info("Exception occurred in checkBmIsInitiator method: "+e.getMessage());
         }
@@ -93,7 +93,7 @@ public class Shared implements Constants {
             String tat = getTat(getEntryDate(ifr), getCurrentDateTime());
             setTableGridData(ifr, decisionHistoryTable, new String[]{dhColStaffId, dhColPrevWs, dhColDecision, dhColRemarks, dhColEntryDate, dhColExitDate, dhColTat},
                     new String[]{getLoginUser(ifr), getCurrentWorkStep(ifr), getDecision(ifr), getRemarks(ifr), getEntryDate(ifr), getCurrentDateTime(), tat});
-            setFields(ifr,decisionHistoryFlagLocal,flag);
+            setFields(ifr,decisionHistoryFlagLocal, flagY);
         }
     }
     public static String getUsersMailsInGroup(IFormReference ifr, String groupName){
@@ -479,10 +479,10 @@ public class Shared implements Constants {
         return getFieldValue(ifr,docFlagLocal);
     }
     public static boolean isDocGenerated(IFormReference ifr){
-        return getDocFlag(ifr).equalsIgnoreCase(flag);
+        return getDocFlag(ifr).equalsIgnoreCase(flagY);
     }
     public static void setDocFlag(IFormReference ifr){
-        setFields(ifr,docFlagLocal,flag);
+        setFields(ifr,docFlagLocal, flagY);
     }
 
     public static String checkDocGenerated(IFormReference ifr){
@@ -614,6 +614,6 @@ public class Shared implements Constants {
     }
 
     private static boolean isAoActive(){
-        return LoadProp.activateAo.equalsIgnoreCase(flag);
+        return LoadProp.activateAo.equalsIgnoreCase(flagY);
     }
 }

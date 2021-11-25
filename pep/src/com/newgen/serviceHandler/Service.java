@@ -59,9 +59,9 @@ public class Service implements Constants{
 
             if (Shared.isNotEmpty(bvnData)) {
 
-                if (bvnData.containsKey("error")) return bvnData.get("error").toString();
+                if (bvnData.containsKey(errorKey)) return bvnData.get(errorKey).toString();
 
-                List<String> accountList = (List<String>) bvnData.get("success");
+                List<String> accountList = (List<String>) bvnData.get(successKey);
 
                 logger.info("Account list: " + accountList);
 

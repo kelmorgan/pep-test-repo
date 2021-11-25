@@ -107,7 +107,7 @@ public interface Constants {
 	 String True = "true";
 	 String bmGroupLabel = "BM_";
 	 String rmGroupLabel= "RM_";
-	 String flag = "Y";
+	 String flagY = "Y";
 	 String flagN = "N";
 	 String decSubmit = "SUBMIT";
 	 String decRework = "REWORK";
@@ -128,8 +128,8 @@ public interface Constants {
 	 String yes = "YES";
 	 String apiSuccess = "SUCCESS";
 	 String apiStatus = "Status";
-	 String apiFailed = "Status";
-	 String apiFailure = "Status";
+	 String apiFailed = "FAILED";
+	 String apiFailure = "FAILURE";
 	 String apiSuccessFailureFlag = "SuccessOrFailure";
 	 String successKey = "success";
 	 String errorKey = "error";
