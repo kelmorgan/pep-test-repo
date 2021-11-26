@@ -42,7 +42,7 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 			case onClickEvent:{
 				switch (control){
 					case generateDocEvent:{
-						return GenerateDocument.generateDoc(ifr, Shared.getSessionId(ifr));
+						return GenerateDocument.generateDoc(ifr);
 					}
 				}
 			}

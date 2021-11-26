@@ -111,7 +111,7 @@ public class Shared implements Constants {
     }
  
     
-    public String getCurrentDateTime (String format){
+    public static String getCurrentDateTime (String format){
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
     }
     public static String getCurrentDateTime (){
@@ -615,5 +615,30 @@ public class Shared implements Constants {
 
     private static boolean isAoActive(){
         return LoadProp.activateAo.equalsIgnoreCase(flagY);
+    }
+
+    public static void setStaffName(IFormReference ifr,String nameLocal,String staffIdLocal){
+        try {
+                resultSet = new DbConnect(ifr, Query.getStaffName(getLoginUser(ifr))).getData();
+                String firstName = getDataByCoordinates(resultSet, 0, 0);
+                String surName = getDataByCoordinates(resultSet, 0, 1);
+                String fullName = firstName.trim().toUpperCase() + " " + surName.trim().toUpperCase();
+
+                validate = new DbConnect(ifr, Query.updateSignNameInfo(nameLocal, staffIdLocal, getWorkItemNumber(ifr), fullName, getLoginUser(ifr))).saveQuery();
+                setFields(ifr, new String[]{nameLocal, staffIdLocal}, new String[]{fullName, getLoginUser(ifr)});
+                if (isSaved(validate)) logger.info("Staff Name successfully Updated");
+        } catch (Exception e){
+            logger.error("Exception occurred in setStaffName Method: "+e.getMessage());
+        }
+
+    }
+    public static void setSignDate(IFormReference ifr, String signDateLocal){
+        if (isDecisionApprove(ifr)) {
+            String signDate = getCurrentDateTime(dbDateTimeFormat);
+            validate = new DbConnect(ifr, Query.updateSignDateInfo(signDateLocal, signDate, getWorkItemNumber(ifr))).saveQuery();
+            setFields(ifr, signDateLocal, signDate);
+
+            if (isSaved(validate)) logger.info("Sign Date successfully Updated");
+        }
     }
 }

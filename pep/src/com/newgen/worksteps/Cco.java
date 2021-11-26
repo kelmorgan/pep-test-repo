@@ -43,10 +43,14 @@ public class Cco implements IFormServerEventHandler , SharedI, Constants {
                 break;
             case onDoneEvent:{
                 switch (control){
+                    case signEvent:{
+                        Shared.setSignDate(ifr,ccoSignDateLocal);
+                    }
+                    break;
                     case decisionHistoryEvent:{
                         Shared.setDecisionHistory(ifr);
-                        break;
                     }
+                    break;
                     case sendMailEvent:
                 }
             }
@@ -94,6 +98,7 @@ public class Cco implements IFormServerEventHandler , SharedI, Constants {
             Shared.enableFields(ifr,new String[]{decisionLocal,remarksLocal});
             Shared.setMandatory(ifr,new String[]{decisionLocal,remarksLocal});
             Shared.checkPepVerification(ifr);
+            Shared.setStaffName(ifr,ccoNameLocal,ccoStaffIdLocal);
             setDecision(ifr);
         }
         catch (Exception e){

@@ -43,6 +43,10 @@ public class LineExecutive implements IFormServerEventHandler, Constants, Shared
             break;
             case onDoneEvent:{
                 switch (control){
+                    case signEvent:{
+                        Shared.setSignDate(ifr,edSignDateLocal);
+                    }
+                    break;
                     case decisionHistoryEvent:{
                         Shared.setDecisionHistory(ifr);
                         break;
@@ -93,6 +97,7 @@ public class LineExecutive implements IFormServerEventHandler, Constants, Shared
             Shared.enableFields(ifr,new String[]{decisionLocal,remarksLocal});
             Shared.setMandatory(ifr,new String[]{decisionLocal,remarksLocal});
             Shared.checkPepVerification(ifr);
+            Shared.setStaffName(ifr,edNameLocal,edStaffIdLocal);
             setDecision(ifr);
         }
         catch (Exception e){

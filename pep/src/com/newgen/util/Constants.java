@@ -85,6 +85,12 @@ public interface Constants {
 	 String repoAcctOpenDateLocal = "REPO_ACCTOPENDATE";
 	 String aoWiNameFlagLocal = "AOFLAG";
 	 String aoWiNameLocal = "AOWINAME";
+	 String edNameLocal = "EDNAME";
+	 String ccoNameLocal = "CCONAME";
+	 String edStaffIdLocal = "EDSTAFFID";
+	 String ccoStaffIdLocal = "CCOSTAFFID";
+	 String edSignDateLocal = "EDSIGNDATE";
+	 String ccoSignDateLocal = "CCOSIGNDATE";
 
 	//sections
 	String accountListSection = "ACCTLINKEDINFOSECTION";
@@ -152,6 +158,7 @@ public interface Constants {
 	String setRepoEvent = "setRepoEvent";
 	String updatePepRepoEvent = "updatePepRepoEvent";
 	String createAoWorkItemEvent = "createAoWorkItemEvent";
+	String signEvent = "signEvent";
 
 	
 	//process info
@@ -174,6 +181,14 @@ public interface Constants {
 	String aoProcessDefIdField = "AOPROCESSDEFID";
 	String mailFromField = "MAILFROM";
 	String processDefIdField = "PROCESSDEFID";
+	String cabinetNameField = "CABINETNAME";
+	String templateNameField = "TEMPLATENAME";
+	String templatePortField = "TEMPLATEPORT";
+	String serverIpField = "SERVERIP";
+	String serverPortField = "SERVERPORT";
+	String jtsIpField = "JTSIP";
+	String jtsPortField = "JTSPORT";
+	String serverNameField = "SERVERNAME";
 
 
 	//Api Service Name

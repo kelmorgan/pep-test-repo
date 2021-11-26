@@ -2,6 +2,15 @@ package com.newgen.util;
 
 public class Query {
 
+    public static String updateSignDateInfo(String signDateLocal,String signDate, String wiName){
+        return "update pep_ext set "+signDateLocal+" = '"+signDate+"' where winame = '"+wiName+"'";
+    }
+    public static String updateSignNameInfo(String nameLocal, String staffIdLocal, String wiName, String name, String staffId){
+        return "update pep_ext set "+nameLocal+" = '"+name+"', "+staffIdLocal+" = '"+staffId+"' where winame = '"+wiName+"'";
+    }
+    public static  String getStaffName(String userName){
+        return "select personalname, familyname from pdbuser where upper(username) = upper('"+userName+"')";
+    }
     public static String setAoDetails(String aoWiName,String wiName){
         return "update pep_ext set aowiname = '"+aoWiName+"', aoflag = 'Y' where winame = '"+wiName+"'";
     }
