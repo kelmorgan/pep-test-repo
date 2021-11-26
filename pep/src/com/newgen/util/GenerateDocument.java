@@ -22,12 +22,23 @@ public class GenerateDocument implements Constants{
             logger.info("Request for template generation: "+ request);
 
             int templatePort = Integer.parseInt(LoadProp.templatePort);
-
-            String response = callSocketServer(LoadProp.serverIp,templatePort,request);
+            String response;
+            try {
+             response = callSocketServer(LoadProp.serverIp,templatePort,request);
             logger.info("Response from template generation: "+ response);
 
+
+
+            } catch (Exception e) {
+                response = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                        + "<message>\n"
+                        + "<ErrorCode>1</ErrorCode>\n"
+                        + "<ErrorDesc>Error while generating template.</ErrorDesc>\n"
+                        + "</message>";
+            }
+
             Shared.setDocFlag(ifr);
-            return "Document Generated Successfully";
+            return response;
         }
         catch (Exception e){
             logger.error("Exception occurred in generateDoc Method: "+ e.getMessage());
