@@ -46,7 +46,7 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
             case onClickEvent: {
                 switch (control) {
                     case apiEvent: {
-                        return new Service(ifr).getAccountListTest();
+                        return new Service(ifr).getAccountList();
                     }
                 }
             }
