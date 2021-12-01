@@ -65,6 +65,9 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 					case apiEvent: {
 						return new Service(ifr).getAccountList();
 					}
+					case generateDocEvent:{
+						return GenerateDocument.generateDoc(ifr);
+					}
 				}
 			}
 			break;
