@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="call-client-handler">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/OneDrive/Documents/Work/Projects/services/code/jar/call-client-handler-dependency/call-client-handler.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Documents/Work/Projects/services/code/jar/call-client-handler-dependency/xml-parser.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Documents/Work/Projects/services/code/jar/ibps-service depenedency/ibps-service.jar!/" />
+      <root url="jar://$USER_HOME$/OneDrive/Documents/Work/Projects/services/code/jar/iform api dependency/form-api.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

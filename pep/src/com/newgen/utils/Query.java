@@ -1,4 +1,4 @@
-package com.newgen.util;
+package com.newgen.utils;
 
 public class Query {
 

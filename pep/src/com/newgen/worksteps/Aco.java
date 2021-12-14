@@ -1,14 +1,15 @@
 package com.newgen.worksteps;
 
+import com.kelmorgan.ibpsformapis.apis.Form;
 import com.newgen.iforms.EControl;
 import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
-import com.newgen.util.Constants;
-import com.newgen.util.LogGenerator;
-import com.newgen.util.Shared;
-import com.newgen.util.SharedI;
+import com.newgen.utils.Constants;
+import com.newgen.utils.LogGenerator;
+import com.newgen.utils.Shared;
+import com.newgen.utils.SharedI;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
@@ -89,11 +90,11 @@ public class Aco implements IFormServerEventHandler , Constants, SharedI {
     public void formLoad(IFormReference ifr) {
         try {
             Shared.hideSections(ifr);
-            Shared.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
-            Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepCategorySection,pepVerificationSection,decisionSection});
+            Form.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
+            Form.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepCategorySection,pepVerificationSection,decisionSection});
             Shared.checkPepVerification(ifr);
-            Shared.enableFields(ifr,new String[]{decisionLocal,remarksLocal});
-            Shared.setMandatory(ifr,new String[]{decisionLocal,remarksLocal});
+            Form.enableFields(ifr,new String[]{decisionLocal,remarksLocal});
+            Form.setMandatory(ifr,new String[]{decisionLocal,remarksLocal});
             setDecision(ifr);
         }
         catch (Exception e){

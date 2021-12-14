@@ -3,7 +3,8 @@ package com.newgen.worksteps;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.newgen.util.*;
+import com.kelmorgan.ibpsformapis.apis.Form;
+import com.newgen.utils.*;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
@@ -42,7 +43,7 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 			case onClickEvent:{
 				switch (control){
 					case generateDocEvent:{
-						return GenerateDocument.generateDoc(ifr);
+						return new GenerateDocument(ifr).generateDoc();
 					}
 				}
 			}
@@ -53,9 +54,8 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 						return Shared.checkDocGenerated(ifr);
 					}
 					case createAoWorkItemEvent:{
-						Shared.createAoWorkItem(ifr);
+						return new CreateAoWorkItem(ifr).createWorkItem();
 					}
-					break;
 					case decisionHistoryEvent:{
 						Shared.setDecisionHistory(ifr);
 					}
@@ -108,19 +108,19 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 	public void formLoad(IFormReference ifr) {
 		try {
 			Shared.hideSections(ifr);
-			Shared.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
+			Form.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
 			Shared.checkPepVerification(ifr);
 			if (Shared.isPrevWs(ifr,ccoWs)){
 				Shared.onboardPepInRepo(ifr);
-				Shared.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection,generateDocumentSection, pepVerificationSection, decisionSection});
+				Form.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection,generateDocumentSection, pepVerificationSection, decisionSection});
 				Shared.setDecisionApprove(ifr);
-				Shared.enableFields(ifr,new String[]{generatePepDocBtn});
-				Shared.setFields(ifr,remarksLocal,"Pep on-boarding approved and successful");
+				Form.enableFields(ifr,new String[]{generatePepDocBtn});
+				Form.setFields(ifr,remarksLocal,"Pep on-boarding approved and successful");
 			}
 			else {
-				Shared.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection, pepVerificationSection, decisionSection});
-				Shared.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
-				Shared.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
+				Form.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection, pepVerificationSection, decisionSection});
+				Form.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
+				Form.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
 				setDecision(ifr);
 			}
 			Shared.checkSol(ifr);

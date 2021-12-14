@@ -1,7 +1,5 @@
 package com.newgen.api.generateXml;
 
-import com.newgen.util.Shared;
-
 public class RequestXml {
 
     public static String getBvnLinkAcctRequest(String bvn){

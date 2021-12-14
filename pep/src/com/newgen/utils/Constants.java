@@ -1,4 +1,4 @@
-package com.newgen.util;
+package com.newgen.utils;
 
 import java.io.File;
 
@@ -139,6 +139,7 @@ public interface Constants {
 	 String apiSuccessFailureFlag = "SuccessOrFailure";
 	 String successKey = "success";
 	 String errorKey = "error";
+	 String exceptionMsg = "Kindly contact IBPS support";
 
 
 	//eventName/controlName

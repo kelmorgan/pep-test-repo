@@ -1,14 +1,15 @@
 package com.newgen.worksteps;
 
+import com.kelmorgan.ibpsformapis.apis.Form;
 import com.newgen.iforms.EControl;
 import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
-import com.newgen.serviceHandler.Service;
-import com.newgen.util.Constants;
-import com.newgen.util.Shared;
-import com.newgen.util.SharedI;
+import com.newgen.api.serviceHandler.Service;
+import com.newgen.utils.Constants;
+import com.newgen.utils.Shared;
+import com.newgen.utils.SharedI;
 import org.json.simple.JSONArray;
 
 import javax.servlet.http.HttpServletRequest;
@@ -97,7 +98,7 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
     @Override
     public void formLoad(IFormReference ifr) {
         Shared.hideSections(ifr);
-        Shared.setFields(ifr,new String[]{currentWsLocal,previousWsLocal}, new String[]{Shared.getCurrentWorkStep(ifr),na});
+        Form.setFields(ifr,new String[]{currentWsLocal,previousWsLocal}, new String[]{Form.getCurrentWorkStep(ifr),na});
         Shared.setInitiatorDetails(ifr);
         Shared.setRepoView(ifr);
         setDecision(ifr);

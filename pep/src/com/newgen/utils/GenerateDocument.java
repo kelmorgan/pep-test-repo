@@ -1,6 +1,6 @@
-package com.newgen.util;
+package com.newgen.utils;
 
-import com.newgen.api.generateXml.RequestXml;
+import com.kelmorgan.ibpsformapis.apis.Form;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
@@ -12,12 +12,17 @@ import java.nio.charset.StandardCharsets;
 
 public class GenerateDocument implements Constants{
     private static final Logger logger = LogGenerator.getLoggerInstance(GenerateDocument.class);
+    private final IFormReference ifr;
 
-    public static String generateDoc (IFormReference ifr) {
+    public GenerateDocument(IFormReference ifr) {
+        this.ifr = ifr;
+    }
+
+    public  String generateDoc () {
         try {
-            String request = RequestXml.getGenerateTemplateRequest(Shared.getWorkItemNumber(ifr),
-                    LoadProp.jtsIp,LoadProp.jtsPort,Shared.getSessionId(ifr),LoadProp.serverIp,LoadProp.serverPort,
-                    LoadProp.serverName,LoadProp.cabinetName,Shared.getProcessName(ifr),LoadProp.templateName,Shared.getCurrentWorkStep(ifr));
+            String request = getGenerateTemplateRequest(Form.getWorkItemNumber(ifr),
+                    LoadProp.jtsIp,LoadProp.jtsPort,Form.getSessionId(ifr),LoadProp.serverIp,LoadProp.serverPort,
+                    LoadProp.serverName,LoadProp.cabinetName,Form.getProcessName(ifr),LoadProp.templateName, Form.getCurrentWorkStep(ifr));
 
             logger.info("Request for template generation: "+ request);
 
@@ -115,5 +120,9 @@ public class GenerateDocument implements Constants{
         }
 
         return sTemp+responseXml;
+    }
+
+    private String getGenerateTemplateRequest(String wiName, String jtsIp,String jtsPort, String sessionId, String serverIp, String serverPort,String serverName, String cabinetName, String processName,String templateName,String currentWorkStep){
+        return "WI_NAME=" + wiName + "~~JTS_IP="+jtsIp+"~~JTS_PORT="+jtsPort+"~~SESSION_ID=" + sessionId + "~~SERVER_IP=" + serverIp + "~~SERVER_PORT=" + serverPort + "~~SERVER_NAME="+serverName+"~~CABINET_NAME=" + cabinetName + "~~PROCESS_NAME=" + processName + "~~TEMPLATE_NAME=" + templateName + "~~ACTIVITY_NAME=" + currentWorkStep;
     }
 }

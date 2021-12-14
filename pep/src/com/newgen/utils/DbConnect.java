@@ -1,5 +1,6 @@
-package com.newgen.util;
+package com.newgen.utils;
 
+import com.kelmorgan.ibpsformapis.apis.Form;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 import java.util.List;
@@ -13,13 +14,13 @@ public class DbConnect {
     public List<List<String>> getData (){
         try {
             logger.info("get data query-- "+query);
-            return ifr.getDataFromDB(query);}
+            return Form.getData(ifr,query);}
         catch (Exception e){ logger.error("Exception Occurred in fetching Data from db-- "+ e.getMessage()); return null; }
     }
     public int saveQuery(){
         try {
             logger.info("save data query-- "+query);
-            return ifr.saveDataInDB(query);
+            return Form.saveData(ifr,query);
         }
         catch(Exception e){ logger.error("Exception Occurred in saving Data to db-- "+ e.getMessage()); return -1; }
     }

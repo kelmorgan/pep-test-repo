@@ -3,8 +3,9 @@ package com.newgen.worksteps;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.newgen.serviceHandler.Service;
-import com.newgen.util.*;
+import com.kelmorgan.ibpsformapis.apis.Form;
+import com.newgen.api.serviceHandler.Service;
+import com.newgen.utils.*;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
@@ -65,9 +66,6 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 					case apiEvent: {
 						return new Service(ifr).getAccountList();
 					}
-					case generateDocEvent:{
-						return GenerateDocument.generateDoc(ifr);
-					}
 				}
 			}
 			break;
@@ -126,10 +124,10 @@ public class BranchInitiator implements IFormServerEventHandler , SharedI, Const
 			Shared.hideSections(ifr);
 			Shared.setInitiatorDetails(ifr);
 			Shared.checkBmIsInitiator(ifr);
-			Shared.setFields(ifr,new String[]{currentWsLocal,previousWsLocal}, new String[]{Shared.getCurrentWorkStep(ifr),na});
-			Shared.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection,pepCategorySection});
-			Shared.enableFields(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal,lineExecutiveLocal,decisionLocal,remarksLocal,searchBvnBtn});
-			Shared.setMandatory(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal,lineExecutiveLocal,decisionLocal,remarksLocal});
+			Form.setFields(ifr,new String[]{currentWsLocal,previousWsLocal}, new String[]{Form.getCurrentWorkStep(ifr),na});
+			Form.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepVerificationSection,decisionSection,pepCategorySection});
+			Form.enableFields(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal,lineExecutiveLocal,decisionLocal,remarksLocal,searchBvnBtn});
+			Form.setMandatory(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal,lineExecutiveLocal,decisionLocal,remarksLocal});
 			Shared.loadLineExecutive(ifr);
 			Shared.setAcoFilter(ifr);
 			setDecision(ifr);

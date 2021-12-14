@@ -1,7 +1,10 @@
-package com.newgen.util;
+package com.newgen.utils.mail;
 
 
 import com.newgen.iforms.custom.IFormReference;
+import com.newgen.utils.DbConnect;
+import com.newgen.utils.LogGenerator;
+import com.newgen.utils.Query;
 import org.apache.log4j.Logger;
 
 public class MailSetup {
