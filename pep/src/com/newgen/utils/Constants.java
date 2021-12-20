@@ -177,6 +177,7 @@ public interface Constants {
 	//config
 	String logPath = "nglogs/NGF_Logs/pep/";
 	String configPath = System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "pep.properties";
+	String mailMessagePath = File.separator + "PEP" + File.separator +"config"+  File.separator + "mailmessages.properties";
 	String activateAoField = "ACTIVATEAO";
 	String aoQueueIdField = "AOQUEUEID";
 	String aoProcessDefIdField = "AOPROCESSDEFID";
@@ -190,6 +191,20 @@ public interface Constants {
 	String jtsIpField = "JTSIP";
 	String jtsPortField = "JTSPORT";
 	String serverNameField = "SERVERNAME";
+	String mailSubjectField="MAILSUBJECT";
+	String acoGroupName = "";
+	String amlGroupName = "";
+	String ccoGroupName = "";
+	String lineExecGroupName = "";
+
+	//mail messages
+	String branchInitiatorMsg = "BRANCHINITIATORMSG";
+	String approveMsg = "APPROVEMSG";
+	String rejectMsg = "REJECTMSG";
+	String returnMsg = "RETURNMSG";
+	String amlInitiatorMsg = "AMLINITIATORMSG";
+	String amlApproveMsg = "AMLAPPROVEMSG";
+	String amlRejectMsg = "AMLREJECTMSG";
 
 
 	//Api Service Name

@@ -8,8 +8,11 @@ import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
 import com.newgen.api.serviceHandler.Service;
 import com.newgen.utils.Constants;
+import com.newgen.utils.LoadProp;
 import com.newgen.utils.Shared;
 import com.newgen.utils.SharedI;
+import com.newgen.utils.mail.MailMessage;
+import com.newgen.utils.mail.MailSetup;
 import org.json.simple.JSONArray;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +36,7 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
 
     @Override
     public String executeServerEvent(IFormReference ifr, String control, String event, String data) {
-        switch (event){
+        switch (event) {
             case onLoadEvent:
                 break;
             case onChangeEvent: {
@@ -43,7 +46,7 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
                     }
                 }
             }
-                break;
+            break;
             case onClickEvent: {
                 switch (control) {
                     case apiEvent: {
@@ -51,10 +54,10 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
                     }
                 }
             }
-                break;
-            case onDoneEvent:{
-                switch (control){
-                    case decisionHistoryEvent:{
+            break;
+            case onDoneEvent: {
+                switch (control) {
+                    case decisionHistoryEvent: {
                         Shared.setDecisionHistory(ifr);
                         break;
                     }
@@ -98,7 +101,7 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
     @Override
     public void formLoad(IFormReference ifr) {
         Shared.hideSections(ifr);
-        Form.setFields(ifr,new String[]{currentWsLocal,previousWsLocal}, new String[]{Form.getCurrentWorkStep(ifr),na});
+        Form.setFields(ifr, new String[]{currentWsLocal, previousWsLocal}, new String[]{Form.getCurrentWorkStep(ifr), na});
         Shared.setInitiatorDetails(ifr);
         Shared.setRepoView(ifr);
         setDecision(ifr);
@@ -106,11 +109,15 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
 
     @Override
     public void sendMail(IFormReference ifr) {
-
+        if (Shared.isDecisionSubmit(ifr)) {
+            String sendTo = Shared.getUsersMailsInGroup(ifr, bmGroupLabel + Shared.getUserSol(ifr));
+            String message = new MailMessage(ifr).getAmlInitiatorMsg();
+            new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+        }
     }
 
     @Override
     public void setDecision(IFormReference ifr) {
-        Shared.setDecision(ifr,decisionLocal,new String[]{decSubmit,decDiscard});
+        Shared.setDecision(ifr, decisionLocal, new String[]{decSubmit, decDiscard});
     }
 }

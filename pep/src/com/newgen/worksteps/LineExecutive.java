@@ -6,10 +6,9 @@ import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
-import com.newgen.utils.Constants;
-import com.newgen.utils.LogGenerator;
-import com.newgen.utils.Shared;
-import com.newgen.utils.SharedI;
+import com.newgen.utils.*;
+import com.newgen.utils.mail.MailMessage;
+import com.newgen.utils.mail.MailSetup;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class LineExecutive implements IFormServerEventHandler, Constants, SharedI {
     private final Logger logger = LogGenerator.getLoggerInstance(LineExecutive.class);
+
     @Override
     public void beforeFormLoad(FormDef formDef, IFormReference ifr) {
         formLoad(ifr);
@@ -35,20 +35,20 @@ public class LineExecutive implements IFormServerEventHandler, Constants, Shared
 
     @Override
     public String executeServerEvent(IFormReference ifr, String control, String event, String data) {
-        switch (event){
+        switch (event) {
             case onLoadEvent:
-            break;
+                break;
             case onChangeEvent:
-            break;
+                break;
             case onClickEvent:
-            break;
-            case onDoneEvent:{
-                switch (control){
-                    case signEvent:{
-                        Shared.setSignDate(ifr,edSignDateLocal);
+                break;
+            case onDoneEvent: {
+                switch (control) {
+                    case signEvent: {
+                        Shared.setSignDate(ifr, edSignDateLocal);
                     }
                     break;
-                    case decisionHistoryEvent:{
+                    case decisionHistoryEvent: {
                         Shared.setDecisionHistory(ifr);
                         break;
                     }
@@ -93,26 +93,36 @@ public class LineExecutive implements IFormServerEventHandler, Constants, Shared
     public void formLoad(IFormReference ifr) {
         try {
             Shared.hideSections(ifr);
-            Form.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
-            Form.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepCategorySection,pepVerificationSection,decisionSection});
-            Form.enableFields(ifr,new String[]{decisionLocal,remarksLocal});
-            Form.setMandatory(ifr,new String[]{decisionLocal,remarksLocal});
+            Form.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
+            Form.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
+            Form.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
+            Form.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
             Shared.checkPepVerification(ifr);
-            Shared.setStaffName(ifr,edNameLocal,edStaffIdLocal);
+            Shared.setStaffName(ifr, edNameLocal, edStaffIdLocal);
             setDecision(ifr);
-        }
-        catch (Exception e){
-            logger.error("Exception occurred in Line Executive FormLoad : "+ e.getMessage());
+        } catch (Exception e) {
+            logger.error("Exception occurred in Line Executive FormLoad : " + e.getMessage());
         }
     }
 
     @Override
     public void sendMail(IFormReference ifr) {
-
+        MailMessage mailMessage = new MailMessage(ifr);
+        String message;
+        String sendTo;
+        if (Shared.isDecisionApprove(ifr)) {
+            sendTo = Shared.getUsersMailsInGroup(ifr, ccoGroupName);
+            message = mailMessage.getApproveMsg();
+            new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+        } else if (Shared.isDecisionReturn(ifr)) {
+            sendTo = Shared.getUsersMailsInGroup(ifr, rmGroupLabel + Shared.getUserSol(ifr));
+            message = mailMessage.getRejectMsg();
+            new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+        }
     }
 
     @Override
     public void setDecision(IFormReference ifr) {
-        Shared.setDecision(ifr,decisionLocal,new String[]{decApprove,decReturn});
+        Shared.setDecision(ifr, decisionLocal, new String[]{decApprove, decReturn});
     }
 }

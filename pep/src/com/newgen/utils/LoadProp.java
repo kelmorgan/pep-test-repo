@@ -20,6 +20,7 @@ public class LoadProp implements  Constants {
     public static String jtsIp;
     public static String jtsPort;
     public static String serverName;
+    public static String mailSubject;
 
 
     static {
@@ -42,6 +43,7 @@ public class LoadProp implements  Constants {
             serverPort = properties.getProperty(serverPortField);
             jtsIp = properties.getProperty(jtsIpField);
             jtsPort = properties.getProperty(jtsPortField);
+            mailSubject = properties.getProperty(mailSubjectField);
         }
         catch  (Exception e){
             logger.error("Error occurred in load property file-- "+ e.getMessage() );

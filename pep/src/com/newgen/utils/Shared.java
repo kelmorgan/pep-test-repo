@@ -120,12 +120,12 @@ public class Shared implements Constants {
     }
 
     public static void setDecision(IFormReference ifr, String decisionLocal, String[] values) {
-        Form.setDropDown(ifr,decisionLocal,values);
+        Form.setDropDown(ifr, decisionLocal, values);
         Form.clearFields(ifr, decisionLocal);
     }
 
     public static void setDecision(IFormReference ifr, String decisionLocal, String[] labels, String[] values) {
-        Form.setDropDown(ifr,decisionLocal,labels,values);
+        Form.setDropDown(ifr, decisionLocal, labels, values);
         Form.clearFields(ifr, decisionLocal);
     }
 
@@ -135,6 +135,10 @@ public class Shared implements Constants {
 
     public static boolean isEmpty(Map<String, Object> map) {
         return map.isEmpty();
+    }
+
+    public static boolean isDecisionDiscard(IFormReference ifr) {
+        return getDecision(ifr).equalsIgnoreCase(decDiscard);
     }
 
     public boolean compareDate(String startDate, String endDate) {
@@ -254,7 +258,7 @@ public class Shared implements Constants {
         try {
             if (isCurrWs(ifr, branchInitiatorWs)) Form.clearDropDown(ifr, lineExecutiveLocal);
             resultSet = new DbConnect(ifr, Query.getLineExecutives()).getData();
-            resultSet.forEach(result ->{
+            resultSet.forEach(result -> {
                 String lineExecName = result.get(0);
                 Form.addToDropDown(ifr, lineExecutiveLocal, lineExecName);
             });
@@ -438,7 +442,7 @@ public class Shared implements Constants {
 
             if (isEmpty(resultSet)) return "No record found for this pep account number";
 
-            resultSet.forEach(result ->{
+            resultSet.forEach(result -> {
                 String sol = result.get(0);
                 String branchName = result.get(1);
                 String accountName = result.get(2);
@@ -526,7 +530,7 @@ public class Shared implements Constants {
             String surName = getDataByCoordinates(resultSet, 0, 1);
             String fullName = firstName.trim().toUpperCase() + " " + surName.trim().toUpperCase();
 
-            validate = new DbConnect(ifr, Query.updateSignNameInfo(nameLocal, staffIdLocal,Form.getWorkItemNumber(ifr), fullName, Form.getLoginUser(ifr))).saveQuery();
+            validate = new DbConnect(ifr, Query.updateSignNameInfo(nameLocal, staffIdLocal, Form.getWorkItemNumber(ifr), fullName, Form.getLoginUser(ifr))).saveQuery();
             Form.setFields(ifr, new String[]{nameLocal, staffIdLocal}, new String[]{fullName, Form.getLoginUser(ifr)});
             if (isSaved(validate)) logger.info("Staff Name successfully Updated");
         } catch (Exception e) {

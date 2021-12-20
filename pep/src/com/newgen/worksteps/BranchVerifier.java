@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kelmorgan.ibpsformapis.apis.Form;
 import com.newgen.utils.*;
+import com.newgen.utils.mail.MailMessage;
+import com.newgen.utils.mail.MailSetup;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
@@ -132,7 +134,19 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 
 	@Override
 	public void sendMail(IFormReference ifr) {
-
+		MailMessage mailMessage = new MailMessage(ifr);
+		String message;
+		String sendTo;
+		if(Shared.isDecisionApprove(ifr)){
+			sendTo = Shared.getUsersMailsInGroup(ifr,acoGroupName);
+			message = mailMessage.getApproveMsg();
+			new MailSetup(ifr,Form.getWorkItemNumber(ifr),sendTo,empty,LoadProp.mailSubject,message);
+		}
+		else if (Shared.isDecisionReturn(ifr)){
+			sendTo = Shared.getUsersMailsInGroup(ifr,rmGroupLabel+Shared.getUserSol(ifr));
+			message = mailMessage.getRejectMsg();
+			new MailSetup(ifr,Form.getWorkItemNumber(ifr),sendTo,empty,LoadProp.mailSubject,message);
+		}
 	}
 
 	@Override
