@@ -123,7 +123,7 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
                 message = mailMessage.getApproveMsg();
                 new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             } else if (Shared.isDecisionDiscard(ifr)) {
-                sendTo = Shared.getUsersMailsInGroup(ifr, amlGroupName);
+                //sendTo = Shared.getUsersMailsInGroup(ifr, Constants.amlGroupName);
                 message = mailMessage.getAmlRejectMsg();
                 new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             }
