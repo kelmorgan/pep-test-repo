@@ -1,5 +1,6 @@
 package com.newgen.iforms.user;
 
+import com.kelmorgan.ibpsformapis.apis.Form;
 import com.newgen.iforms.custom.IFormListenerFactory;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
@@ -18,8 +19,7 @@ public class PEP implements IFormListenerFactory, Constants {
 		IFormServerEventHandler objActivity = null;
 		try {
 
-			//String workStep = Form.getCurrentWorkStep(ifr);
-			String workStep = branchInitiatorWs;
+			String workStep = Form.getCurrentWorkStep(ifr);
 			logger.info("workStep: " + workStep);
 
 			if (Shared.isProcessName(ifr, pepProcessName)) {
