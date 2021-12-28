@@ -579,7 +579,7 @@ public class Shared implements Constants {
         documentList.add(idVerificationDoc);
         documentList.add(bvnDoc);
         documentList.add(mandateCardDoc);
-        if (isPepAcctCategory(ifr,pepAcctCategoryCorporate)) documentList.add(LoadProp.taxIdDoc);
+        if (isPepAcctCategory(ifr,pepAcctCategoryCorporate)) documentList.add(taxIdDoc);
         return documentList;
     }
 

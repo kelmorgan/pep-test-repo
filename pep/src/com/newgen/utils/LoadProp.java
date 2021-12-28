@@ -21,7 +21,6 @@ public class LoadProp implements Constants {
     public static String mailSubject;
     public static String pepMailGroup;
     public static String logPath;
-    public static String taxIdDoc;
 
 
     static {
