@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -546,5 +547,44 @@ public class Shared implements Constants {
 
             if (isSaved(validate)) logger.info("Sign Date successfully Updated");
         }
+    }
+
+    public static String validatePepDocuments(IFormReference ifr){
+        if (isDecisionSubmit(ifr)){
+            List<String> documents = getDocumentList(ifr);
+
+           for (String document : documents) {
+               if (isDocNotAttached(ifr, document)) {
+                   switch (document) {
+                       case aoDoc: return documentAttachMsg + aoDoc;
+                       case addressVerificationDoc: return  documentAttachMsg + addressVerificationDoc;
+                       case cddDoc: return  documentAttachMsg + cddDoc;
+                       case idDoc: return  documentAttachMsg + idDoc;
+                       case idVerificationDoc: return  documentAttachMsg + idVerificationDoc;
+                       case bvnDoc: return  documentAttachMsg + bvnDoc;
+                       case mandateCardDoc: return  documentAttachMsg + mandateCardDoc;
+                       case taxIdDoc: return  documentAttachMsg + taxIdDoc;
+                   }
+               }
+           }
+        }
+        return null;
+    }
+    private static List<String> getDocumentList(IFormReference ifr){
+        List<String> documentList = new ArrayList<>();
+        documentList.add(aoDoc);
+        documentList.add(addressVerificationDoc);
+        documentList.add(cddDoc);
+        documentList.add(idDoc);
+        documentList.add(idVerificationDoc);
+        documentList.add(bvnDoc);
+        documentList.add(mandateCardDoc);
+        if (isPepAcctCategory(ifr,pepAcctCategoryCorporate)) documentList.add(LoadProp.taxIdDoc);
+        return documentList;
+    }
+
+    private static boolean isDocNotAttached(IFormReference ifr,String documentName){
+        return Integer.parseInt(new DbConnect
+                (ifr,Query.getCheckDocQuery(Form.getWorkItemNumber(ifr),documentName)).getData().get(0).get(0) ) < 1;
     }
 }

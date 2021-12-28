@@ -7,10 +7,9 @@ import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
 import com.newgen.api.serviceHandler.Service;
-import com.newgen.utils.Constants;
-import com.newgen.utils.LogGenerator;
-import com.newgen.utils.Shared;
-import com.newgen.utils.SharedI;
+import com.newgen.utils.*;
+import com.newgen.utils.mail.MailMessage;
+import com.newgen.utils.mail.MailSetup;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Rework implements IFormServerEventHandler, SharedI, Constants {
     private final Logger logger = LogGenerator.getLoggerInstance(Rework.class);
+
     @Override
     public void beforeFormLoad(FormDef formDef, IFormReference ifr) {
         formLoad(ifr);
@@ -36,43 +36,49 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
 
     @Override
     public String executeServerEvent(IFormReference ifr, String control, String event, String data) {
-        switch (event){
+        switch (event) {
             case onLoadEvent:
-            case onChangeEvent:{
-                switch (control){
-                    case lineExecFilterEvent:{
+            case onChangeEvent: {
+                switch (control) {
+                    case lineExecFilterEvent: {
                         Shared.setLineExecutiveFilter(ifr);
                         break;
                     }
-                    case accountTypeEvent:{
+                    case accountTypeEvent: {
                         Shared.showAccountTypeOthersField(ifr);
                         break;
                     }
-                    case isLinkedPepEvent:{
+                    case isLinkedPepEvent: {
                         Shared.linkedPep(ifr);
                         break;
                     }
-                    case mandatoryPepInfoEvent:{
+                    case mandatoryPepInfoEvent: {
                         return Shared.setPepMandatoryInfoFields(ifr);
                     }
                 }
             }
             break;
-            case onClickEvent:{
+            case onClickEvent: {
                 switch (control) {
                     case apiEvent: {
-                        return new Service(ifr).getAccountListTest();
+                        return new Service(ifr).getAccountList();
                     }
                 }
             }
             break;
-            case onDoneEvent:{
-                switch (control){
-                    case decisionHistoryEvent:{
-                        Shared.setDecisionHistory(ifr);
-                        break;
+            case onDoneEvent: {
+                switch (control) {
+                    case checkDocEvent: {
+                        return Shared.validatePepDocuments(ifr);
                     }
-                    case sendMailEvent:
+                    case decisionHistoryEvent: {
+                        Shared.setDecisionHistory(ifr);
+                    }
+                    break;
+                    case sendMailEvent: {
+                        sendMail(ifr);
+                    }
+                    break;
                 }
             }
         }
@@ -115,27 +121,30 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
             Shared.hideSections(ifr);
             Shared.checkBmIsInitiator(ifr);
             Shared.loadLineExecutive(ifr);
-            Form.clearFields(ifr,new String[]{remarksLocal,decisionHistoryFlagLocal});
-            Form.setVisible(ifr,new String[]{accountListSection,pepInfoSection,pepCategorySection,pepVerificationSection,decisionSection});
-            Form.enableFields(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal,lineExecutiveLocal,decisionLocal,remarksLocal,searchBvnBtn});
-            Form.setMandatory(ifr,new String[]{bvnLocal,pepCategoryLocal,pepAccountCategoryLocal,lineExecutiveLocal,decisionLocal,remarksLocal});
+            Form.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
+            Form.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
+            Form.enableFields(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal, searchBvnBtn});
+            Form.setMandatory(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal});
             Shared.setPepMandatoryInfoFields(ifr);
             Shared.checkPepVerification(ifr);
             setDecision(ifr);
             Shared.checkSol(ifr);
-        }
-        catch (Exception e){
-            logger.error("Exception occurred in Branch Initiator FormLoad : "+ e.getMessage());
+        } catch (Exception e) {
+            logger.error("Exception occurred in Branch Initiator FormLoad : " + e.getMessage());
         }
     }
 
     @Override
     public void sendMail(IFormReference ifr) {
-
+        if (Shared.isDecisionSubmit(ifr)) {
+            String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
+            String message = new MailMessage(ifr).getRejectMsg();
+            new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+        }
     }
 
     @Override
     public void setDecision(IFormReference ifr) {
-        Shared.setDecision(ifr,decisionLocal,new String[]{decSubmit,decDiscard});
+        Shared.setDecision(ifr, decisionLocal, new String[]{decSubmit, decDiscard});
     }
 }

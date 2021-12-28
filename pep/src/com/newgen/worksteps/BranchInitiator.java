@@ -72,11 +72,17 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
             break;
             case onDoneEvent: {
                 switch (control) {
+                    case checkDocEvent:{
+                        return Shared.validatePepDocuments(ifr);
+                    }
                     case decisionHistoryEvent: {
                         Shared.setDecisionHistory(ifr);
                     }
                     break;
-                    case sendMailEvent:
+                    case sendMailEvent:{
+                        sendMail(ifr);
+                    }
+                    break;
                 }
             }
         }
@@ -140,7 +146,7 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
     @Override
     public void sendMail(IFormReference ifr) {
         if (Shared.isDecisionSubmit(ifr)) {
-            String sendTo = Shared.getUsersMailsInGroup(ifr, bmGroupLabel + Shared.getUserSol(ifr));
+            String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
             String message = new MailMessage(ifr).getBranchInitiatorMsg();
             new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         }

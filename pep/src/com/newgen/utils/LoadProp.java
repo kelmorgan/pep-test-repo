@@ -1,14 +1,12 @@
 package com.newgen.utils;
 
-import org.apache.log4j.Logger;
-
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
-public class LoadProp implements  Constants {
-    private static final Logger logger = LogGenerator.getLoggerInstance(LoadProp.class);
-	public static String mailFrom;
-	public static String processDefId;
+public class LoadProp implements Constants {
+    public static String mailFrom;
+    public static String processDefId;
     public static String activateAo;
     public static String aoProcessDefId;
     public static String aoQueueId;
@@ -21,11 +19,13 @@ public class LoadProp implements  Constants {
     public static String jtsPort;
     public static String serverName;
     public static String mailSubject;
+    public static String pepMailGroup;
+    public static String logPath;
+    public static String taxIdDoc;
 
 
     static {
         try {
-            logger.info("Start loading properties file");
             Properties properties = new Properties();
             InputStream in = new FileInputStream(configPath);
             properties.load(in);
@@ -44,9 +44,10 @@ public class LoadProp implements  Constants {
             jtsIp = properties.getProperty(jtsIpField);
             jtsPort = properties.getProperty(jtsPortField);
             mailSubject = properties.getProperty(mailSubjectField);
-        }
-        catch  (Exception e){
-            logger.error("Error occurred in load property file-- "+ e.getMessage() );
+            pepMailGroup = properties.getProperty(pepMailGroupField);
+            logPath = properties.getProperty(logPathField);
+        } catch (Exception e) {
+            System.out.println("Exception in Pep Process LoadProd Class: " + e.getMessage());
         }
     }
 }

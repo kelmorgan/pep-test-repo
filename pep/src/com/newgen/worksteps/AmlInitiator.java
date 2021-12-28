@@ -61,7 +61,10 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
                         Shared.setDecisionHistory(ifr);
                         break;
                     }
-                    case sendMailEvent:
+                    case sendMailEvent:{
+                        sendMail(ifr);
+                    }
+                    break;
                 }
             }
         }
@@ -110,7 +113,7 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
     @Override
     public void sendMail(IFormReference ifr) {
         if (Shared.isDecisionSubmit(ifr)) {
-            String sendTo = Shared.getUsersMailsInGroup(ifr, bmGroupLabel + Shared.getUserSol(ifr));
+            String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
             String message = new MailMessage(ifr).getAmlInitiatorMsg();
             new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         }

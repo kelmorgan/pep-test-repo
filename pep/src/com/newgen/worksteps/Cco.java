@@ -52,7 +52,10 @@ public class Cco implements IFormServerEventHandler, SharedI, Constants {
                         Shared.setDecisionHistory(ifr);
                     }
                     break;
-                    case sendMailEvent:
+                    case sendMailEvent:{
+                        sendMail(ifr);
+                    }
+                    break;
                 }
             }
         }
@@ -110,13 +113,13 @@ public class Cco implements IFormServerEventHandler, SharedI, Constants {
     public void sendMail(IFormReference ifr) {
         MailMessage mailMessage = new MailMessage(ifr);
         String message;
-        String sendTo;
+        String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
         if (Shared.isDecisionApprove(ifr)) {
-            sendTo = Shared.getUsersMailsInGroup(ifr, bmGroupLabel + Shared.getUserSol(ifr));
+            //sendTo = Shared.getUsersMailsInGroup(ifr, bmGroupLabel + Shared.getUserSol(ifr));
             message = mailMessage.getApproveMsg();
             new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         } else if (Shared.isDecisionReturn(ifr)) {
-            sendTo = Shared.getUsersMailsInGroup(ifr, rmGroupLabel + Shared.getUserSol(ifr));
+            //sendTo = Shared.getUsersMailsInGroup(ifr, rmGroupLabel + Shared.getUserSol(ifr));
             message = mailMessage.getRejectMsg();
             new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         }

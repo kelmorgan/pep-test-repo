@@ -17,7 +17,7 @@ public class CreateAoWorkItem {
 
     public String createWorkItem() {
         try {
-            if (isAoActive() && Shared.isPrevWs(ifr, Constants.ccoWs)) {
+            if (isValid()) {
                 String otherName = Shared.isNotEmpty(Shared.getOtherName(ifr)) ? Shared.getOtherName(ifr) : Constants.empty;
                 String attributes = "<BVNNO>" + Shared.getBvn(ifr) + "</BVNNO><R_SNAME>" + Shared.getSurName(ifr) + "</R_SNAME><R_FNAME>" + Shared.getFirstName(ifr) + "</R_FNAME><R_ONAME>" + otherName + "</R_ONAME>";
                 logger.info("attribute: " + attributes);
@@ -29,10 +29,11 @@ public class CreateAoWorkItem {
                 String aoWiName = service.createWorkItem(attributes, processDefId, queueId, Constants.flagN);
                 logger.info("Ao workItem created: " + aoWiName);
                 service.disconnectCabinet();
-                if (Shared.isNotEmpty(aoWiName))
+                if (Shared.isNotEmpty(aoWiName)) {
                     new DbConnect(ifr, Query.setAoDetails(aoWiName, Form.getWorkItemNumber(ifr))).saveQuery();
-
-                return "WorkItem successfully created on AO process. RefNo: " + aoWiName;
+                    return "WorkItem successfully created on AO process. RefNo: " + aoWiName;
+                }
+                else return "Something went wrong in creating AO WorkItem. " + Constants.exceptionMsg;
             }
         } catch (Exception e) {
             logger.error("Exception occurred in createAoWiName method: " + e.getMessage());
@@ -48,6 +49,10 @@ public class CreateAoWorkItem {
 
     private boolean isAoActive() {
         return LoadProp.activateAo.equalsIgnoreCase(Constants.flagY);
+    }
+
+    private boolean isValid(){
+        return isAoActive() && Shared.isPrevWs(ifr, Constants.ccoWs) && Shared.isPepCategory(ifr,Constants.pepCategoryNew);
     }
 
 }
