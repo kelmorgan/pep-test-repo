@@ -1,10 +1,12 @@
 package com.newgen.iforms.user;
 
+import com.kelmorgan.ibpsformapis.apis.Form;
 import com.newgen.iforms.custom.IFormListenerFactory;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.utils.Constants;
 import com.newgen.utils.LogGenerator;
+import com.newgen.utils.Shared;
 import com.newgen.worksteps.*;
 import org.apache.log4j.Logger;
 
@@ -17,12 +19,10 @@ public class PEP implements IFormListenerFactory, Constants {
 		IFormServerEventHandler objActivity = null;
 		try {
 
-			//String workStep = Form.getCurrentWorkStep(ifr);
-			String workStep =ifr.getActivityName();
+			String workStep = Form.getCurrentWorkStep(ifr);
 			logger.info("workStep: " + workStep);
-			String processName = ifr.getProcessName();
 
-			if (processName.equalsIgnoreCase(pepProcessName)) {
+			if (Shared.isProcessName(ifr, pepProcessName)) {
 				switch (workStep) {
 					case branchInitiatorWs: {
 						objActivity = new BranchInitiator();
