@@ -3,7 +3,7 @@ package com.newgen.utils;
 import com.kelmorgan.ibpservices.initializer.IBPSServiceHandler;
 import com.kelmorgan.ibpservices.initializer.ServiceInitializer;
 import com.kelmorgan.ibpservices.initializer.ServiceInjector;
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
@@ -30,7 +30,7 @@ public class CreateAoWorkItem {
                 logger.info("Ao workItem created: " + aoWiName);
                 service.disconnectCabinet();
                 if (Shared.isNotEmpty(aoWiName)) {
-                    new DbConnect(ifr, Query.setAoDetails(aoWiName, Form.getWorkItemNumber(ifr))).saveQuery();
+                    new DbConnect(ifr, Query.setAoDetails(aoWiName, FormApi.getWorkItemNumber(ifr))).saveQuery();
                     return "WorkItem successfully created on AO process. RefNo: " + aoWiName;
                 }
                 else return "Something went wrong in creating AO WorkItem. " + Constants.exceptionMsg;

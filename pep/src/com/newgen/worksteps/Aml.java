@@ -1,6 +1,6 @@
 package com.newgen.worksteps;
 
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.EControl;
 import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
@@ -96,15 +96,15 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
     public void formLoad(IFormReference ifr) {
         try {
             Shared.hideSections(ifr);
-            Form.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
+            FormApi.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
             if (Shared.isPrevWs(ifr, amlInitiatorWs)) {
                 Shared.setRepoView(ifr);
                 Shared.setDecision(ifr, decisionLocal, new String[]{decApprove, decDiscard});
             } else {
                 Shared.checkPepVerification(ifr);
-                Form.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
-                Form.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
-                Form.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
+                FormApi.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
+                FormApi.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
+                FormApi.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
                 setDecision(ifr);
             }
         } catch (Exception e) {
@@ -121,21 +121,21 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
             if (Shared.isDecisionApprove(ifr)) {
                 //sendTo = Shared.getUsersMailsInGroup(ifr, amlGroupName);
                 message = mailMessage.getApproveMsg();
-                new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+                new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             } else if (Shared.isDecisionDiscard(ifr)) {
                 //sendTo = Shared.getUsersMailsInGroup(ifr, Constants.amlGroupName);
                 message = mailMessage.getAmlRejectMsg();
-                new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+                new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             }
         } else {
             if (Shared.isDecisionApprove(ifr)) {
                 //sendTo = Shared.getUsersMailsInGroup(ifr, lineExecGroupName);
                 message = mailMessage.getApproveMsg();
-                new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+                new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             } else if (Shared.isDecisionReturn(ifr)) {
                // sendTo = Shared.getUsersMailsInGroup(ifr, rmGroupLabel + Shared.getUserSol(ifr));
                 message = mailMessage.getRejectMsg();
-                new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+                new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             }
         }
     }

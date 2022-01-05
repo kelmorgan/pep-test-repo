@@ -1,6 +1,6 @@
 package com.newgen.api.serviceHandler;
 
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.api.controllers.AccountDetailsController;
 import com.newgen.api.controllers.AccountLinkedToBvnController;
 import com.newgen.api.controllers.TestController;
@@ -24,17 +24,17 @@ public class Service implements Constants {
 
     public Service(IFormReference ifr) {
         this.ifr = ifr;
-        this.processName = Form.getProcessName(ifr);
-        this.wiName = Form.getWorkItemNumber(ifr);
+        this.processName = FormApi.getProcessName(ifr);
+        this.wiName = FormApi.getWorkItemNumber(ifr);
     }
 
     public String getAccountListTest() {
-        Form.clearTable(ifr, accountListTable);
+        FormApi.clearTable(ifr, accountListTable);
         String bvn = Shared.getBvn(ifr);
 
         if (Shared.isEmpty(bvn)) return "Kindly enter BVN";
         if (isBvnValid(bvn.length())) {
-            Form.clearFields(ifr, bvnLocal);
+            FormApi.clearFields(ifr, bvnLocal);
             return "BVN must be 11 digits";
         }
 
@@ -46,7 +46,7 @@ public class Service implements Constants {
             String solId = row.get("solId");
             String branchName = row.get("branchName");
 
-            Form.setTableGridData(ifr, Constants.accountListTable,
+            FormApi.setTableGridData(ifr, Constants.accountListTable,
                     new String[]{Constants.alColAccountNo, Constants.alColAccountName, Constants.alColSolId, Constants.alColBranchName},
                     new String[]{accountNumber, accountName, solId, branchName});
         }
@@ -55,11 +55,11 @@ public class Service implements Constants {
 
     public String getAccountList() {
         try {
-            Form.clearTable(ifr, accountListTable);
+            FormApi.clearTable(ifr, accountListTable);
             String bvn = Shared.getBvn(ifr);
             if (Shared.isEmpty(bvn)) return "Kindly enter BVN";
             if (isBvnValid(bvn.length())) {
-                Form.clearFields(ifr, bvnLocal);
+                FormApi.clearFields(ifr, bvnLocal);
                 return "BVN must be 11 digits";
             }
             AccountLinkedToBvnController accountLinkedToBvnController =
@@ -86,7 +86,7 @@ public class Service implements Constants {
                             String sol = accountDetails.get("sol");
                             String branchName = accountDetails.get("branchName");
 
-                            Form.setTableGridData(ifr, accountListTable,
+                            FormApi.setTableGridData(ifr, accountListTable,
                                     new String[]{alColAccountNo, alColAccountName, alColSolId, alColBranchName},
                                     new String[]{accountNumber, accountName, sol, branchName});
                         }

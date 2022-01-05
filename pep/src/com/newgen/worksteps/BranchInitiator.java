@@ -1,21 +1,20 @@
 package com.newgen.worksteps;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.api.serviceHandler.Service;
+import com.newgen.iforms.EControl;
+import com.newgen.iforms.FormDef;
+import com.newgen.iforms.custom.IFormReference;
+import com.newgen.iforms.custom.IFormServerEventHandler;
+import com.newgen.mvcbeans.model.WorkdeskModel;
 import com.newgen.utils.*;
 import com.newgen.utils.mail.MailMessage;
 import com.newgen.utils.mail.MailSetup;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
-import com.newgen.iforms.EControl;
-import com.newgen.iforms.FormDef;
-import com.newgen.iforms.custom.IFormReference;
-import com.newgen.iforms.custom.IFormServerEventHandler;
-import com.newgen.mvcbeans.model.WorkdeskModel;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 public class BranchInitiator implements IFormServerEventHandler, SharedI, Constants {
@@ -131,10 +130,10 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
             Shared.hideSections(ifr);
             Shared.setInitiatorDetails(ifr);
             Shared.checkBmIsInitiator(ifr);
-            Form.setFields(ifr, new String[]{currentWsLocal, previousWsLocal}, new String[]{Form.getCurrentWorkStep(ifr), na});
-            Form.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepVerificationSection, decisionSection, pepCategorySection});
-            Form.enableFields(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal, searchBvnBtn});
-            Form.setMandatory(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal});
+            FormApi.setFields(ifr, new String[]{currentWsLocal, previousWsLocal}, new String[]{FormApi.getCurrentWorkStep(ifr), na});
+            FormApi.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepVerificationSection, decisionSection, pepCategorySection});
+            FormApi.enableFields(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal, searchBvnBtn});
+            FormApi.setMandatory(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal});
             Shared.loadLineExecutive(ifr);
             Shared.setAcoFilter(ifr);
             setDecision(ifr);
@@ -148,7 +147,7 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
         if (Shared.isDecisionSubmit(ifr)) {
             String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
             String message = new MailMessage(ifr).getBranchInitiatorMsg();
-            new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+            new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         }
     }
 

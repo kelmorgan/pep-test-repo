@@ -1,6 +1,6 @@
 package com.newgen.utils;
 
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
@@ -20,9 +20,9 @@ public class GenerateDocument implements Constants{
 
     public  String generateDoc () {
         try {
-            String request = getGenerateTemplateRequest(Form.getWorkItemNumber(ifr),
-                    LoadProp.jtsIp,LoadProp.jtsPort,Form.getSessionId(ifr),LoadProp.serverIp,LoadProp.serverPort,
-                    LoadProp.serverName,LoadProp.cabinetName,Form.getProcessName(ifr),LoadProp.templateName, Form.getCurrentWorkStep(ifr));
+            String request = getGenerateTemplateRequest(FormApi.getWorkItemNumber(ifr),
+                    LoadProp.jtsIp,LoadProp.jtsPort,FormApi.getSessionId(ifr),LoadProp.serverIp,LoadProp.serverPort,
+                    LoadProp.serverName,LoadProp.cabinetName,FormApi.getProcessName(ifr),LoadProp.templateName, FormApi.getCurrentWorkStep(ifr));
 
             logger.info("Request for template generation: "+ request);
 

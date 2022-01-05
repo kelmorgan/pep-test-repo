@@ -1,20 +1,19 @@
 package com.newgen.worksteps;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
+import com.newgen.iforms.EControl;
+import com.newgen.iforms.FormDef;
+import com.newgen.iforms.custom.IFormReference;
+import com.newgen.iforms.custom.IFormServerEventHandler;
+import com.newgen.mvcbeans.model.WorkdeskModel;
 import com.newgen.utils.*;
 import com.newgen.utils.mail.MailMessage;
 import com.newgen.utils.mail.MailSetup;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 
-import com.newgen.iforms.EControl;
-import com.newgen.iforms.FormDef;
-import com.newgen.iforms.custom.IFormReference;
-import com.newgen.iforms.custom.IFormServerEventHandler;
-import com.newgen.mvcbeans.model.WorkdeskModel;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class BranchVerifier implements IFormServerEventHandler , SharedI, Constants {
 	private final Logger logger = LogGenerator.getLoggerInstance(BranchVerifier.class);
@@ -113,19 +112,19 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 	public void formLoad(IFormReference ifr) {
 		try {
 			Shared.hideSections(ifr);
-			Form.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
+			FormApi.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
 			Shared.checkPepVerification(ifr);
 			if (Shared.isPrevWs(ifr,ccoWs)){
 				Shared.onboardPepInRepo(ifr);
-				Form.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection,generateDocumentSection, pepVerificationSection, decisionSection});
+				FormApi.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection,generateDocumentSection, pepVerificationSection, decisionSection});
 				Shared.setDecisionApprove(ifr);
-				Form.enableFields(ifr,new String[]{generatePepDocBtn});
-				Form.setFields(ifr,remarksLocal,"Pep on-boarding approved and successful");
+				FormApi.enableFields(ifr,new String[]{generatePepDocBtn});
+				FormApi.setFields(ifr,remarksLocal,"Pep on-boarding approved and successful");
 			}
 			else {
-				Form.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection, pepVerificationSection, decisionSection});
-				Form.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
-				Form.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
+				FormApi.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection, pepVerificationSection, decisionSection});
+				FormApi.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
+				FormApi.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
 				setDecision(ifr);
 			}
 			Shared.checkSol(ifr);
@@ -143,12 +142,12 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 		if(Shared.isDecisionApprove(ifr)){
 			//sendTo = Shared.getUsersMailsInGroup(ifr,acoGroupName);
 			message = mailMessage.getApproveMsg();
-			new MailSetup(ifr,Form.getWorkItemNumber(ifr),sendTo,empty,LoadProp.mailSubject,message);
+			new MailSetup(ifr,FormApi.getWorkItemNumber(ifr),sendTo,empty,LoadProp.mailSubject,message);
 		}
 		else if (Shared.isDecisionReturn(ifr)){
 			//sendTo = Shared.getUsersMailsInGroup(ifr,rmGroupLabel+Shared.getUserSol(ifr));
 			message = mailMessage.getRejectMsg();
-			new MailSetup(ifr,Form.getWorkItemNumber(ifr),sendTo,empty,LoadProp.mailSubject,message);
+			new MailSetup(ifr,FormApi.getWorkItemNumber(ifr),sendTo,empty,LoadProp.mailSubject,message);
 		}
 	}
 

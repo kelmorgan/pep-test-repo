@@ -1,6 +1,6 @@
 package com.newgen.worksteps;
 
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.EControl;
 import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
@@ -96,10 +96,10 @@ public class LineExecutive implements IFormServerEventHandler, Constants, Shared
     public void formLoad(IFormReference ifr) {
         try {
             Shared.hideSections(ifr);
-            Form.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
-            Form.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
-            Form.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
-            Form.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
+            FormApi.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
+            FormApi.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
+            FormApi.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
+            FormApi.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
             Shared.checkPepVerification(ifr);
             Shared.setStaffName(ifr, edNameLocal, edStaffIdLocal);
             setDecision(ifr);
@@ -116,11 +116,11 @@ public class LineExecutive implements IFormServerEventHandler, Constants, Shared
         if (Shared.isDecisionApprove(ifr)) {
             //sendTo = Shared.getUsersMailsInGroup(ifr, ccoGroupName);
             message = mailMessage.getApproveMsg();
-            new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+            new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         } else if (Shared.isDecisionReturn(ifr)) {
            // sendTo = Shared.getUsersMailsInGroup(ifr, rmGroupLabel + Shared.getUserSol(ifr));
             message = mailMessage.getRejectMsg();
-            new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+            new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         }
     }
 

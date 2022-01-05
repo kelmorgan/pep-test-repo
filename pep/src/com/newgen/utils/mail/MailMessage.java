@@ -1,6 +1,6 @@
 package com.newgen.utils.mail;
 
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.utils.Constants;
 import com.newgen.utils.Shared;
@@ -26,38 +26,38 @@ public class MailMessage {
 
     public String getBranchInitiatorMsg(){
         message = properties.getProperty(Constants.branchInitiatorMsg);
-        message = message.replaceAll("&<WorkItemName>&", Form.getWorkItemNumber(ifr));
+        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
         return message;
     }
     public String getApproveMsg(){
         message = properties.getProperty(Constants.approveMsg);
-        message = message.replaceAll("&<WorkItemName>&", Form.getWorkItemNumber(ifr));
+        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
         return message;
     }
     public String getRejectMsg(){
         message = properties.getProperty(Constants.rejectMsg);
-        message = message.replaceAll("&<WorkItemName>&", Form.getWorkItemNumber(ifr));
+        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
         message = message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
         return message;
     }
     public String getReturnMsg(){
         message = properties.getProperty(Constants.returnMsg);
-        message = message.replaceAll("&<WorkItemName>&", Form.getWorkItemNumber(ifr));
+        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
         return message;
     }
     public String getAmlInitiatorMsg(){
         message = properties.getProperty(Constants.amlInitiatorMsg);
-        message = message.replaceAll("&<WorkItemName>&", Form.getWorkItemNumber(ifr));
+        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
         return message;
     }
     public String getAmlApproveMsg(){
         message = properties.getProperty(Constants.amlApproveMsg);
-        message = message.replaceAll("&<WorkItemName>&", Form.getWorkItemNumber(ifr));
+        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
         return message;
     }
     public String getAmlRejectMsg(){
         message = properties.getProperty(Constants.amlRejectMsg);
-        message = message.replaceAll("&<WorkItemName>&", Form.getWorkItemNumber(ifr));
+        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
         message = message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
         return message;
     }

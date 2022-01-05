@@ -1,7 +1,7 @@
 package com.newgen.utils;
 
 
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
@@ -30,15 +30,15 @@ public class Shared implements Constants {
     }
 
     public static String getUserSol(IFormReference ifr) {
-        return Form.getFieldValue(ifr, userSolIdLocal);
+        return FormApi.getFieldValue(ifr, userSolIdLocal);
     }
 
     public static void checkBmIsInitiator(IFormReference ifr) {
         try {
-            Form.clearFields(ifr, bvFlagLocal);
-            resultSet = new DbConnect(ifr, Query.getIsUserMemberOfGroup(Form.getLoginUser(ifr), getBmGroupName(ifr))).getData();
+            FormApi.clearFields(ifr, bvFlagLocal);
+            resultSet = new DbConnect(ifr, Query.getIsUserMemberOfGroup(FormApi.getLoginUser(ifr), getBmGroupName(ifr))).getData();
             int count = getFormattedNumber(getDataByCoordinates(resultSet, 0, 0));
-            if (count > 0) Form.setFields(ifr, bvFlagLocal, flagY);
+            if (count > 0) FormApi.setFields(ifr, bvFlagLocal, flagY);
         } catch (Exception e) {
             logger.info("Exception occurred in checkBmIsInitiator method: " + e.getMessage());
         }
@@ -46,21 +46,21 @@ public class Shared implements Constants {
 
     public static void setInitiatorDetails(IFormReference ifr) {
         try {
-            resultSet = new DbConnect(ifr, Query.getUserDetailsQuery(Form.getLoginUser(ifr))).getData();
+            resultSet = new DbConnect(ifr, Query.getUserDetailsQuery(FormApi.getLoginUser(ifr))).getData();
             String sol = getDataByCoordinates(resultSet, 0, 0);
             String branchName = getDataByCoordinates(resultSet, 0, 1);
-            Form.setFields(ifr, new String[]{userSolIdLocal, userBranchNameLocal, userIdLocal}, new String[]{sol, branchName, Form.getLoginUser(ifr)});
+            FormApi.setFields(ifr, new String[]{userSolIdLocal, userBranchNameLocal, userIdLocal}, new String[]{sol, branchName, FormApi.getLoginUser(ifr)});
         } catch (Exception e) {
             logger.info("Exception occurred in setInitiatorDetails method: " + e.getMessage());
         }
     }
 
     public static void hideSections(IFormReference ifr) {
-        Form.setInvisible(ifr, new String[]{accountListSection, pepInfoSection, pepVerificationSection, decisionSection, pepCategorySection, generateDocumentSection, pepRepositorySection});
+        FormApi.setInvisible(ifr, new String[]{accountListSection, pepInfoSection, pepVerificationSection, decisionSection, pepCategorySection, generateDocumentSection, pepRepositorySection});
     }
 
     public static boolean isProcessName(IFormReference ifr, String processName) {
-        return Form.getProcessName(ifr).equalsIgnoreCase(processName);
+        return FormApi.getProcessName(ifr).equalsIgnoreCase(processName);
     }
 
     private static String getTat(String entryDate, String exitDate) {
@@ -87,9 +87,9 @@ public class Shared implements Constants {
     public static void setDecisionHistory(IFormReference ifr) {
         if (isDecisionHistoryEmpty(ifr)) {
             String tat = getTat(getEntryDate(ifr), getCurrentDateTime());
-            Form.setTableGridData(ifr, decisionHistoryTable, new String[]{dhColStaffId, dhColPrevWs, dhColDecision, dhColRemarks, dhColEntryDate, dhColExitDate, dhColTat},
-                    new String[]{Form.getLoginUser(ifr), Form.getCurrentWorkStep(ifr), getDecision(ifr), getRemarks(ifr), getEntryDate(ifr), getCurrentDateTime(), tat});
-            Form.setFields(ifr, decisionHistoryFlagLocal, flagY);
+            FormApi.setTableGridData(ifr, decisionHistoryTable, new String[]{dhColStaffId, dhColPrevWs, dhColDecision, dhColRemarks, dhColEntryDate, dhColExitDate, dhColTat},
+                    new String[]{FormApi.getLoginUser(ifr), FormApi.getCurrentWorkStep(ifr), getDecision(ifr), getRemarks(ifr), getEntryDate(ifr), getCurrentDateTime(), tat});
+            FormApi.setFields(ifr, decisionHistoryFlagLocal, flagY);
         }
     }
 
@@ -121,13 +121,13 @@ public class Shared implements Constants {
     }
 
     public static void setDecision(IFormReference ifr, String decisionLocal, String[] values) {
-        Form.setDropDown(ifr, decisionLocal, values);
-        Form.clearFields(ifr, decisionLocal);
+        FormApi.setDropDown(ifr, decisionLocal, values);
+        FormApi.clearFields(ifr, decisionLocal);
     }
 
     public static void setDecision(IFormReference ifr, String decisionLocal, String[] labels, String[] values) {
-        Form.setDropDown(ifr, decisionLocal, labels, values);
-        Form.clearFields(ifr, decisionLocal);
+        FormApi.setDropDown(ifr, decisionLocal, labels, values);
+        FormApi.clearFields(ifr, decisionLocal);
     }
 
     public static boolean isEmpty(String s) {
@@ -183,7 +183,7 @@ public class Shared implements Constants {
     }
 
     public static void setWiName(IFormReference ifr) {
-        Form.setFields(ifr, wiNameFormLocal, Form.getWorkItemNumber(ifr));
+        FormApi.setFields(ifr, wiNameFormLocal, FormApi.getWorkItemNumber(ifr));
     }
 
     public static boolean isSaved(int value) {
@@ -207,11 +207,11 @@ public class Shared implements Constants {
     }
 
     public static String getBvn(IFormReference ifr) {
-        return Form.getFieldValue(ifr, bvnLocal);
+        return FormApi.getFieldValue(ifr, bvnLocal);
     }
 
     public static String getPrevWs(IFormReference ifr) {
-        return Form.getFieldValue(ifr, previousWsLocal);
+        return FormApi.getFieldValue(ifr, previousWsLocal);
     }
 
     public static boolean isPrevWs(IFormReference ifr, String workStep) {
@@ -219,7 +219,7 @@ public class Shared implements Constants {
     }
 
     public static boolean isCurrWs(IFormReference ifr, String workStep) {
-        return Form.getCurrentWorkStep(ifr).equalsIgnoreCase(workStep);
+        return FormApi.getCurrentWorkStep(ifr).equalsIgnoreCase(workStep);
     }
 
     public static boolean isDecisionApprove(IFormReference ifr) {
@@ -235,7 +235,7 @@ public class Shared implements Constants {
     }
 
     public static String getDecision(IFormReference ifr) {
-        return Form.getFieldValue(ifr, decisionLocal);
+        return FormApi.getFieldValue(ifr, decisionLocal);
     }
 
     public static void checkSol(IFormReference ifr) {
@@ -248,7 +248,7 @@ public class Shared implements Constants {
     }
 
     public static String getLineExecutive(IFormReference ifr) {
-        return Form.getFieldValue(ifr, lineExecutiveLocal);
+        return FormApi.getFieldValue(ifr, lineExecutiveLocal);
     }
 
     public static boolean isLineExecutive(IFormReference ifr, String executive) {
@@ -257,11 +257,11 @@ public class Shared implements Constants {
 
     public static void loadLineExecutive(IFormReference ifr) {
         try {
-            if (isCurrWs(ifr, branchInitiatorWs)) Form.clearDropDown(ifr, lineExecutiveLocal);
+            if (isCurrWs(ifr, branchInitiatorWs)) FormApi.clearDropDown(ifr, lineExecutiveLocal);
             resultSet = new DbConnect(ifr, Query.getLineExecutives()).getData();
             resultSet.forEach(result -> {
                 String lineExecName = result.get(0);
-                Form.addToDropDown(ifr, lineExecutiveLocal, lineExecName);
+                FormApi.addToDropDown(ifr, lineExecutiveLocal, lineExecName);
             });
         } catch (Exception e) {
             logger.info("Exception occurred in Loading Line Executive Method: " + e.getMessage());
@@ -270,9 +270,9 @@ public class Shared implements Constants {
 
     public static void setLineExecutiveFilter(IFormReference ifr) {
         try {
-            Form.clearFields(ifr, lineExecFilterLocal);
+            FormApi.clearFields(ifr, lineExecFilterLocal);
             resultSet = new DbConnect(ifr, Query.getLineExecutivesId(getLineExecutive(ifr))).getData();
-            Form.setFields(ifr, lineExecFilterLocal, getDataByCoordinates(resultSet, 0, 0));
+            FormApi.setFields(ifr, lineExecFilterLocal, getDataByCoordinates(resultSet, 0, 0));
         } catch (Exception e) {
             logger.error("Exception occurred in setting line executive filter: " + e.getMessage());
         }
@@ -280,16 +280,16 @@ public class Shared implements Constants {
 
     public static void setAcoFilter(IFormReference ifr) {
         try {
-            Form.clearFields(ifr, acoFilterLocal);
+            FormApi.clearFields(ifr, acoFilterLocal);
             resultSet = new DbConnect(ifr, Query.getAcoId(getUserSol(ifr))).getData();
-            Form.setFields(ifr, acoFilterLocal, getDataByCoordinates(resultSet, 0, 0));
+            FormApi.setFields(ifr, acoFilterLocal, getDataByCoordinates(resultSet, 0, 0));
         } catch (Exception e) {
             logger.info("Exception occurred in setting aco filter method: " + e.getMessage());
         }
     }
 
     public static String getAccountType(IFormReference ifr) {
-        return Form.getFieldValue(ifr, pepAccountTypeLocal);
+        return FormApi.getFieldValue(ifr, pepAccountTypeLocal);
     }
 
     public static boolean isAccountType(IFormReference ifr, String accountType) {
@@ -298,24 +298,24 @@ public class Shared implements Constants {
 
     public static void showAccountTypeOthersField(IFormReference ifr) {
         if (isAccountType(ifr, accountTypeOthers)) {
-            Form.setVisible(ifr, otherAcctTypeLocal);
-            Form.setMandatory(ifr, otherAcctTypeLocal);
+            FormApi.setVisible(ifr, otherAcctTypeLocal);
+            FormApi.setMandatory(ifr, otherAcctTypeLocal);
         } else {
-            Form.clearFields(ifr, otherAcctTypeLocal);
-            Form.setInvisible(ifr, otherAcctTypeLocal);
+            FormApi.clearFields(ifr, otherAcctTypeLocal);
+            FormApi.setInvisible(ifr, otherAcctTypeLocal);
         }
     }
 
     public static String getRemarks(IFormReference ifr) {
-        return Form.getFieldValue(ifr, remarksLocal);
+        return FormApi.getFieldValue(ifr, remarksLocal);
     }
 
     public static boolean isNotMemberOfSol(IFormReference ifr) {
-        return Integer.parseInt(new DbConnect(ifr, Query.getIsMemberOfSol(Form.getLoginUser(ifr), getUserSol(ifr))).getData().get(0).get(0)) <= 0;
+        return Integer.parseInt(new DbConnect(ifr, Query.getIsMemberOfSol(FormApi.getLoginUser(ifr), getUserSol(ifr))).getData().get(0).get(0)) <= 0;
     }
 
     public static String getEntryDate(IFormReference ifr) {
-        return Form.getFieldValue(ifr, entryDateLocal);
+        return FormApi.getFieldValue(ifr, entryDateLocal);
     }
 
     public static boolean isDecisionHistoryEmpty(IFormReference ifr) {
@@ -323,15 +323,15 @@ public class Shared implements Constants {
     }
 
     private static String getDecisionHistoryFlag(IFormReference ifr) {
-        return Form.getFieldValue(ifr, decisionHistoryFlagLocal);
+        return FormApi.getFieldValue(ifr, decisionHistoryFlagLocal);
     }
 
     public static String getPepCategory(IFormReference ifr) {
-        return Form.getFieldValue(ifr, pepCategoryLocal);
+        return FormApi.getFieldValue(ifr, pepCategoryLocal);
     }
 
     public static String getPepAccountCategory(IFormReference ifr) {
-        return Form.getFieldValue(ifr, pepAccountCategoryLocal);
+        return FormApi.getFieldValue(ifr, pepAccountCategoryLocal);
     }
 
     public static boolean isPepCategory(IFormReference ifr, String category) {
@@ -348,43 +348,43 @@ public class Shared implements Constants {
 
         if (isEmpty(getPepAccountCategory(ifr))) return "Kindly Choose Pep Account Category";
 
-        Form.enableFields(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal, addressLocal, pepSolIdLocal, pepBranchNameLocal, pepStatusLocal, srcOfWealthLocal, purposeOfAccountLocal, officeDesignationLocal, pepAccountTypeLocal, isDocCompletedLocal, isLinkedPepLocal});
-        Form.setMandatory(ifr, new String[]{surNameLocal, firstNameLocal, addressLocal, pepSolIdLocal, pepBranchNameLocal, pepStatusLocal, srcOfWealthLocal, purposeOfAccountLocal, officeDesignationLocal, pepAccountTypeLocal, isDocCompletedLocal, isLinkedPepLocal});
+        FormApi.enableFields(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal, addressLocal, pepSolIdLocal, pepBranchNameLocal, pepStatusLocal, srcOfWealthLocal, purposeOfAccountLocal, officeDesignationLocal, pepAccountTypeLocal, isDocCompletedLocal, isLinkedPepLocal});
+        FormApi.setMandatory(ifr, new String[]{surNameLocal, firstNameLocal, addressLocal, pepSolIdLocal, pepBranchNameLocal, pepStatusLocal, srcOfWealthLocal, purposeOfAccountLocal, officeDesignationLocal, pepAccountTypeLocal, isDocCompletedLocal, isLinkedPepLocal});
 
         if (isPepCategory(ifr, pepCategoryExisting)) {
-            Form.enableFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
-            Form.setMandatory(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
+            FormApi.enableFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
+            FormApi.setMandatory(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
         } else {
-            Form.clearFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
-            Form.disableFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
-            Form.undoMandatory(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
+            FormApi.clearFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
+            FormApi.disableFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
+            FormApi.undoMandatory(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
         }
 
         if (isPepAcctCategory(ifr, pepAcctCategoryCorporate)) {
-            Form.enableFields(ifr, new String[]{tinLocal});
-            Form.setMandatory(ifr, new String[]{tinLocal});
+            FormApi.enableFields(ifr, new String[]{tinLocal});
+            FormApi.setMandatory(ifr, new String[]{tinLocal});
         } else {
-            Form.disableFields(ifr, new String[]{tinLocal});
-            Form.clearFields(ifr, new String[]{tinLocal});
-            Form.undoMandatory(ifr, new String[]{tinLocal});
+            FormApi.disableFields(ifr, new String[]{tinLocal});
+            FormApi.clearFields(ifr, new String[]{tinLocal});
+            FormApi.undoMandatory(ifr, new String[]{tinLocal});
         }
 
         return null;
     }
 
     public static String getIsLinkedPep(IFormReference ifr) {
-        return Form.getFieldValue(ifr, isLinkedPepLocal);
+        return FormApi.getFieldValue(ifr, isLinkedPepLocal);
     }
 
     public static void linkedPep(IFormReference ifr) {
         if (isLinkedPep(ifr)) {
-            Form.setVisible(ifr, new String[]{linkedPepLocal});
-            Form.enableFields(ifr, new String[]{linkedPepLocal});
-            Form.setMandatory(ifr, new String[]{linkedPepLocal});
+            FormApi.setVisible(ifr, new String[]{linkedPepLocal});
+            FormApi.enableFields(ifr, new String[]{linkedPepLocal});
+            FormApi.setMandatory(ifr, new String[]{linkedPepLocal});
         } else {
-            Form.setInvisible(ifr, new String[]{linkedPepLocal});
-            Form.undoMandatory(ifr, new String[]{linkedPepLocal});
-            Form.clearFields(ifr, new String[]{linkedPepLocal});
+            FormApi.setInvisible(ifr, new String[]{linkedPepLocal});
+            FormApi.undoMandatory(ifr, new String[]{linkedPepLocal});
+            FormApi.clearFields(ifr, new String[]{linkedPepLocal});
         }
     }
 
@@ -393,17 +393,17 @@ public class Shared implements Constants {
     }
 
     public static void checkPepVerification(IFormReference ifr) {
-        if (isLinkedPep(ifr)) Form.setVisible(ifr, linkedPepLocal);
+        if (isLinkedPep(ifr)) FormApi.setVisible(ifr, linkedPepLocal);
 
-        if (isAccountType(ifr, accountTypeOthers)) Form.setVisible(ifr, accountTypeOthers);
+        if (isAccountType(ifr, accountTypeOthers)) FormApi.setVisible(ifr, accountTypeOthers);
     }
 
     public static void setDecisionApprove(IFormReference ifr) {
-        Form.setFields(ifr, decisionLocal, decApprove);
+        FormApi.setFields(ifr, decisionLocal, decApprove);
     }
 
     public static String getDocFlag(IFormReference ifr) {
-        return Form.getFieldValue(ifr, docFlagLocal);
+        return FormApi.getFieldValue(ifr, docFlagLocal);
     }
 
     public static boolean isDocGenerated(IFormReference ifr) {
@@ -411,7 +411,7 @@ public class Shared implements Constants {
     }
 
     public static void setDocFlag(IFormReference ifr) {
-        Form.setFields(ifr, docFlagLocal, flagY);
+        FormApi.setFields(ifr, docFlagLocal, flagY);
     }
 
     public static String checkDocGenerated(IFormReference ifr) {
@@ -420,16 +420,16 @@ public class Shared implements Constants {
     }
 
     public static void setRepoView(IFormReference ifr) {
-        Form.setVisible(ifr, new String[]{accountListSection, pepRepositorySection, decisionSection});
-        Form.setInvisible(ifr, new String[]{lineExecutiveLocal});
-        Form.enableFields(ifr, new String[]{bvnLocal, searchBvnBtn, repoAcctNoLocal, decisionLocal, remarksLocal});
-        Form.setMandatory(ifr, new String[]{bvnLocal, repoAcctNoLocal, decisionLocal, remarksLocal});
+        FormApi.setVisible(ifr, new String[]{accountListSection, pepRepositorySection, decisionSection});
+        FormApi.setInvisible(ifr, new String[]{lineExecutiveLocal});
+        FormApi.enableFields(ifr, new String[]{bvnLocal, searchBvnBtn, repoAcctNoLocal, decisionLocal, remarksLocal});
+        FormApi.setMandatory(ifr, new String[]{bvnLocal, repoAcctNoLocal, decisionLocal, remarksLocal});
 
-        if (isCurrWs(ifr, amlWs)) Form.disableFields(ifr, new String[]{bvnLocal, searchBvnBtn, repoAcctNoLocal});
+        if (isCurrWs(ifr, amlWs)) FormApi.disableFields(ifr, new String[]{bvnLocal, searchBvnBtn, repoAcctNoLocal});
     }
 
     public static String getRepoAcctNo(IFormReference ifr) {
-        return Form.getFieldValue(ifr, repoAcctNoLocal);
+        return FormApi.getFieldValue(ifr, repoAcctNoLocal);
     }
 
     public static String setRepoInfo(IFormReference ifr) {
@@ -453,7 +453,7 @@ public class Shared implements Constants {
                 String natureOfBusiness = result.get(6);
                 String acctOpenDate = result.get(7);
 
-                Form.setFields(ifr, new String[]{repoAcctNameLocal, repoAddressLocal, repoAcctOpenDateLocal, repoBranchNameLocal, repoSolIdLocal, repoNOfBusiness, repoPepNameLocal, repoPositionLocal},
+                FormApi.setFields(ifr, new String[]{repoAcctNameLocal, repoAddressLocal, repoAcctOpenDateLocal, repoBranchNameLocal, repoSolIdLocal, repoNOfBusiness, repoPepNameLocal, repoPositionLocal},
                         new String[]{accountName, address, acctOpenDate, branchName, sol, natureOfBusiness, pepName, position});
 
             });
@@ -464,21 +464,21 @@ public class Shared implements Constants {
     }
 
     public static void updatePepRepo(IFormReference ifr) {
-        validate = new DbConnect(ifr, Query.updatePepRepo(Form.getWorkItemNumber(ifr), getBvn(ifr), getRepoAcctNo(ifr))).saveQuery();
+        validate = new DbConnect(ifr, Query.updatePepRepo(FormApi.getWorkItemNumber(ifr), getBvn(ifr), getRepoAcctNo(ifr))).saveQuery();
 
         if (isSaved(validate)) logger.info("Pep Repo Updated");
     }
 
     public static void onboardPepInRepo(IFormReference ifr) {
         if (isOnboardedFlagNotSet(ifr)) {
-            String sol = Form.getFieldValue(ifr, pepSolIdLocal);
-            String branchName = Form.getFieldValue(ifr, pepBranchNameLocal);
-            String acctNo = Form.getFieldValue(ifr, accountNoLocal);
+            String sol = FormApi.getFieldValue(ifr, pepSolIdLocal);
+            String branchName = FormApi.getFieldValue(ifr, pepBranchNameLocal);
+            String acctNo = FormApi.getFieldValue(ifr, accountNoLocal);
             String pepName = getPepName(ifr);
-            String address = Form.getFieldValue(ifr, addressLocal);
-            String officePosition = Form.getFieldValue(ifr, officeDesignationLocal);
-            String acctOpenDate = Form.getFieldValue(ifr, accountOpeningDateLocal);
-            String wiName = Form.getWorkItemNumber(ifr);
+            String address = FormApi.getFieldValue(ifr, addressLocal);
+            String officePosition = FormApi.getFieldValue(ifr, officeDesignationLocal);
+            String acctOpenDate = FormApi.getFieldValue(ifr, accountOpeningDateLocal);
+            String wiName = FormApi.getWorkItemNumber(ifr);
             String bvn = getBvn(ifr);
             validate = 0;
 
@@ -496,43 +496,43 @@ public class Shared implements Constants {
     }
 
     private static String getPepName(IFormReference ifr) {
-        String firstName = Form.getFieldValue(ifr, firstNameLocal);
-        String surName = Form.getFieldValue(ifr, surNameLocal);
-        String otherName = Form.getFieldValue(ifr, otherNameLocal);
+        String firstName = FormApi.getFieldValue(ifr, firstNameLocal);
+        String surName = FormApi.getFieldValue(ifr, surNameLocal);
+        String otherName = FormApi.getFieldValue(ifr, otherNameLocal);
 
         return firstName + " " + surName + " " + otherName;
     }
 
     private static void setOnboardedFlag(IFormReference ifr) {
-        validate = new DbConnect(ifr, Query.setOnboardedFlag(Form.getWorkItemNumber(ifr))).saveQuery();
+        validate = new DbConnect(ifr, Query.setOnboardedFlag(FormApi.getWorkItemNumber(ifr))).saveQuery();
         if (isSaved(validate)) logger.info("OnboardedFlag set successfully");
     }
 
     private static boolean isOnboardedFlagNotSet(IFormReference ifr) {
-        return Integer.parseInt(new DbConnect(ifr, Query.isOnboardedFlagSet(Form.getWorkItemNumber(ifr))).getData().get(0).get(0)) == 0;
+        return Integer.parseInt(new DbConnect(ifr, Query.isOnboardedFlagSet(FormApi.getWorkItemNumber(ifr))).getData().get(0).get(0)) == 0;
     }
 
     public static String getFirstName(IFormReference ifr) {
-        return Form.getFieldValue(ifr, firstNameLocal);
+        return FormApi.getFieldValue(ifr, firstNameLocal);
     }
 
     public static String getSurName(IFormReference ifr) {
-        return Form.getFieldValue(ifr, surNameLocal);
+        return FormApi.getFieldValue(ifr, surNameLocal);
     }
 
     public static String getOtherName(IFormReference ifr) {
-        return Form.getFieldValue(ifr, otherNameLocal);
+        return FormApi.getFieldValue(ifr, otherNameLocal);
     }
 
     public static void setStaffName(IFormReference ifr, String nameLocal, String staffIdLocal) {
         try {
-            resultSet = new DbConnect(ifr, Query.getStaffName(Form.getLoginUser(ifr))).getData();
+            resultSet = new DbConnect(ifr, Query.getStaffName(FormApi.getLoginUser(ifr))).getData();
             String firstName = getDataByCoordinates(resultSet, 0, 0);
             String surName = getDataByCoordinates(resultSet, 0, 1);
             String fullName = firstName.trim().toUpperCase() + " " + surName.trim().toUpperCase();
 
-            validate = new DbConnect(ifr, Query.updateSignNameInfo(nameLocal, staffIdLocal, Form.getWorkItemNumber(ifr), fullName, Form.getLoginUser(ifr))).saveQuery();
-            Form.setFields(ifr, new String[]{nameLocal, staffIdLocal}, new String[]{fullName, Form.getLoginUser(ifr)});
+            validate = new DbConnect(ifr, Query.updateSignNameInfo(nameLocal, staffIdLocal, FormApi.getWorkItemNumber(ifr), fullName, FormApi.getLoginUser(ifr))).saveQuery();
+            FormApi.setFields(ifr, new String[]{nameLocal, staffIdLocal}, new String[]{fullName, FormApi.getLoginUser(ifr)});
             if (isSaved(validate)) logger.info("Staff Name successfully Updated");
         } catch (Exception e) {
             logger.error("Exception occurred in setStaffName Method: " + e.getMessage());
@@ -542,8 +542,8 @@ public class Shared implements Constants {
     public static void setSignDate(IFormReference ifr, String signDateLocal) {
         if (isDecisionApprove(ifr)) {
             String signDate = getCurrentDateTime(dbDateTimeFormat);
-            validate = new DbConnect(ifr, Query.updateSignDateInfo(signDateLocal, signDate, Form.getWorkItemNumber(ifr))).saveQuery();
-            Form.setFields(ifr, signDateLocal, signDate);
+            validate = new DbConnect(ifr, Query.updateSignDateInfo(signDateLocal, signDate, FormApi.getWorkItemNumber(ifr))).saveQuery();
+            FormApi.setFields(ifr, signDateLocal, signDate);
 
             if (isSaved(validate)) logger.info("Sign Date successfully Updated");
         }
@@ -585,6 +585,6 @@ public class Shared implements Constants {
 
     private static boolean isDocNotAttached(IFormReference ifr,String documentName){
         return Integer.parseInt(new DbConnect
-                (ifr,Query.getCheckDocQuery(Form.getWorkItemNumber(ifr),documentName)).getData().get(0).get(0) ) < 1;
+                (ifr,Query.getCheckDocQuery(FormApi.getWorkItemNumber(ifr),documentName)).getData().get(0).get(0) ) < 1;
     }
 }

@@ -1,12 +1,12 @@
 package com.newgen.worksteps;
 
-import com.kelmorgan.ibpsformapis.apis.Form;
+import com.kelmorgan.ibpsformapis.apis.FormApi;
+import com.newgen.api.serviceHandler.Service;
 import com.newgen.iforms.EControl;
 import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
-import com.newgen.api.serviceHandler.Service;
 import com.newgen.utils.Constants;
 import com.newgen.utils.LoadProp;
 import com.newgen.utils.Shared;
@@ -104,7 +104,7 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
     @Override
     public void formLoad(IFormReference ifr) {
         Shared.hideSections(ifr);
-        Form.setFields(ifr, new String[]{currentWsLocal, previousWsLocal}, new String[]{Form.getCurrentWorkStep(ifr), na});
+        FormApi.setFields(ifr, new String[]{currentWsLocal, previousWsLocal}, new String[]{FormApi.getCurrentWorkStep(ifr), na});
         Shared.setInitiatorDetails(ifr);
         Shared.setRepoView(ifr);
         setDecision(ifr);
@@ -115,7 +115,7 @@ public class AmlInitiator implements IFormServerEventHandler, SharedI, Constants
         if (Shared.isDecisionSubmit(ifr)) {
             String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
             String message = new MailMessage(ifr).getAmlInitiatorMsg();
-            new MailSetup(ifr, Form.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+            new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         }
     }
 
