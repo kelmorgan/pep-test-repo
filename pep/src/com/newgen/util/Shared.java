@@ -350,10 +350,13 @@ public class Shared implements Constants {
 
         FormApi.enableFields(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal, addressLocal, pepSolIdLocal, pepBranchNameLocal, pepStatusLocal, srcOfWealthLocal, purposeOfAccountLocal, officeDesignationLocal, pepAccountTypeLocal, isDocCompletedLocal, isLinkedPepLocal});
         FormApi.setMandatory(ifr, new String[]{surNameLocal, firstNameLocal, addressLocal, pepSolIdLocal, pepBranchNameLocal, pepStatusLocal, srcOfWealthLocal, purposeOfAccountLocal, officeDesignationLocal, pepAccountTypeLocal, isDocCompletedLocal, isLinkedPepLocal});
+        FormApi.setVisible(ifr,new String[]{pepInfoSection,pepVerificationSection});
 
         if (isPepCategory(ifr, pepCategoryExisting)) {
             FormApi.enableFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
             FormApi.setMandatory(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
+            FormApi.setInvisible(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal});
+            FormApi.setVisible(ifr, new String[]{pepNameLocal});
         } else {
             FormApi.clearFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
             FormApi.disableFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
@@ -587,4 +590,15 @@ public class Shared implements Constants {
         return Integer.parseInt(new DbConnect
                 (ifr,Query.getCheckDocQuery(FormApi.getWorkItemNumber(ifr),documentName)).getData().get(0).get(0) ) < 1;
     }
+
+    public static void checkExistingPep(IFormReference ifr){
+        if (isPepCategory(ifr, pepCategoryExisting)) {
+            FormApi.setInvisible(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal});
+            FormApi.setVisible(ifr, new String[]{pepNameLocal});
+        }
+    }
+    public static String getPepAccount(IFormReference ifr){
+        return FormApi.getFieldValue(ifr, accountNoLocal);
+    }
+
 }

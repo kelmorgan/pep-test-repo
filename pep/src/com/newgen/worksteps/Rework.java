@@ -63,6 +63,9 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
                     case apiEvent: {
                         return new Service(ifr).getAccountList();
                     }
+                    case setAccountDetailsEvent:{
+                        return new Service(ifr).getAccountDetails();
+                    }
                 }
             }
             break;
@@ -127,6 +130,7 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
             FormApi.setMandatory(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal});
             Shared.setPepMandatoryInfoFields(ifr);
             Shared.checkPepVerification(ifr);
+            Shared.checkExistingPep(ifr);
             setDecision(ifr);
             Shared.checkSol(ifr);
         } catch (Exception e) {

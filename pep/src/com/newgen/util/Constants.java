@@ -91,6 +91,7 @@ public interface Constants {
     String ccoStaffIdLocal = "CCOSTAFFID";
     String edSignDateLocal = "EDSIGNDATE";
     String ccoSignDateLocal = "CCOSIGNDATE";
+    String pepNameLocal = "PEPNAME";
 
     //sections
     String accountListSection = "ACCTLINKEDINFOSECTION";
@@ -161,6 +162,7 @@ public interface Constants {
     String updatePepRepoEvent = "updatePepRepoEvent";
     String createAoWorkItemEvent = "createAoWorkItemEvent";
     String signEvent = "signEvent";
+    String setAccountDetailsEvent = "setAccountDetailsEvent";
 
 
     //process info

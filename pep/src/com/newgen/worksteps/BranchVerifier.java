@@ -114,6 +114,7 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 			Shared.hideSections(ifr);
 			FormApi.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
 			Shared.checkPepVerification(ifr);
+			Shared.checkExistingPep(ifr);
 			if (Shared.isPrevWs(ifr,ccoWs)){
 				Shared.onboardPepInRepo(ifr);
 				FormApi.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection,generateDocumentSection, pepVerificationSection, decisionSection});

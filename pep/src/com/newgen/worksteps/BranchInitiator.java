@@ -66,6 +66,9 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
                     case apiEvent: {
                         return new Service(ifr).getAccountList();
                     }
+                    case setAccountDetailsEvent:{
+                        return new Service(ifr).getAccountDetails();
+                    }
                 }
             }
             break;
@@ -131,7 +134,7 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
             Shared.setInitiatorDetails(ifr);
             Shared.checkBmIsInitiator(ifr);
             FormApi.setFields(ifr, new String[]{currentWsLocal, previousWsLocal}, new String[]{FormApi.getCurrentWorkStep(ifr), na});
-            FormApi.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepVerificationSection, decisionSection, pepCategorySection});
+            FormApi.setVisible(ifr, new String[]{accountListSection, decisionSection, pepCategorySection});
             FormApi.enableFields(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal, searchBvnBtn});
             FormApi.setMandatory(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal});
             Shared.loadLineExecutive(ifr);

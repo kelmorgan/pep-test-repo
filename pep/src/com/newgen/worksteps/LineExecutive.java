@@ -101,6 +101,7 @@ public class LineExecutive implements IFormServerEventHandler, Constants, Shared
             FormApi.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
             FormApi.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
             Shared.checkPepVerification(ifr);
+            Shared.checkExistingPep(ifr);
             Shared.setStaffName(ifr, edNameLocal, edStaffIdLocal);
             setDecision(ifr);
         } catch (Exception e) {

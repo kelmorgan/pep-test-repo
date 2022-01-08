@@ -38,6 +38,8 @@ public class AccountDetailsController {
                 String branchName = xmlParser.getValueOf("SOLDESC");
                 logger.info("branchName- "+ branchName);
 
+                String accountOpeningDate = xmlParser.getValueOf("AcctOpnDt");
+
                 String cusDetails = xmlParser.getValueOf("PersonName");
                 xmlParser.setInputXML(cusDetails);
                 String name = xmlParser.getValueOf("Name");
@@ -46,6 +48,7 @@ public class AccountDetailsController {
                 result.put("sol",sol);
                 result.put("branchName",branchName);
                 result.put("name",name);
+                result.put("acctDate",accountOpeningDate);
             } else if (isStatusFailed(status)) {
                 String errorDesc = xmlParser.getValueOf("ErrorDesc");
                 errorDesc = errorDesc + ". " + Constants.exceptionMsg;

@@ -102,6 +102,7 @@ public class Cco implements IFormServerEventHandler, SharedI, Constants {
             FormApi.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
             FormApi.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
             Shared.checkPepVerification(ifr);
+            Shared.checkExistingPep(ifr);
             Shared.setStaffName(ifr, ccoNameLocal, ccoStaffIdLocal);
             setDecision(ifr);
         } catch (Exception e) {

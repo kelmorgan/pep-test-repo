@@ -101,6 +101,31 @@ public class Service implements Constants {
 
         return null;
     }
+    public String getAccountDetails(){
+        try{
+            if (Shared.isPepCategory(ifr, pepCategoryExisting)) {
+                AccountDetailsController controller = getAccountDetailsController(Shared.getPepAccount(ifr));
+                assert controller != null;
+                Map<String, String> accountDetails = controller.getAccountDetails();
+
+                if (!accountDetails.isEmpty()) {
+                    if (accountDetails.containsKey(errorKey)) return accountDetails.get(errorKey);
+
+                    String name = accountDetails.get("name");
+                    String mapDate = accountDetails.get("acctDate");
+                    String []  dateArray = mapDate.split("T");
+                    String  date = dateArray[0];
+
+                    FormApi.setFields(ifr,new String[]{pepNameLocal,accountOpeningDateLocal},new String[]{name,date});
+                }
+            }
+        }
+        catch (Exception e){
+            logger.error("Exception occurred get account details method: " + e.getMessage());
+            return "Exception occurred in getting account details : Contact iBPS Support";
+        }
+        return null;
+    }
 
     private boolean isBvnValid(int bvnLength) {
         return bvnLength < Constants.bvnLength;
