@@ -126,10 +126,7 @@ public class Service implements Constants {
                     String  date = dateArray[0];
                     logger.info("date: "+date);
 
-                    String formattedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(dbDateFormat)).toString();
-                    logger.info("formatted date: "+formattedDate);
-
-                    FormApi.setFields(ifr,new String[]{pepNameLocal,accountOpeningDateLocal},new String[]{name,formattedDate});
+                    FormApi.setFields(ifr,new String[]{pepNameLocal,accountOpeningDateLocal},new String[]{name,date});
                 }
             }
         }
