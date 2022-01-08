@@ -21,6 +21,7 @@ public class PEP implements IFormListenerFactory, Constants {
 
 			String workStep = FormApi.getCurrentWorkStep(ifr);
 			logger.info("workStep: " + workStep);
+			logger.info("calling from main pep jar");
 
 			if (Shared.isProcessName(ifr, pepProcessName)) {
 				switch (workStep) {
