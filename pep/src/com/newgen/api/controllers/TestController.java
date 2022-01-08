@@ -1,6 +1,6 @@
 package com.newgen.api.controllers;
 
-import com.newgen.utils.Constants;
+import com.newgen.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;

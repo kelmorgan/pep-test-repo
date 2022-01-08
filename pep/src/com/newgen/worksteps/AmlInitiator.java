@@ -7,12 +7,12 @@ import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
-import com.newgen.utils.Constants;
-import com.newgen.utils.LoadProp;
-import com.newgen.utils.Shared;
-import com.newgen.utils.SharedI;
-import com.newgen.utils.mail.MailMessage;
-import com.newgen.utils.mail.MailSetup;
+import com.newgen.util.Constants;
+import com.newgen.util.LoadProp;
+import com.newgen.util.Shared;
+import com.newgen.util.SharedI;
+import com.newgen.util.mail.MailMessage;
+import com.newgen.util.mail.MailSetup;
 import org.json.simple.JSONArray;
 
 import javax.servlet.http.HttpServletRequest;

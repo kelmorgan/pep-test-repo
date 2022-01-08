@@ -1,9 +1,9 @@
-package com.newgen.utils.mail;
+package com.newgen.util.mail;
 
 import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
-import com.newgen.utils.Constants;
-import com.newgen.utils.Shared;
+import com.newgen.util.Constants;
+import com.newgen.util.Shared;
 
 import java.io.FileInputStream;
 import java.io.InputStream;

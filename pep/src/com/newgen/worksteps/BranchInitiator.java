@@ -7,9 +7,9 @@ import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
-import com.newgen.utils.*;
-import com.newgen.utils.mail.MailMessage;
-import com.newgen.utils.mail.MailSetup;
+import com.newgen.util.*;
+import com.newgen.util.mail.MailMessage;
+import com.newgen.util.mail.MailSetup;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 

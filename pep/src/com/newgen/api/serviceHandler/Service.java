@@ -6,9 +6,9 @@ import com.newgen.api.controllers.AccountLinkedToBvnController;
 import com.newgen.api.controllers.TestController;
 import com.newgen.api.generateXml.RequestXml;
 import com.newgen.iforms.custom.IFormReference;
-import com.newgen.utils.Constants;
-import com.newgen.utils.LogGenerator;
-import com.newgen.utils.Shared;
+import com.newgen.util.Constants;
+import com.newgen.util.LogGenerator;
+import com.newgen.util.Shared;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;

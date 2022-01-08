@@ -4,9 +4,9 @@ import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormListenerFactory;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
-import com.newgen.utils.Constants;
-import com.newgen.utils.LogGenerator;
-import com.newgen.utils.Shared;
+import com.newgen.util.Constants;
+import com.newgen.util.LogGenerator;
+import com.newgen.util.Shared;
 import com.newgen.worksteps.*;
 import org.apache.log4j.Logger;
 

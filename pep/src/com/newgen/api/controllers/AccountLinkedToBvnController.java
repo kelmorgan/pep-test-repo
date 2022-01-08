@@ -3,9 +3,9 @@ package com.newgen.api.controllers;
 import com.kelmorgan.callclienthandler.handler.RequestResponseHandler;
 import com.kelmorgan.callclienthandler.services.SoapServiceHandler;
 import com.kelmorgan.xmlparser.parser.XmlParser;
-import com.newgen.utils.Constants;
-import com.newgen.utils.LogGenerator;
-import com.newgen.utils.Shared;
+import com.newgen.util.Constants;
+import com.newgen.util.LogGenerator;
+import com.newgen.util.Shared;
 import org.apache.log4j.Logger;
 
 import java.util.*;

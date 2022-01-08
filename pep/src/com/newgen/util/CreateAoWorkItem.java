@@ -1,4 +1,4 @@
-package com.newgen.utils;
+package com.newgen.util;
 
 import com.kelmorgan.ibpservices.initializer.IBPSServiceHandler;
 import com.kelmorgan.ibpservices.initializer.ServiceInitializer;

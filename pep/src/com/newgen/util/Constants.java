@@ -1,4 +1,4 @@
-package com.newgen.utils;
+package com.newgen.util;
 
 import java.io.File;
 
