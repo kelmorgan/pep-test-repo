@@ -104,7 +104,12 @@ public class Service implements Constants {
     public String getAccountDetails(){
         try{
             if (Shared.isPepCategory(ifr, pepCategoryExisting)) {
-                AccountDetailsController controller = getAccountDetailsController(Shared.getPepAccount(ifr));
+
+                String accountNumber = Shared.getPepAccount(ifr);
+
+                if (accountNumber.isEmpty()) return "Kindly enter Account Number";
+
+                AccountDetailsController controller = getAccountDetailsController(accountNumber);
                 assert controller != null;
                 Map<String, String> accountDetails = controller.getAccountDetails();
 

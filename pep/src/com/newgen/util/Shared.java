@@ -353,14 +353,15 @@ public class Shared implements Constants {
         FormApi.setVisible(ifr,new String[]{pepInfoSection,pepVerificationSection});
 
         if (isPepCategory(ifr, pepCategoryExisting)) {
-            FormApi.enableFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
-            FormApi.setMandatory(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
+            FormApi.enableFields(ifr, new String[]{accountNoLocal});
+            FormApi.setMandatory(ifr, new String[]{accountNoLocal});
             FormApi.setInvisible(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal});
             FormApi.setVisible(ifr, new String[]{pepNameLocal});
         } else {
             FormApi.clearFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
             FormApi.disableFields(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
             FormApi.undoMandatory(ifr, new String[]{accountNoLocal, accountOpeningDateLocal});
+            FormApi.setInvisible(ifr, new String[]{pepNameLocal});
         }
 
         if (isPepAcctCategory(ifr, pepAcctCategoryCorporate)) {
