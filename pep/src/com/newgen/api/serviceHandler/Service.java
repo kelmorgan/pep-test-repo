@@ -116,10 +116,13 @@ public class Service implements Constants {
                 if (!accountDetails.isEmpty()) {
                     if (accountDetails.containsKey(errorKey)) return accountDetails.get(errorKey);
 
+                    logger.info("account Number : "+ accountNumber);
                     String name = accountDetails.get("name");
                     String mapDate = accountDetails.get("acctDate");
+                    logger.info("mapDate: "+mapDate);
                     String []  dateArray = mapDate.split("T");
                     String  date = dateArray[0];
+                    logger.info("date: "+date);
 
                     FormApi.setFields(ifr,new String[]{pepNameLocal,accountOpeningDateLocal},new String[]{name,date});
                 }
