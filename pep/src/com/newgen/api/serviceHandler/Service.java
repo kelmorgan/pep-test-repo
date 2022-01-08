@@ -11,6 +11,8 @@ import com.newgen.util.LogGenerator;
 import com.newgen.util.Shared;
 import org.apache.log4j.Logger;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +126,10 @@ public class Service implements Constants {
                     String  date = dateArray[0];
                     logger.info("date: "+date);
 
-                    FormApi.setFields(ifr,new String[]{pepNameLocal,accountOpeningDateLocal},new String[]{name,date});
+                    String formattedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(dbDateFormat)).toString();
+                    logger.info("formatted date: "+formattedDate);
+
+                    FormApi.setFields(ifr,new String[]{pepNameLocal,accountOpeningDateLocal},new String[]{name,formattedDate});
                 }
             }
         }
