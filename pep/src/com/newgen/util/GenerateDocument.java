@@ -19,21 +19,20 @@ public class GenerateDocument implements Constants{
     }
 
     public  String generateDoc () {
+        String response;
         try {
             String request = getGenerateTemplateRequest(FormApi.getWorkItemNumber(ifr),
                     LoadProp.jtsIp,LoadProp.jtsPort,FormApi.getSessionId(ifr),LoadProp.serverIp,LoadProp.serverPort,
                     LoadProp.serverName,LoadProp.cabinetName,FormApi.getProcessName(ifr),LoadProp.templateName, FormApi.getCurrentWorkStep(ifr));
-
+            int templatePort = Integer.parseInt(LoadProp.templatePort);
+            String serverIp = LoadProp.serverIp;
+            logger.info("templatePort: "+ templatePort);
+            logger.info("Server Ip: "+serverIp);
             logger.info("Request for template generation: "+ request);
 
-            int templatePort = Integer.parseInt(LoadProp.templatePort);
-            String response;
             try {
-             response = callSocketServer(LoadProp.serverIp,templatePort,request);
+             response = callSocketServer(serverIp,templatePort,request);
             logger.info("Response from template generation: "+ response);
-
-
-
             } catch (Exception e) {
                 response = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                         + "<message>\n"
@@ -41,14 +40,14 @@ public class GenerateDocument implements Constants{
                         + "<ErrorDesc>Error while generating template.</ErrorDesc>\n"
                         + "</message>";
             }
-
             Shared.setDocFlag(ifr);
-            return response;
         }
         catch (Exception e){
             logger.error("Exception occurred in generateDoc Method: "+ e.getMessage());
+            response = "Exception occurred in generateDoc Method: "+ e.getMessage();
         }
-        return  null;
+        logger.info("final response: "+ response);
+        return  response;
     }
 
     private static String callSocketServer(String serverIp,int templatePort, String request) {
