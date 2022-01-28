@@ -77,6 +77,8 @@ public class Service implements Constants {
 
                 logger.info("Account list: " + accountList);
 
+                FormApi.disableFields(ifr,bvnLocal);
+
                 accountList.forEach(accountNumber -> {
                     try {
                         AccountDetailsController controller = getAccountDetailsController(accountNumber);
