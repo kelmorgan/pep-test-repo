@@ -19,46 +19,45 @@ public class MailMessage {
         try {
             InputStream inputStream = new FileInputStream(Constants.mailMessagePath);
             properties.load(inputStream);
-        } catch (Exception e){
-            System.out.println("Exception Occurred: "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Exception Occurred: " + e.getMessage());
         }
     }
 
-    public String getBranchInitiatorMsg(){
+    public String getBranchInitiatorMsg() {
         message = properties.getProperty(Constants.branchInitiatorMsg);
-        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        return message;
+        return message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
     }
-    public String getApproveMsg(){
+
+    public String getApproveMsg() {
         message = properties.getProperty(Constants.approveMsg);
-        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        return message;
+        return message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
     }
-    public String getRejectMsg(){
+
+    public String getRejectMsg() {
         message = properties.getProperty(Constants.rejectMsg);
         message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        message = message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
-        return message;
+        return message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
     }
-    public String getReturnMsg(){
+
+    public String getReturnMsg() {
         message = properties.getProperty(Constants.returnMsg);
-        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        return message;
+        return message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
     }
-    public String getAmlInitiatorMsg(){
+
+    public String getAmlInitiatorMsg() {
         message = properties.getProperty(Constants.amlInitiatorMsg);
-        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        return message;
+        return message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
     }
-    public String getAmlApproveMsg(){
+
+    public String getAmlApproveMsg() {
         message = properties.getProperty(Constants.amlApproveMsg);
-        message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        return message;
+        return message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
     }
-    public String getAmlRejectMsg(){
+
+    public String getAmlRejectMsg() {
         message = properties.getProperty(Constants.amlRejectMsg);
         message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        message = message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
-        return message;
+        return message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
     }
 }
