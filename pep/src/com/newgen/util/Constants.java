@@ -191,7 +191,8 @@ public interface Constants {
 
     //config
     String configPath = System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "pep.properties";
-    String mailMessagePath = "PEP" + File.separator + "config" + File.separator + "mailmessages.properties";
+   // String mailMessagePath = "PEP" + File.separator + "config" + File.separator + "mailmessages.properties";
+    String mailMessagePath = "/PEP/config/mailmessages.properties";
     //String logPathField = "LOGPATH";
     String logPathField = "nglogs/NGF_Logs/pep/";
     String activateAoField = "ACTIVATEAO";
