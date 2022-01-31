@@ -5,6 +5,7 @@ import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -350,7 +351,7 @@ public class Shared implements Constants {
 
         FormApi.enableFields(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal, addressLocal, pepSolIdLocal, pepBranchNameLocal, pepStatusLocal, srcOfWealthLocal, purposeOfAccountLocal, officeDesignationLocal, pepAccountTypeLocal, isDocCompletedLocal, isLinkedPepLocal});
         FormApi.setMandatory(ifr, new String[]{surNameLocal, firstNameLocal, addressLocal, pepSolIdLocal, pepBranchNameLocal, pepStatusLocal, srcOfWealthLocal, purposeOfAccountLocal, officeDesignationLocal, pepAccountTypeLocal, isDocCompletedLocal, isLinkedPepLocal});
-        FormApi.setVisible(ifr,new String[]{pepInfoSection,pepVerificationSection});
+        FormApi.setVisible(ifr, new String[]{pepInfoSection, pepVerificationSection});
 
         if (isPepCategory(ifr, pepCategoryExisting)) {
             FormApi.enableFields(ifr, new String[]{accountNoLocal});
@@ -485,7 +486,7 @@ public class Shared implements Constants {
             String wiName = FormApi.getWorkItemNumber(ifr);
             String bvn = getBvn(ifr);
             validate = 0;
-
+            FormApi.setFields(ifr, pepOnboardedDateLocal, LocalDate.now().toString());
 
             if (isPepCategory(ifr, pepCategoryNew))
                 validate = new DbConnect(ifr, Query.setPepRepoNew(wiName, sol, branchName, pepName, address, officePosition, bvn)).saveQuery();
@@ -500,11 +501,17 @@ public class Shared implements Constants {
     }
 
     private static String getPepName(IFormReference ifr) {
-        String firstName = FormApi.getFieldValue(ifr, firstNameLocal);
-        String surName = FormApi.getFieldValue(ifr, surNameLocal);
-        String otherName = FormApi.getFieldValue(ifr, otherNameLocal);
+        String pepName = "";
+        if (isPepCategory(ifr, pepCategoryNew)) {
+            String firstName = FormApi.getFieldValue(ifr, firstNameLocal);
+            String surName = FormApi.getFieldValue(ifr, surNameLocal);
+            String otherName = FormApi.getFieldValue(ifr, otherNameLocal);
+            pepName = firstName + " " + surName + " " + otherName;
+            FormApi.setFields(ifr, pepNameLocal, pepName);
+        } else if (isPepCategory(ifr, pepCategoryExisting))
+            pepName = FormApi.getFieldValue(ifr, pepNameLocal);
 
-        return firstName + " " + surName + " " + otherName;
+        return pepName;
     }
 
     private static void setOnboardedFlag(IFormReference ifr) {
@@ -553,28 +560,37 @@ public class Shared implements Constants {
         }
     }
 
-    public static String validatePepDocuments(IFormReference ifr){
-        if (isDecisionSubmit(ifr)){
+    public static String validatePepDocuments(IFormReference ifr) {
+        if (isDecisionSubmit(ifr)) {
             List<String> documents = getDocumentList(ifr);
 
-           for (String document : documents) {
-               if (isDocNotAttached(ifr, document)) {
-                   switch (document) {
-                       case aoDoc: return documentAttachMsg + aoDoc;
-                       case addressVerificationDoc: return  documentAttachMsg + addressVerificationDoc;
-                       case cddDoc: return  documentAttachMsg + cddDoc;
-                       case idDoc: return  documentAttachMsg + idDoc;
-                       case idVerificationDoc: return  documentAttachMsg + idVerificationDoc;
-                       case bvnDoc: return  documentAttachMsg + bvnDoc;
-                       case mandateCardDoc: return  documentAttachMsg + mandateCardDoc;
-                       case taxIdDoc: return  documentAttachMsg + taxIdDoc;
-                   }
-               }
-           }
+            for (String document : documents) {
+                if (isDocNotAttached(ifr, document)) {
+                    switch (document) {
+                        case aoDoc:
+                            return documentAttachMsg + aoDoc;
+                        case addressVerificationDoc:
+                            return documentAttachMsg + addressVerificationDoc;
+                        case cddDoc:
+                            return documentAttachMsg + cddDoc;
+                        case idDoc:
+                            return documentAttachMsg + idDoc;
+                        case idVerificationDoc:
+                            return documentAttachMsg + idVerificationDoc;
+                        case bvnDoc:
+                            return documentAttachMsg + bvnDoc;
+                        case mandateCardDoc:
+                            return documentAttachMsg + mandateCardDoc;
+                        case taxIdDoc:
+                            return documentAttachMsg + taxIdDoc;
+                    }
+                }
+            }
         }
         return null;
     }
-    private static List<String> getDocumentList(IFormReference ifr){
+
+    private static List<String> getDocumentList(IFormReference ifr) {
         List<String> documentList = new ArrayList<>();
         documentList.add(aoDoc);
         documentList.add(addressVerificationDoc);
@@ -583,22 +599,23 @@ public class Shared implements Constants {
         documentList.add(idVerificationDoc);
         documentList.add(bvnDoc);
         documentList.add(mandateCardDoc);
-        if (isPepAcctCategory(ifr,pepAcctCategoryCorporate)) documentList.add(taxIdDoc);
+        if (isPepAcctCategory(ifr, pepAcctCategoryCorporate)) documentList.add(taxIdDoc);
         return documentList;
     }
 
-    private static boolean isDocNotAttached(IFormReference ifr,String documentName){
+    private static boolean isDocNotAttached(IFormReference ifr, String documentName) {
         return Integer.parseInt(new DbConnect
-                (ifr,Query.getCheckDocQuery(FormApi.getWorkItemNumber(ifr),documentName)).getData().get(0).get(0) ) < 1;
+                (ifr, Query.getCheckDocQuery(FormApi.getWorkItemNumber(ifr), documentName)).getData().get(0).get(0)) < 1;
     }
 
-    public static void checkExistingPep(IFormReference ifr){
+    public static void checkExistingPep(IFormReference ifr) {
         if (isPepCategory(ifr, pepCategoryExisting)) {
             FormApi.setInvisible(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal});
             FormApi.setVisible(ifr, new String[]{pepNameLocal});
         }
     }
-    public static String getPepAccount(IFormReference ifr){
+
+    public static String getPepAccount(IFormReference ifr) {
         return FormApi.getFieldValue(ifr, accountNoLocal);
     }
 

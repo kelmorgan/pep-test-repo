@@ -92,6 +92,7 @@ public interface Constants {
     String edSignDateLocal = "EDSIGNDATE";
     String ccoSignDateLocal = "CCOSIGNDATE";
     String pepNameLocal = "PEPNAME";
+    String pepOnboardedDateLocal= "INITIATIONDATE";
 
     //sections
     String accountListSection = "ACCTLINKEDINFOSECTION";
