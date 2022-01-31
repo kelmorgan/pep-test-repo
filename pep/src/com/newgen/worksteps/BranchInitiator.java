@@ -7,6 +7,7 @@ import com.newgen.iforms.FormDef;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.iforms.custom.IFormServerEventHandler;
 import com.newgen.mvcbeans.model.WorkdeskModel;
+import com.newgen.tests.MailTests;
 import com.newgen.util.*;
 import com.newgen.util.mail.MailMessage;
 import com.newgen.util.mail.MailSetup;
@@ -86,6 +87,10 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
                     }
                     break;
                 }
+            }
+            break;
+            case testEvent:{
+                new MailTests(ifr).mainCall();
             }
         }
         return null;

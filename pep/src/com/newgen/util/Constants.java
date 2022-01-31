@@ -163,6 +163,7 @@ public interface Constants {
     String createAoWorkItemEvent = "createAoWorkItemEvent";
     String signEvent = "signEvent";
     String setAccountDetailsEvent = "setAccountDetailsEvent";
+    String testEvent = "testEvent";
 
 
     //process info
