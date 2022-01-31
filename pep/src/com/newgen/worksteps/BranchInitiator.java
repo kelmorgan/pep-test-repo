@@ -88,7 +88,6 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
                     break;
                 }
             }
-            break;
             case testEvent:{
                 new MailTests(ifr).mainCall();
             }

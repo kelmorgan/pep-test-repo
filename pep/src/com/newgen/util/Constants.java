@@ -73,6 +73,7 @@ public interface Constants {
     String fetchPepInfoBtn = "FETCHPEPINFOBTN";
     String searchBvnBtn = "SEARCHBVNBTN";
     String generatePepDocBtn = "GENERATEDOCUMENTBTN";
+    String generateAoBtn = "GENERATEAOBTN";
     String docFlagLocal = "DOCFLAG";
     String repoSolIdLocal = "REPO_SOLID";
     String repoBranchNameLocal = "REPO_BRANCHNAME";
@@ -99,7 +100,7 @@ public interface Constants {
     String pepInfoSection = "PEPINFORMATIONSECTION";
     String pepVerificationSection = "PEPVERIFICATIONSECTION";
     String decisionSection = "DECISIONSECTION";
-    String generateDocumentSection = "GENERATEDOCSECTION";
+    String generateSection = "GENERATEDOCSECTION";
     String pepCategorySection = "PEPCATEGORYSECTION";
     String pepRepositorySection = "REPOSECTION";
 
@@ -224,4 +225,5 @@ public interface Constants {
     String amlInitiatorMsg = "AMLINITIATORMSG";
     String amlApproveMsg = "AMLAPPROVEMSG";
     String amlRejectMsg = "AMLREJECTMSG";
+    String aoWorkItemMsg = "CREATEAOWORKITEMMSG";
 }

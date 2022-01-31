@@ -102,7 +102,7 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
                 Shared.setDecision(ifr, decisionLocal, new String[]{decApprove, decDiscard});
             } else {
                 Shared.checkPepVerification(ifr);
-                Shared.checkExistingPep(ifr);
+                Shared.checkPepStatus(ifr);
                 FormApi.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
                 FormApi.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
                 FormApi.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});

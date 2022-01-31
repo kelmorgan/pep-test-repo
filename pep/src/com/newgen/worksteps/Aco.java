@@ -95,7 +95,7 @@ public class Aco implements IFormServerEventHandler, Constants, SharedI {
             FormApi.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
             FormApi.setVisible(ifr, new String[]{accountListSection, pepInfoSection, pepCategorySection, pepVerificationSection, decisionSection});
             Shared.checkPepVerification(ifr);
-            Shared.checkExistingPep(ifr);
+            Shared.checkPepStatus(ifr);
             FormApi.enableFields(ifr, new String[]{decisionLocal, remarksLocal});
             FormApi.setMandatory(ifr, new String[]{decisionLocal, remarksLocal});
             setDecision(ifr);

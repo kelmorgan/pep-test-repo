@@ -46,17 +46,18 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 					case generateDocEvent:{
 						return new GenerateDocument(ifr).generateDoc();
 					}
+					case createAoWorkItemEvent:{
+						return new CreateAoWorkItem(ifr).createWorkItem();
+					}
 				}
 			}
 			break;
 			case onDoneEvent:{
 				switch (control){
 					case checkDocEvent:{
-						return Shared.checkDocGenerated(ifr);
+						return Shared.onboardedPepChecks(ifr);
 					}
-					case createAoWorkItemEvent:{
-						return new CreateAoWorkItem(ifr).createWorkItem();
-					}
+
 					case decisionHistoryEvent:{
 						Shared.setDecisionHistory(ifr);
 					}
@@ -114,12 +115,12 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 			Shared.hideSections(ifr);
 			FormApi.clearFields(ifr, new String[]{remarksLocal, decisionHistoryFlagLocal});
 			Shared.checkPepVerification(ifr);
-			Shared.checkExistingPep(ifr);
+			Shared.checkPepStatus(ifr);
 			if (Shared.isPrevWs(ifr,ccoWs)){
 				Shared.onboardPepInRepo(ifr);
-				FormApi.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection,generateDocumentSection, pepVerificationSection, decisionSection});
+				FormApi.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection, generateSection, pepVerificationSection, decisionSection});
 				Shared.setDecisionApprove(ifr);
-				FormApi.enableFields(ifr,new String[]{generatePepDocBtn});
+				FormApi.enableFields(ifr,new String[]{generatePepDocBtn,generateAoBtn});
 				FormApi.setFields(ifr,remarksLocal,"Pep on-boarding approved and successful");
 			}
 			else {

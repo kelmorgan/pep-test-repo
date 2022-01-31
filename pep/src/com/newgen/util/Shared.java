@@ -5,7 +5,6 @@ import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
-import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -57,7 +56,7 @@ public class Shared implements Constants {
     }
 
     public static void hideSections(IFormReference ifr) {
-        FormApi.setInvisible(ifr, new String[]{accountListSection, pepInfoSection, pepVerificationSection, decisionSection, pepCategorySection, generateDocumentSection, pepRepositorySection});
+        FormApi.setInvisible(ifr, new String[]{accountListSection, pepInfoSection, pepVerificationSection, decisionSection, pepCategorySection, generateSection, pepRepositorySection});
     }
 
     public static boolean isProcessName(IFormReference ifr, String processName) {
@@ -411,16 +410,26 @@ public class Shared implements Constants {
         return FormApi.getFieldValue(ifr, docFlagLocal);
     }
 
-    public static boolean isDocGenerated(IFormReference ifr) {
+    public static String getAoFlag(IFormReference ifr) {
+        return FormApi.getFieldValue(ifr, aoWiNameFlagLocal);
+    }
+
+    public static boolean isDocNotGenerated(IFormReference ifr) {
         return isEmpty(getDocFlag(ifr));
+    }
+
+    public static boolean isAONotGenerated(IFormReference ifr) {
+        return isEmpty(getAoFlag(ifr));
     }
 
     public static void setDocFlag(IFormReference ifr) {
         FormApi.setFields(ifr, docFlagLocal, flagY);
     }
 
-    public static String checkDocGenerated(IFormReference ifr) {
-        if (isDocGenerated(ifr)) return "Kindly generate Pep On-boarding Document";
+    public static String onboardedPepChecks(IFormReference ifr) {
+        if (isDocNotGenerated(ifr)) return "Kindly generate Pep On-boarding Document";
+
+        if (isAONotGenerated(ifr)) return "Kindly generate AO WorkItem";
         return null;
     }
 
@@ -608,10 +617,12 @@ public class Shared implements Constants {
                 (ifr, Query.getCheckDocQuery(FormApi.getWorkItemNumber(ifr), documentName)).getData().get(0).get(0)) < 1;
     }
 
-    public static void checkExistingPep(IFormReference ifr) {
+    public static void checkPepStatus(IFormReference ifr) {
         if (isPepCategory(ifr, pepCategoryExisting)) {
             FormApi.setInvisible(ifr, new String[]{surNameLocal, firstNameLocal, otherNameLocal});
             FormApi.setVisible(ifr, new String[]{pepNameLocal});
+        } else if (isPepCategory(ifr, pepCategoryNew)) {
+            FormApi.setInvisible(ifr, new String[]{pepNameLocal});
         }
     }
 

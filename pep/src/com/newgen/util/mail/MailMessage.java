@@ -65,4 +65,8 @@ public class MailMessage {
         message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
         return message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
     }
+    public String getAoWorkItemMsg(){
+        message = properties.getProperty(Constants.aoWorkItemMsg);
+        return  message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
+    }
 }

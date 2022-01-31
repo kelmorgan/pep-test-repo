@@ -130,7 +130,7 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
             FormApi.setMandatory(ifr, new String[]{bvnLocal, pepCategoryLocal, pepAccountCategoryLocal, lineExecutiveLocal, decisionLocal, remarksLocal});
             Shared.setPepMandatoryInfoFields(ifr);
             Shared.checkPepVerification(ifr);
-            Shared.checkExistingPep(ifr);
+            Shared.checkPepStatus(ifr);
             setDecision(ifr);
             Shared.checkSol(ifr);
         } catch (Exception e) {
