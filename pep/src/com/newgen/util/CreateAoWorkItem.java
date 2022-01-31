@@ -33,6 +33,7 @@ public class CreateAoWorkItem {
                 service.disconnectCabinet();
                 if (Shared.isNotEmpty(aoWiName)) {
                     FormApi.setFields(ifr,Constants.aoWiNameFlagLocal,Constants.flagY);
+                    FormApi.disableFields(ifr,Constants.generateAoBtn);
                     new DbConnect(ifr, Query.setAoDetails(aoWiName, FormApi.getWorkItemNumber(ifr))).saveQuery();
                     sendMail();
                     return "WorkItem successfully created on AO process. RefNo: " + aoWiName;
@@ -59,7 +60,8 @@ public class CreateAoWorkItem {
     }
 
     private void sendMail() {
-        String sendTo = FormApi.getLoginUser(ifr) + Constants.endMail;
+        //String sendTo = FormApi.getLoginUser(ifr) + Constants.endMail;
+        String sendTo = "SN029216" + Constants.endMail;
         String message = new MailMessage(ifr).getAoWorkItemMsg();
         new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, Constants.empty, LoadProp.mailSubject, message);
     }
