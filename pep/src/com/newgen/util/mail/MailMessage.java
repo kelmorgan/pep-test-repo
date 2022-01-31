@@ -3,7 +3,9 @@ package com.newgen.util.mail;
 import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import com.newgen.util.Constants;
+import com.newgen.util.LogGenerator;
 import com.newgen.util.Shared;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -13,14 +15,17 @@ public class MailMessage {
     private final IFormReference ifr;
     private final Properties properties = new Properties();
     private String message;
+    private final Logger logger = LogGenerator.getLoggerInstance(MailMessage.class);
 
     public MailMessage(IFormReference ifr) {
         this.ifr = ifr;
         try {
-            InputStream inputStream = new FileInputStream(Constants.mailMessagePath);
+            String path = Constants.mailMessagePath;
+            logger.info("Message config path: "+ path);
+            InputStream inputStream = new FileInputStream(path);
             properties.load(inputStream);
         } catch (Exception e) {
-            System.out.println("Exception Occurred: " + e.getMessage());
+            logger.error("Exception Occurred: "+ e.getMessage());
         }
     }
 
