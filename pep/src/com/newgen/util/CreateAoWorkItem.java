@@ -60,8 +60,7 @@ public class CreateAoWorkItem {
     }
 
     private void sendMail(String aoWiName) {
-        //String sendTo = FormApi.getLoginUser(ifr) + Constants.endMail;
-        String sendTo = "SN029216" + Constants.endMail;
+        String sendTo = FormApi.getLoginUser(ifr) + Constants.endMail;
         String message = new MailMessage(ifr).getAoWorkItemMsg(aoWiName);
         new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, Constants.empty, LoadProp.mailSubject, message);
     }
