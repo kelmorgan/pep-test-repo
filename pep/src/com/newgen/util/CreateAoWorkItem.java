@@ -35,7 +35,7 @@ public class CreateAoWorkItem {
                     FormApi.setFields(ifr,Constants.aoWiNameFlagLocal,Constants.flagY);
                     FormApi.disableFields(ifr,Constants.generateAoBtn);
                     new DbConnect(ifr, Query.setAoDetails(aoWiName, FormApi.getWorkItemNumber(ifr))).saveQuery();
-                    sendMail();
+                    sendMail(aoWiName);
                     return "WorkItem successfully created on AO process. RefNo: " + aoWiName;
                 } else return "Something went wrong in creating AO WorkItem. " + Constants.exceptionMsg;
             }
@@ -59,10 +59,10 @@ public class CreateAoWorkItem {
         return isAoActive() && Shared.isAONotGenerated(ifr) && Shared.isPrevWs(ifr, Constants.ccoWs) && Shared.isPepCategory(ifr, Constants.pepCategoryNew);
     }
 
-    private void sendMail() {
+    private void sendMail(String aoWiName) {
         //String sendTo = FormApi.getLoginUser(ifr) + Constants.endMail;
         String sendTo = "SN029216" + Constants.endMail;
-        String message = new MailMessage(ifr).getAoWorkItemMsg();
+        String message = new MailMessage(ifr).getAoWorkItemMsg(aoWiName);
         new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, Constants.empty, LoadProp.mailSubject, message);
     }
 
