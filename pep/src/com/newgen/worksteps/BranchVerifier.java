@@ -122,6 +122,10 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 				Shared.setDecisionApprove(ifr);
 				FormApi.enableFields(ifr,new String[]{generatePepDocBtn,generateAoBtn});
 				FormApi.setFields(ifr,remarksLocal,"Pep on-boarding approved and successful");
+				if (Shared.isPepCategory(ifr, Constants.pepCategoryNew)) {
+					FormApi.setInvisible(ifr,new String[]{generateAoBtn});
+					FormApi.disableFields(ifr,new String[]{generateAoBtn});
+				}
 			}
 			else {
 				FormApi.setVisible(ifr, new String[]{accountListSection, pepCategorySection, pepInfoSection, pepVerificationSection, decisionSection});

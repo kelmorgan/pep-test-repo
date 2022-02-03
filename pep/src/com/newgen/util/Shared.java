@@ -429,7 +429,7 @@ public class Shared implements Constants {
     public static String onboardedPepChecks(IFormReference ifr) {
         if (isDocNotGenerated(ifr)) return "Kindly generate Pep On-boarding Document";
 
-        if (isAONotGenerated(ifr)) return "Kindly generate AO WorkItem";
+        if (isAONotGenerated(ifr) && isPepCategory(ifr, Constants.pepCategoryNew)) return "Kindly generate AO WorkItem";
         return null;
     }
 
