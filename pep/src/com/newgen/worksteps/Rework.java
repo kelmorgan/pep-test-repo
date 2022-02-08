@@ -74,6 +74,10 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
                     case checkDocEvent: {
                         return Shared.validatePepDocuments(ifr);
                     }
+                    case setPepNameEvent:{
+                        Shared.setPepName(ifr);
+                    }
+                    break;
                     case decisionHistoryEvent: {
                         Shared.setDecisionHistory(ifr);
                     }

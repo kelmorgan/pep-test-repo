@@ -510,17 +510,7 @@ public class Shared implements Constants {
     }
 
     private static String getPepName(IFormReference ifr) {
-        String pepName = "";
-        if (isPepCategory(ifr, pepCategoryNew)) {
-            String firstName = FormApi.getFieldValue(ifr, firstNameLocal);
-            String surName = FormApi.getFieldValue(ifr, surNameLocal);
-            String otherName = FormApi.getFieldValue(ifr, otherNameLocal);
-            pepName = firstName + " " + surName + " " + otherName;
-            FormApi.setFields(ifr, pepNameLocal, pepName);
-        } else if (isPepCategory(ifr, pepCategoryExisting))
-            pepName = FormApi.getFieldValue(ifr, pepNameLocal);
-
-        return pepName;
+        return FormApi.getFieldValue(ifr,pepNameLocal);
     }
 
     private static void setOnboardedFlag(IFormReference ifr) {
@@ -630,4 +620,15 @@ public class Shared implements Constants {
         return FormApi.getFieldValue(ifr, accountNoLocal);
     }
 
+    public static void setPepName(IFormReference ifr) {
+        String pepName = "";
+
+        if (isPepCategory(ifr, pepCategoryNew) && isDecisionSubmit(ifr)) {
+            String firstName = FormApi.getFieldValue(ifr, firstNameLocal);
+            String surName = FormApi.getFieldValue(ifr, surNameLocal);
+            String otherName = FormApi.getFieldValue(ifr, otherNameLocal);
+            pepName = firstName + " " + surName + " " + otherName;
+            FormApi.setFields(ifr, pepNameLocal, pepName);
+        }
+    }
 }
