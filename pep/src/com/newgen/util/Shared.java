@@ -510,7 +510,7 @@ public class Shared implements Constants {
     }
 
     private static String getPepName(IFormReference ifr) {
-        return FormApi.getFieldValue(ifr,pepNameLocal);
+        return FormApi.getFieldValue(ifr, pepNameLocal);
     }
 
     private static void setOnboardedFlag(IFormReference ifr) {
@@ -621,13 +621,11 @@ public class Shared implements Constants {
     }
 
     public static void setPepName(IFormReference ifr) {
-        String pepName = "";
-
         if (isPepCategory(ifr, pepCategoryNew) && isDecisionSubmit(ifr)) {
             String firstName = FormApi.getFieldValue(ifr, firstNameLocal);
             String surName = FormApi.getFieldValue(ifr, surNameLocal);
             String otherName = FormApi.getFieldValue(ifr, otherNameLocal);
-            pepName = firstName + " " + surName + " " + otherName;
+            String pepName = firstName + " " + surName + " " + otherName;
             FormApi.setFields(ifr, pepNameLocal, pepName);
         }
     }
