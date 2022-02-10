@@ -146,7 +146,7 @@ public class Rework implements IFormServerEventHandler, SharedI, Constants {
     public void sendMail(IFormReference ifr) {
         if (Shared.isDecisionSubmit(ifr)) {
             String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
-            String message = new MailMessage(ifr).getRejectMsg();
+            String message = new MailMessage(ifr).getReturnMsg();
             new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         }
     }

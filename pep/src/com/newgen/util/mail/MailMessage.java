@@ -36,13 +36,15 @@ public class MailMessage {
 
     public String getApproveMsg() {
         message = properties.getProperty(Constants.approveMsg);
-        return message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
+        message=  message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
+        return message.replaceAll("&<Approver>&", FormApi.getCurrentWorkStep(ifr));
     }
 
     public String getRejectMsg() {
         message = properties.getProperty(Constants.rejectMsg);
         message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        return message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
+        message =  message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
+        return message.replaceAll("&<Rejector>&", FormApi.getCurrentWorkStep(ifr));
     }
 
     public String getReturnMsg() {
@@ -63,7 +65,8 @@ public class MailMessage {
     public String getAmlRejectMsg() {
         message = properties.getProperty(Constants.amlRejectMsg);
         message = message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
-        return message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
+        message =  message.replaceAll("&<Remarks>&", Shared.getRemarks(ifr));
+        return message.replaceAll("&<Rejector>&", FormApi.getCurrentWorkStep(ifr));
     }
     public String getAoWorkItemMsg(String aoWiName){
         message = properties.getProperty(Constants.aoWorkItemMsg);
