@@ -5,6 +5,7 @@ import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -448,6 +449,7 @@ public class Shared implements Constants {
 
     public static String setRepoInfo(IFormReference ifr) {
         try {
+            FormApi.clearFields(ifr,new String[]{repoAcctNameLocal, repoAddressLocal, repoAcctOpenDateLocal, repoBranchNameLocal, repoSolIdLocal, repoNOfBusiness, repoPepNameLocal, repoPositionLocal});
 
             String acctNo = getRepoAcctNo(ifr);
 
