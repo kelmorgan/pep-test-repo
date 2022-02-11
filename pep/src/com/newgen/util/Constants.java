@@ -29,6 +29,7 @@ public interface Constants {
     String userBranchNameLocal = "BRCHNAME";
     String lineExecutiveLocal = "LINEEXEC";
     String bvnLocal = "BVN";
+    String bvnNameLocal = "BVNNAME";
     String accountNoLocal = "ACCTNUM";
     String surNameLocal = "SURNAME";
     String firstNameLocal = "FIRSTNAME";
@@ -189,8 +190,11 @@ public interface Constants {
     String getCurrentAcctAppCode = "ODAcctInqrespAcctStatus";
     String getSpecialAcctAppcode = "FetchCAAccountDetails";
     String callTypeFinacle = "Finacle";
+    String callTypeWebservice = "WebService";
     String endpointCustomFIFinacle = "EndPointUrl";
     String endpointBpmFinacle = "AM_EndPointUrl";
+    String endpointBvnValidator = "BvnValidator";
+    String soapActionBvnValidator = "BVNValidation";
 
     //config
     String configPath = System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "pep.properties";

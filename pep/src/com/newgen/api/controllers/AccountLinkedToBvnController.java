@@ -1,6 +1,7 @@
 package com.newgen.api.controllers;
 
 import com.kelmorgan.callclienthandler.handler.RequestResponseHandler;
+import com.kelmorgan.callclienthandler.services.FinacleServiceHandler;
 import com.kelmorgan.callclienthandler.services.SoapServiceHandler;
 import com.kelmorgan.xmlparser.parser.XmlParser;
 import com.newgen.util.Constants;
@@ -17,9 +18,9 @@ public class AccountLinkedToBvnController {
     private final String request;
     private final Map<String, Object> result = new HashMap<>();
 
-    public AccountLinkedToBvnController(String processName, String ngMethod, String wiName, String callType, String endpoint, String request) {
+    public AccountLinkedToBvnController(String processName, String appCode, String wiName, String endpoint, String request) {
         this.request = request;
-        this.requestResponseHandler = new SoapServiceHandler(processName, ngMethod, wiName, callType, endpoint);
+        this.requestResponseHandler = new FinacleServiceHandler(processName, appCode, wiName, endpoint);
     }
 
 
@@ -58,6 +59,7 @@ public class AccountLinkedToBvnController {
 
             logger.info("-------------Call Completed-------------");
         } catch (Exception e) {
+            result.clear();
             String exception = "Exception occurred in Fetching Linked Accounts: " + e.getMessage();
             logger.error("Exception message: " + exception);
             result.put(Constants.errorKey, exception);

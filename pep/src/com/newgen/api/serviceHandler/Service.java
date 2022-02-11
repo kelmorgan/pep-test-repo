@@ -3,6 +3,7 @@ package com.newgen.api.serviceHandler;
 import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.api.controllers.AccountDetailsController;
 import com.newgen.api.controllers.AccountLinkedToBvnController;
+import com.newgen.api.controllers.BvnValidatorController;
 import com.newgen.api.controllers.TestController;
 import com.newgen.api.generateXml.RequestXml;
 import com.newgen.iforms.custom.IFormReference;
@@ -11,8 +12,6 @@ import com.newgen.util.LogGenerator;
 import com.newgen.util.Shared;
 import org.apache.log4j.Logger;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +63,15 @@ public class Service implements Constants {
                 FormApi.clearFields(ifr, bvnLocal);
                 return "BVN must be 11 digits";
             }
-            AccountLinkedToBvnController accountLinkedToBvnController =
-                    new AccountLinkedToBvnController(processName, getBvnAcctListAppCode,
-                            wiName, callTypeFinacle, endpointCustomFIFinacle, RequestXml.getBvnLinkAcctRequest(bvn));
 
+            BvnValidatorController bvnValidatorController = getBvnValidatorController(bvn);
+
+            Map<String,String> bvnValidateData = bvnValidatorController.validateBvn();
+
+            if (bvnValidateData.containsKey(errorKey)) return bvnValidateData.get(errorKey);
+
+
+            AccountLinkedToBvnController accountLinkedToBvnController = getAccountLinkedToBvnController(bvn);
             Map<String, Object> bvnData = accountLinkedToBvnController.getAccountList();
 
             if (!bvnData.isEmpty()) {
@@ -78,6 +82,7 @@ public class Service implements Constants {
                 logger.info("Account list: " + accountList);
 
                 FormApi.disableFields(ifr,bvnLocal);
+                FormApi.setFields(ifr,bvnNameLocal,bvnValidateData.get(successKey));
 
                 accountList.forEach(accountNumber -> {
                     try {
@@ -145,12 +150,19 @@ public class Service implements Constants {
 
     private AccountDetailsController getAccountDetailsController(String accountNumber) {
         if (accountNumber.startsWith("1")) {
-            return new AccountDetailsController(processName, wiName, callTypeFinacle, getSpecialAcctAppcode, endpointBpmFinacle, RequestXml.getSpecialAcctRequest(accountNumber));
+            return new AccountDetailsController(processName, wiName, getSpecialAcctAppcode, endpointBpmFinacle, RequestXml.getSpecialAcctRequest(accountNumber));
         } else if (accountNumber.startsWith("2")) {
-            return new AccountDetailsController(processName, wiName, callTypeFinacle, getCurrentAcctAppCode, endpointCustomFIFinacle, RequestXml.getCurrentAcctRequest(accountNumber));
+            return new AccountDetailsController(processName, wiName, getCurrentAcctAppCode, endpointCustomFIFinacle, RequestXml.getCurrentAcctRequest(accountNumber));
         } else if (accountNumber.startsWith("3")) {
-            return new AccountDetailsController(processName, wiName, callTypeFinacle, getSavingAcctAppCode, endpointCustomFIFinacle, RequestXml.getSavingAcctRequest(accountNumber));
+            return new AccountDetailsController(processName, wiName, getSavingAcctAppCode, endpointCustomFIFinacle, RequestXml.getSavingAcctRequest(accountNumber));
         }
         return null;
+    }
+
+    private AccountLinkedToBvnController getAccountLinkedToBvnController(String bvn){
+        return new AccountLinkedToBvnController(processName, getBvnAcctListAppCode, wiName, endpointCustomFIFinacle, RequestXml.getBvnLinkAcctRequest(bvn));
+    }
+    private BvnValidatorController getBvnValidatorController(String bvn){
+        return new BvnValidatorController(processName, soapActionBvnValidator, wiName, endpointBvnValidator, RequestXml.getBvnValidationRequest(bvn));
     }
 }

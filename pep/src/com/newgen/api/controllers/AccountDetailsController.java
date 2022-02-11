@@ -1,7 +1,7 @@
 package com.newgen.api.controllers;
 
 import com.kelmorgan.callclienthandler.handler.RequestResponseHandler;
-import com.kelmorgan.callclienthandler.services.SoapServiceHandler;
+import com.kelmorgan.callclienthandler.services.FinacleServiceHandler;
 import com.kelmorgan.xmlparser.parser.XmlParser;
 import com.newgen.util.Constants;
 import com.newgen.util.LogGenerator;
@@ -16,9 +16,9 @@ public class AccountDetailsController {
     private final String request;
     private final Map<String, String> result = new HashMap<>();
 
-    public AccountDetailsController(String processName, String wiName, String callType, String appCode, String endPoint, String request) {
+    public AccountDetailsController(String processName, String wiName, String appCode, String endPoint, String request) {
         this.request = request;
-        this.requestResponseHandler = new SoapServiceHandler(processName,appCode,wiName,callType,endPoint);
+        this.requestResponseHandler = new FinacleServiceHandler(processName,appCode,wiName,endPoint);
     }
 
     public Map<String,String> getAccountDetails(){
@@ -56,6 +56,7 @@ public class AccountDetailsController {
             }
             logger.info("-------------------Call Completed-------------------");
         } catch (Exception e){
+            result.clear();
             String exception = "Exception occurred in Fetching Account Details:  "+e.getMessage();
             logger.error("Exception message: "+ exception);
             result.put(Constants.errorKey,exception);
