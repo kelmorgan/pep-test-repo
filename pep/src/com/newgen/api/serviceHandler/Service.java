@@ -64,15 +64,12 @@ public class Service implements Constants {
                 return "BVN must be 11 digits";
             }
 
-            BvnValidatorController bvnValidatorController = getBvnValidatorController(bvn);
-
-            Map<String,String> bvnValidateData = bvnValidatorController.validateBvn();
+            Map<String, String> bvnValidateData = getBvnValidatorController(bvn).validateBvn();
 
             if (bvnValidateData.containsKey(errorKey)) return bvnValidateData.get(errorKey);
 
 
-            AccountLinkedToBvnController accountLinkedToBvnController = getAccountLinkedToBvnController(bvn);
-            Map<String, Object> bvnData = accountLinkedToBvnController.getAccountList();
+            Map<String, Object> bvnData = getAccountLinkedToBvnController(bvn).getAccountList();
 
             if (!bvnData.isEmpty()) {
                 if (bvnData.containsKey(errorKey)) return bvnData.get(errorKey).toString();
@@ -80,9 +77,6 @@ public class Service implements Constants {
                 List<String> accountList = (List<String>) bvnData.get(successKey);
 
                 logger.info("Account list: " + accountList);
-
-                FormApi.disableFields(ifr,bvnLocal);
-                FormApi.setFields(ifr,bvnNameLocal,bvnValidateData.get(successKey));
 
                 accountList.forEach(accountNumber -> {
                     try {
@@ -103,6 +97,8 @@ public class Service implements Constants {
                         logger.error("Exception occurred getAccountList method Iterating through account List: " + e.getMessage());
                     }
                 });
+                FormApi.disableFields(ifr, bvnLocal);
+                FormApi.setFields(ifr, bvnNameLocal, bvnValidateData.get(successKey));
             }
         } catch (Exception e) {
             logger.error("Exception occurred getAccountList method: " + e.getMessage());
@@ -110,8 +106,9 @@ public class Service implements Constants {
 
         return null;
     }
-    public String getAccountDetails(){
-        try{
+
+    public String getAccountDetails() {
+        try {
             if (Shared.isPepCategory(ifr, pepCategoryExisting)) {
 
                 String accountNumber = Shared.getPepAccount(ifr);
@@ -125,19 +122,18 @@ public class Service implements Constants {
                 if (!accountDetails.isEmpty()) {
                     if (accountDetails.containsKey(errorKey)) return accountDetails.get(errorKey);
 
-                    logger.info("account Number : "+ accountNumber);
+                    logger.info("account Number : " + accountNumber);
                     String name = accountDetails.get("name");
                     String mapDate = accountDetails.get("acctDate");
-                    logger.info("mapDate: "+mapDate);
-                    String []  dateArray = mapDate.split("T");
-                    String  date = dateArray[0];
-                    logger.info("date: "+date);
+                    logger.info("mapDate: " + mapDate);
+                    String[] dateArray = mapDate.split("T");
+                    String date = dateArray[0];
+                    logger.info("date: " + date);
 
-                    FormApi.setFields(ifr,new String[]{pepNameLocal,accountOpeningDateLocal},new String[]{name,date});
+                    FormApi.setFields(ifr, new String[]{pepNameLocal, accountOpeningDateLocal}, new String[]{name, date});
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.error("Exception occurred get account details method: " + e.getMessage());
             return "Exception occurred in getting account details : Contact iBPS Support";
         }
@@ -159,10 +155,11 @@ public class Service implements Constants {
         return null;
     }
 
-    private AccountLinkedToBvnController getAccountLinkedToBvnController(String bvn){
+    private AccountLinkedToBvnController getAccountLinkedToBvnController(String bvn) {
         return new AccountLinkedToBvnController(processName, getBvnAcctListAppCode, wiName, endpointCustomFIFinacle, RequestXml.getBvnLinkAcctRequest(bvn));
     }
-    private BvnValidatorController getBvnValidatorController(String bvn){
+
+    private BvnValidatorController getBvnValidatorController(String bvn) {
         return new BvnValidatorController(processName, soapActionBvnValidator, wiName, endpointBvnValidator, RequestXml.getBvnValidationRequest(bvn));
     }
 }

@@ -40,11 +40,11 @@ public class BvnValidatorController {
                     logger.info("fullName: "+fullName);
                     result.put(Constants.successKey, fullName);
                 } else {
-                    String responseMessage = xmlParser.getValueOf("a:ResponseMessage");
-                    result.put(Constants.errorKey, responseMessage);
+                    String errorMessage = xmlParser.getValueOf("a:ResponseMessage");
+                    result.put(Constants.errorKey, errorMessage);
                 }
             } else result.put(Constants.errorKey, "No response from NIBBS Validate BVN Api. " + Constants.exceptionMsg);
-
+            logger.info("-------------------Call Completed-------------------");
         } catch (Exception e) {
             result.clear();
             result.put(Constants.errorKey, "Exception occurred in calling NIBBS validate BVN Api. " + Constants.exceptionMsg);
