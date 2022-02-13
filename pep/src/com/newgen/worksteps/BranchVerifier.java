@@ -49,6 +49,10 @@ public class BranchVerifier implements IFormServerEventHandler , SharedI, Consta
 					case createAoWorkItemEvent:{
 						return new CreateAoWorkItem(ifr).createWorkItem();
 					}
+					case setDocGenerationEvent:{
+						Shared.setDocFlag(ifr);
+					}
+					break;
 				}
 			}
 			break;

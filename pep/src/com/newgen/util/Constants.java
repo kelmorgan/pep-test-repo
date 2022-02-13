@@ -168,6 +168,7 @@ public interface Constants {
     String setAccountDetailsEvent = "setAccountDetailsEvent";
     String testEvent = "testEvent";
     String setPepNameEvent = "setPepNameEvent";
+    String setDocGenerationEvent = "setDocGenerationEvent";
 
 
     //process info
