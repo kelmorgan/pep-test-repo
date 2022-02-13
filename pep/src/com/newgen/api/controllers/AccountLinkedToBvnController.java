@@ -2,7 +2,6 @@ package com.newgen.api.controllers;
 
 import com.kelmorgan.callclienthandler.handler.RequestResponseHandler;
 import com.kelmorgan.callclienthandler.services.FinacleServiceHandler;
-import com.kelmorgan.callclienthandler.services.SoapServiceHandler;
 import com.kelmorgan.xmlparser.parser.XmlParser;
 import com.newgen.util.Constants;
 import com.newgen.util.LogGenerator;

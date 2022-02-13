@@ -1,7 +1,6 @@
 package com.newgen.api.controllers;
 
 import com.kelmorgan.callclienthandler.handler.RequestResponseHandler;
-import com.kelmorgan.callclienthandler.services.RestServiceHandler;
 import com.kelmorgan.callclienthandler.services.SoapServiceHandler;
 import com.kelmorgan.xmlparser.parser.XmlParser;
 import com.newgen.util.Constants;
