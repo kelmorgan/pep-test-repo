@@ -57,6 +57,7 @@ public class Service implements Constants {
     public String getAccountList() {
         try {
             FormApi.clearTable(ifr, accountListTable);
+            FormApi.clearFields(ifr, bvnNameLocal);
             String bvn = Shared.getBvn(ifr);
             if (Shared.isEmpty(bvn)) return "Kindly enter BVN";
             if (isBvnValid(bvn.length())) {
