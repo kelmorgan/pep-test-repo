@@ -20,7 +20,7 @@ public class GenerateDocument implements Constants{
 
     private GenerateDocumentHandler handler (){
         return  new Generate(FormApi.getWorkItemNumber(ifr),
-                LoadProp.jtsIp,LoadProp.jtsPort,FormApi.getSessionId(ifr),LoadProp.serverIp,LoadProp.serverPort,
+                LoadProp.jtsPort,LoadProp.jtsIp,FormApi.getSessionId(ifr),LoadProp.serverIp,LoadProp.serverPort,
                 LoadProp.serverName,LoadProp.cabinetName,FormApi.getProcessName(ifr),LoadProp.templateName, FormApi.getCurrentWorkStep(ifr),Integer.parseInt(LoadProp.templatePort));
     }
 
