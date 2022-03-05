@@ -5,7 +5,6 @@ import com.kelmorgan.ibpsformapis.apis.FormApi;
 import com.newgen.iforms.custom.IFormReference;
 import org.apache.log4j.Logger;
 
-import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -21,6 +20,14 @@ public class Shared implements Constants {
     public static List<List<String>> resultSet;
     public static int validate;
     public static String message;
+
+    private static String getLoginUserMail(IFormReference ifr) {
+        return FormApi.getLoginUser(ifr) + endMail.trim();
+    }
+
+    public static String getInitiatorMail(IFormReference ifr) {
+        return FormApi.getFieldValue(ifr, initiatorMailLocal);
+    }
 
     public static String getBmGroupName(IFormReference ifr) {
         return bmGroupLabel + getUserSol(ifr);
@@ -50,7 +57,7 @@ public class Shared implements Constants {
             resultSet = new DbConnect(ifr, Query.getUserDetailsQuery(FormApi.getLoginUser(ifr))).getData();
             String sol = getDataByCoordinates(resultSet, 0, 0);
             String branchName = getDataByCoordinates(resultSet, 0, 1);
-            FormApi.setFields(ifr, new String[]{userSolIdLocal, userBranchNameLocal, userIdLocal}, new String[]{sol, branchName, FormApi.getLoginUser(ifr)});
+            FormApi.setFields(ifr, new String[]{userSolIdLocal, userBranchNameLocal, userIdLocal, initiatorMailLocal}, new String[]{sol, branchName, FormApi.getLoginUser(ifr), getLoginUserMail(ifr)});
         } catch (Exception e) {
             logger.info("Exception occurred in setInitiatorDetails method: " + e.getMessage());
         }
@@ -449,7 +456,7 @@ public class Shared implements Constants {
 
     public static String setRepoInfo(IFormReference ifr) {
         try {
-            FormApi.clearFields(ifr,new String[]{repoAcctNameLocal, repoAddressLocal, repoAcctOpenDateLocal, repoBranchNameLocal, repoSolIdLocal, repoNOfBusiness, repoPepNameLocal, repoPositionLocal});
+            FormApi.clearFields(ifr, new String[]{repoAcctNameLocal, repoAddressLocal, repoAcctOpenDateLocal, repoBranchNameLocal, repoSolIdLocal, repoNOfBusiness, repoPepNameLocal, repoPositionLocal});
 
             String acctNo = getRepoAcctNo(ifr);
 
@@ -630,5 +637,39 @@ public class Shared implements Constants {
             String pepName = firstName + " " + surName + " " + otherName;
             FormApi.setFields(ifr, pepNameLocal, pepName);
         }
+    }
+
+    public static String getBvFlag(IFormReference ifr) {
+        return FormApi.getFieldValue(ifr, bvFlagLocal);
+    }
+
+    public static boolean isBranchVerifier(IFormReference ifr) {
+        return getBvFlag(ifr).equalsIgnoreCase(flagY);
+    }
+
+    public static String getAcoGroupName(IFormReference ifr) {
+        try {
+            return new DbConnect(ifr, Query.getAcoGroup(getAcoId(ifr))).getData().get(0).get(0);
+        } catch (Exception e){
+            logger.info("Exception occurred in getting aco group name. "+ e.getMessage());
+            return null;
+        }
+    }
+
+    public static String getLineExecGroupName(IFormReference ifr) {
+        try {
+            return new DbConnect(ifr, Query.getLineExecutiveGroupName(getLineExecutiveId(ifr))).getData().get(0).get(0);
+        } catch (Exception e){
+            logger.info("Exception occurred in getting Line executive group name. "+ e.getMessage());
+            return  null;
+        }
+    }
+
+    private static String getLineExecutiveId(IFormReference ifr) {
+        return FormApi.getFieldValue(ifr, lineExecFilterLocal);
+    }
+
+    private static String getAcoId(IFormReference ifr) {
+        return FormApi.getFieldValue(ifr, acoFilterLocal);
     }
 }

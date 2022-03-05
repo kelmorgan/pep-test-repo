@@ -72,4 +72,10 @@ public class MailMessage {
         message = properties.getProperty(Constants.aoWorkItemMsg);
         return  message.replaceAll("&<WorkItemName>&",aoWiName);
     }
+
+    public String getBvApproveMsg(){
+        message = properties.getProperty(Constants.bvApproveMsg);
+        message=  message.replaceAll("&<WorkItemName>&", FormApi.getWorkItemNumber(ifr));
+        return message.replaceAll("&<Approver>&", Constants.branchVerifierWs);
+    }
 }

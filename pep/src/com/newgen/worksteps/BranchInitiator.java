@@ -67,7 +67,7 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
                     case apiEvent: {
                         return new Service(ifr).getAccountList();
                     }
-                    case setAccountDetailsEvent:{
+                    case setAccountDetailsEvent: {
                         return new Service(ifr).getAccountDetails();
                     }
                 }
@@ -75,10 +75,10 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
             break;
             case onDoneEvent: {
                 switch (control) {
-                    case checkDocEvent:{
+                    case checkDocEvent: {
                         return Shared.validatePepDocuments(ifr);
                     }
-                    case setPepNameEvent:{
+                    case setPepNameEvent: {
                         Shared.setPepName(ifr);
                     }
                     break;
@@ -86,14 +86,14 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
                         Shared.setDecisionHistory(ifr);
                     }
                     break;
-                    case sendMailEvent:{
+                    case sendMailEvent: {
                         sendMail(ifr);
                     }
                     break;
                 }
             }
             break;
-            case testEvent:{
+            case testEvent: {
                 new MailTests(ifr).mainCall();
             }
         }
@@ -157,9 +157,15 @@ public class BranchInitiator implements IFormServerEventHandler, SharedI, Consta
     @Override
     public void sendMail(IFormReference ifr) {
         if (Shared.isDecisionSubmit(ifr)) {
-            String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
-            String message = new MailMessage(ifr).getBranchInitiatorMsg();
-            new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+            if (Shared.isBranchVerifier(ifr)) {
+                String sendTo = Shared.getUsersMailsInGroup(ifr, Shared.getAcoGroupName(ifr));
+                String message = new MailMessage(ifr).getBvApproveMsg();
+                new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, Shared.getInitiatorMail(ifr), LoadProp.mailSubject, message);
+            } else {
+                String sendTo = Shared.getUsersMailsInGroup(ifr, Shared.getBmGroupName(ifr));
+                String message = new MailMessage(ifr).getBranchInitiatorMsg();
+                new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, Shared.getInitiatorMail(ifr), LoadProp.mailSubject, message);
+            }
         }
     }
 

@@ -55,6 +55,7 @@ public class Query {
         return "select aco_group from usr_0_fbn_aco_groupname where aco_id = '" + id + "'";
     }
 
+
     public static String getAcoId(String sol) {
         return "select aco_id from usr_0_fbn_aco_mapping where sole_id = '" + sol + "'";
     }
@@ -65,6 +66,10 @@ public class Query {
 
     public static String getLineExecutivesId(String name) {
         return "select le_id from usr_0_fbn_lineexecutive where upper(le_name) = upper('" + name + "')";
+    }
+
+    public static String getLineExecutiveGroupName(String id) {
+        return "select le_groupname from usr_0_fbn_lineexecutive where le_id = '" + id + "'";
     }
 
     public static String getIsMemberOfSol(String userId, String sol) {

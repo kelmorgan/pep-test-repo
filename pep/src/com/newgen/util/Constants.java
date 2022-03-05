@@ -95,6 +95,7 @@ public interface Constants {
     String ccoSignDateLocal = "CCOSIGNDATE";
     String pepNameLocal = "PEPNAME";
     String pepOnboardedDateLocal= "INITIATIONDATE";
+    String initiatorMailLocal = "INITIATORMAIL";
 
     //sections
     String accountListSection = "ACCTLINKEDINFOSECTION";
@@ -170,9 +171,7 @@ public interface Constants {
     String setPepNameEvent = "setPepNameEvent";
     String setDocGenerationEvent = "setDocGenerationEvent";
 
-
     //process info
-
 
     //Document List
     String aoDoc = "COMPLETED ACCOUNT OPENING FORM";
@@ -200,7 +199,7 @@ public interface Constants {
     //config
     String configPath = System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "pep.properties";
    // String mailMessagePath = "PEP" + File.separator + "config" + File.separator + "mailmessages.properties";
-    String mailMessagePath =System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "mailmessages.properties";
+    String mailMessagePath =System.getProperty("user.dir") + File.separator + "FBNConfig" + File.separator + "pepmailmessages.properties";
     //String logPathField = "LOGPATH";
     String logPathField = "nglogs/NGF_Logs/pep/";
     String activateAoField = "ACTIVATEAO";
@@ -218,14 +217,13 @@ public interface Constants {
     String serverNameField = "SERVERNAME";
     String mailSubjectField = "MAILSUBJECT";
     String pepMailGroupField = "PEPMAILGROUP";
-    String acoGroupNameField = "";
-    String amlGroupNameField = "";
-    String ccoGroupNameField = "";
-    String lineExecGroupNameField = "";
+    String amlGroupNameField = "AMLGROUPNAME";
+    String ccoGroupNameField = "CCOGROUPNAME";
 
     //mail messages config
     String branchInitiatorMsg = "BRANCHINITIATORMSG";
     String approveMsg = "APPROVEMSG";
+    String bvApproveMsg = "BVAPPROVEMSG";
     String rejectMsg = "REJECTMSG";
     String returnMsg = "RETURNMSG";
     String amlInitiatorMsg = "AMLINITIATORMSG";

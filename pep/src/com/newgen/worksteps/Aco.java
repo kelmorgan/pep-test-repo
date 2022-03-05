@@ -48,7 +48,7 @@ public class Aco implements IFormServerEventHandler, Constants, SharedI {
                         Shared.setDecisionHistory(ifr);
                         break;
                     }
-                    case sendMailEvent:{
+                    case sendMailEvent: {
                         sendMail(ifr);
                     }
                     break;
@@ -108,13 +108,13 @@ public class Aco implements IFormServerEventHandler, Constants, SharedI {
     public void sendMail(IFormReference ifr) {
         MailMessage mailMessage = new MailMessage(ifr);
         String message;
-        String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
+        String sendTo;
         if (Shared.isDecisionApprove(ifr)) {
-           // sendTo = Shared.getUsersMailsInGroup(ifr, amlGroupName);
+            sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.amlGroupName);
             message = mailMessage.getApproveMsg();
-            new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+            new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, Shared.getInitiatorMail(ifr), LoadProp.mailSubject, message);
         } else if (Shared.isDecisionReturn(ifr)) {
-          //  sendTo = Shared.getUsersMailsInGroup(ifr, rmGroupLabel + Shared.getUserSol(ifr));
+            sendTo = Shared.getInitiatorMail(ifr);
             message = mailMessage.getRejectMsg();
             new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
         }

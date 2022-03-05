@@ -117,24 +117,24 @@ public class Aml implements IFormServerEventHandler, Constants, SharedI {
     public void sendMail(IFormReference ifr) {
         MailMessage mailMessage = new MailMessage(ifr);
         String message;
-        String sendTo = Shared.getUsersMailsInGroup(ifr, LoadProp.pepMailGroup);
+        String sendTo;
         if (Shared.isPrevWs(ifr, amlInitiatorWs)) {
             if (Shared.isDecisionApprove(ifr)) {
-                //sendTo = Shared.getUsersMailsInGroup(ifr, amlGroupName);
+                sendTo = Shared.getInitiatorMail(ifr);
                 message = mailMessage.getAmlApproveMsg();
                 new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             } else if (Shared.isDecisionDiscard(ifr)) {
-                //sendTo = Shared.getUsersMailsInGroup(ifr, Constants.amlGroupName);
+                sendTo = Shared.getInitiatorMail(ifr);
                 message = mailMessage.getAmlRejectMsg();
                 new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             }
         } else {
             if (Shared.isDecisionApprove(ifr)) {
-                //sendTo = Shared.getUsersMailsInGroup(ifr, lineExecGroupName);
+                sendTo = Shared.getUsersMailsInGroup(ifr, Shared.getLineExecGroupName(ifr));
                 message = mailMessage.getApproveMsg();
-                new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
+                new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, Shared.getInitiatorMail(ifr), LoadProp.mailSubject, message);
             } else if (Shared.isDecisionReturn(ifr)) {
-               // sendTo = Shared.getUsersMailsInGroup(ifr, rmGroupLabel + Shared.getUserSol(ifr));
+                sendTo = Shared.getInitiatorMail(ifr);
                 message = mailMessage.getRejectMsg();
                 new MailSetup(ifr, FormApi.getWorkItemNumber(ifr), sendTo, empty, LoadProp.mailSubject, message);
             }

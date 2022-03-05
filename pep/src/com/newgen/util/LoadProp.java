@@ -21,6 +21,8 @@ public class LoadProp implements Constants {
     public static String mailSubject;
     public static String pepMailGroup;
     public static String logPath;
+    public static String amlGroupName;
+    public static String ccoGroupName;
 
 
     static {
@@ -45,6 +47,9 @@ public class LoadProp implements Constants {
             mailSubject = properties.getProperty(mailSubjectField);
             pepMailGroup = properties.getProperty(pepMailGroupField);
             logPath = properties.getProperty(logPathField);
+            amlGroupName= properties.getProperty(amlGroupNameField);
+            ccoGroupName = properties.getProperty(ccoGroupNameField);
+
         } catch (Exception e) {
             System.out.println("Exception in Pep Process LoadProd Class: " + e.getMessage());
         }
